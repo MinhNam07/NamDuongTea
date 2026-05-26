@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { ProductCategoryCard } from "@/components/marketing/product-category-card";
 import { ProductGrid } from "@/components/product-grid";
 import { Button } from "@/components/ui/button";
-import { PRODUCT_CATEGORIES } from "@/lib/site-navigation";
+import { PRODUCT_LINES } from "@/lib/product-lines";
 import type { ProductCardProduct } from "@/components/product-card";
 
 type ProductOverviewSectionProps = {
@@ -36,14 +36,14 @@ export function ProductOverviewSection({
           </Button>
         </header>
 
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {PRODUCT_CATEGORIES.map((cat) => (
+        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          {PRODUCT_LINES.map((line) => (
             <ProductCategoryCard
-              key={cat.slug}
-              name={cat.name}
-              href={cat.href}
-              image={cat.image}
-              description={cat.description}
+              key={line.slug}
+              name={line.name}
+              href={line.href}
+              image={line.image}
+              description={line.description}
             />
           ))}
         </div>

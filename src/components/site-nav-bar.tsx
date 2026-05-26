@@ -35,7 +35,13 @@ import { PRIMARY_NAV } from "@/lib/site-navigation";
 import { cn } from "@/lib/utils";
 
 const HEADER_INNER_CLASS =
-  "container mx-auto flex h-full items-center gap-4 px-4 md:px-6 lg:grid lg:grid-cols-[1fr_auto_1fr]";
+  "mx-auto flex h-full w-full max-w-[1280px] items-center gap-4 pl-2 pr-4 md:pl-3 md:pr-6 lg:grid lg:grid-cols-[1fr_auto_1fr] lg:pl-4";
+
+/** Chỉ nhãn menu trên thanh header (desktop), không áp dropdown / sheet mobile */
+const HEADER_NAV_ITEM_CLASS = cn(
+  navigationMenuTriggerStyle,
+  "h-auto min-h-0 px-5 py-2 text-lg leading-snug md:text-xl [&_svg]:size-6",
+);
 
 function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
@@ -78,15 +84,18 @@ export function SiteNavBar({ collapsed, transparent = false }: SiteNavBarProps) 
   return (
     <>
       <div className={HEADER_INNER_CLASS}>
-        <Link href="/" className="flex shrink-0 items-center lg:justify-self-start">
+        <Link
+          href="/"
+          className="-ml-2 flex shrink-0 items-center md:-ml-4 lg:-ml-6 lg:justify-self-start"
+        >
           <Image
             src={BRAND_LOGO_SRC}
             alt="Nam Dương Tea"
-            width={664}
-            height={376}
+            width={200}
+            height={48}
             className={cn(
               "w-auto bg-transparent transition-[height] duration-300 ease-out",
-              collapsed ? "h-9 md:h-10" : "h-11 md:h-12",
+              collapsed ? "h-10 md:h-12" : "h-14 md:h-[7rem]",
             )}
             priority
           />
@@ -97,12 +106,13 @@ export function SiteNavBar({ collapsed, transparent = false }: SiteNavBarProps) 
           aria-label="Điều hướng chính"
         >
           <NavigationMenu className="flex-none">
-            <NavigationMenuList>
+            <NavigationMenuList className="gap-2">
               {PRIMARY_NAV.map((item) =>
                 item.children ? (
                   <NavigationMenuItem key={item.label}>
                     <NavigationMenuTrigger
                       className={cn(
+                        HEADER_NAV_ITEM_CLASS,
                         isNavItemActive(pathname, item) &&
                           "text-tea-yellow-green",
                       )}
@@ -117,7 +127,7 @@ export function SiteNavBar({ collapsed, transparent = false }: SiteNavBarProps) 
                               <Link
                                 href={child.href}
                                 className={cn(
-                                  "block rounded-xl px-3 py-2 text-sm font-medium text-tea-ink hover:bg-tea-green-50 hover:text-tea-dark-green",
+                                  "block rounded-xl px-3 py-2.5 text-base font-medium text-tea-ink hover:bg-tea-green-50 hover:text-tea-dark-green",
                                   isActive(
                                     pathname,
                                     child.href.split("#")[0] ?? child.href,
@@ -137,7 +147,7 @@ export function SiteNavBar({ collapsed, transparent = false }: SiteNavBarProps) 
                     <Link
                       href={item.href!}
                       className={cn(
-                        navigationMenuTriggerStyle,
+                        HEADER_NAV_ITEM_CLASS,
                         isActive(pathname, item.href!) &&
                           "text-tea-yellow-green underline decoration-tea-yellow-green decoration-2 underline-offset-4",
                       )}
@@ -151,16 +161,16 @@ export function SiteNavBar({ collapsed, transparent = false }: SiteNavBarProps) 
           </NavigationMenu>
         </nav>
 
-        <div className="ml-auto flex items-center gap-2 lg:justify-self-end">
+        <div className="ml-auto flex items-center gap-3 lg:justify-self-end">
           <Button
             type="button"
             variant="ghost"
             size="icon"
-            className={iconBtnClass}
+            className={cn(iconBtnClass, "h-12 w-12 [&_svg]:size-6")}
             onClick={() => setSearchOpen(true)}
             aria-label="Tìm kiếm"
           >
-            <Search className="h-5 w-5" />
+            <Search />
           </Button>
 
           <Sheet open={mobileOpen} onOpenChange={setMobileOpen}>
@@ -169,10 +179,10 @@ export function SiteNavBar({ collapsed, transparent = false }: SiteNavBarProps) 
                 type="button"
                 variant="ghost"
                 size="icon"
-                className={cn(iconBtnClass, "lg:hidden")}
+                className={cn(iconBtnClass, "h-12 w-12 [&_svg]:size-6 lg:hidden")}
                 aria-label="Mở menu"
               >
-                <Menu className="h-5 w-5" />
+                <Menu />
               </Button>
             </SheetTrigger>
             <SheetContent side="right" className="overflow-y-auto">

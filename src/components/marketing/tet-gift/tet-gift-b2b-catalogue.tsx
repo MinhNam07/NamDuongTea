@@ -69,12 +69,13 @@ export function TetGiftB2bCatalogue() {
                   >
                     <td className="px-4 py-4 align-top">
                       <div className="flex items-start gap-3">
-                        <div className="relative h-16 w-14 shrink-0 overflow-hidden rounded-sm border border-tea-gold/15 bg-tea-ivory">
+                        <div className="relative h-16 w-14 shrink-0 overflow-hidden rounded-sm border border-tea-gold/15 bg-black">
                           <TetGiftProductImage
                             slug={set.slug}
                             name={set.name}
                             className="absolute inset-0"
                             sizes="56px"
+                            gallery={false}
                           />
                         </div>
                         <div>

@@ -1,3 +1,5 @@
+import { PRODUCT_LINES } from "@/lib/product-lines";
+
 export type NavChild = {
   label: string;
   href: string;
@@ -9,6 +11,14 @@ export type NavItem = {
   children?: NavChild[];
 };
 
+const PRODUCT_NAV_CHILDREN: NavChild[] = [
+  { label: "Tất cả sản phẩm", href: "/san-pham" },
+  ...PRODUCT_LINES.map((line) => ({
+    label: line.name,
+    href: line.href,
+  })),
+];
+
 export const PRIMARY_NAV: NavItem[] = [
   {
     label: "Về Nam Dương",
@@ -19,13 +29,7 @@ export const PRIMARY_NAV: NavItem[] = [
   },
   {
     label: "Sản phẩm",
-    children: [
-      { label: "Tất cả sản phẩm", href: "/san-pham" },
-      { label: "Nam Dương trà quán", href: "/nam-duong-tra-quan" },
-      { label: "Trà xanh", href: "/san-pham?category=tra-xanh" },
-      { label: "Trà đen", href: "/san-pham?category=tra-den" },
-      { label: "Trà ô-long", href: "/san-pham?category=tra-o-long" },
-    ],
+    children: PRODUCT_NAV_CHILDREN,
   },
   { label: "Tin tức", href: "/tin-tuc" },
   { label: "Đại lý", href: "/dang-ky-dai-ly" },
@@ -40,11 +44,10 @@ export const FOOTER_QUICK_LINKS: NavChild[] = [
   { label: "Liên hệ", href: "/lien-he" },
 ];
 
-export const FOOTER_PRODUCT_LINKS: NavChild[] = [
-  { label: "Trà xanh", href: "/san-pham?category=tra-xanh" },
-  { label: "Trà đen", href: "/san-pham?category=tra-den" },
-  { label: "Trà ô-long", href: "/san-pham?category=tra-o-long" },
-];
+export const FOOTER_PRODUCT_LINKS: NavChild[] = PRODUCT_LINES.map((line) => ({
+  label: line.name,
+  href: line.href,
+}));
 
 export const SOCIAL_LINKS = {
   facebook: "https://facebook.com/",
@@ -55,33 +58,4 @@ export const SOCIAL_LINKS = {
 
 export const SUPPORT_CHAT_URL = SOCIAL_LINKS.zalo;
 
-export const PRODUCT_CATEGORIES = [
-  {
-    name: "Trà xanh",
-    slug: "tra-xanh",
-    href: "/san-pham?category=tra-xanh",
-    image: "/images/story-farm.webp",
-    description: "Búp tươi, hương thanh mát từ vùng trà Nam Dương.",
-  },
-  {
-    name: "Trà đen",
-    slug: "tra-den",
-    href: "/san-pham?category=tra-den",
-    image: "/images/hero.JPG",
-    description: "Đậm vị, ổn định cho pha trà và pha chế F&B.",
-  },
-  {
-    name: "Trà ô-long",
-    slug: "tra-o-long",
-    href: "/san-pham?category=tra-o-long",
-    image: "/images/story-farm.webp",
-    description: "Hương hoa quả nhẹ, phù hợp quán trà cao cấp.",
-  },
-  {
-    name: "Nguyên liệu B2B",
-    slug: "nguyen-lieu",
-    href: "/san-pham",
-    image: "/images/hero.JPG",
-    description: "Cung ứng số lượng lớn cho đại lý và xuất khẩu.",
-  },
-] as const;
+export { PRODUCT_LINES as PRODUCT_CATEGORIES } from "@/lib/product-lines";

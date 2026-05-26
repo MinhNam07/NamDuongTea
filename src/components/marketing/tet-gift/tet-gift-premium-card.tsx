@@ -32,7 +32,7 @@ export function TetGiftPremiumCard({
         className,
       )}
     >
-      <div className="relative aspect-[3/4] w-full border-b border-tea-gold/15">
+      <div className="relative aspect-[3/4] w-full border-b border-tea-gold/15 bg-black">
         <TetGiftProductImage
           slug={product.slug}
           name={product.name}

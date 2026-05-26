@@ -1,6 +1,29 @@
 /** Tên bộ sưu tập (hiển thị trên site) */
 export const TRA_QUAN_COLLECTION_NAME = "Nam Dương trà quán";
 
+/** Ảnh hero — Nam mộc trà quán (IMG_0655) */
+export const NAM_MOC_TRA_QUAN_HERO_SRC =
+  "/images/products/tet-gift-sets/nam-moc-tra-quan-hero.JPG";
+
+/** Hiển thị ảnh `-2` trước (ảnh thứ 2 trong folder gốc). */
+export const TET_GIFT_SLIDES_REVERSED = new Set([
+  "bach-nhien-tra-quan",
+  "son-moc-tra-quan",
+  "thanh-nhien-tra-quan",
+]);
+
+export type TetGiftSlideSuffix = "" | "-2";
+
+export function tetGiftSlideSuffixes(
+  slug: string,
+  gallery = true,
+): TetGiftSlideSuffix[] {
+  const order: TetGiftSlideSuffix[] = TET_GIFT_SLIDES_REVERSED.has(slug)
+    ? ["-2", ""]
+    : ["", "-2"];
+  return gallery ? order : [order[0]];
+}
+
 export type TetGiftTeaLine = {
   name: string;
   weight: string;

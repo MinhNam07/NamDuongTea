@@ -1,10 +1,12 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 
+import { ProductCategoryCard } from "@/components/marketing/product-category-card";
 import { ProductGrid } from "@/components/product-grid";
 import type { ProductCardProduct } from "@/components/product-card";
 import { Badge } from "@/components/ui/badge";
 import { getPayloadClient } from "@/lib/payload";
+import { PRODUCT_LINES } from "@/lib/product-lines";
 import { buildMetadata } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 
@@ -13,7 +15,7 @@ export const revalidate = 300;
 export const metadata: Metadata = buildMetadata({
   title: "Sản phẩm trà",
   description:
-    "Catalog trà xanh, trà đen, trà ô-long Nam Dương — phục vụ đại lý, nhà phân phối và xuất khẩu.",
+    "Bạch trà shan tuyết, trà đinh ngọc, hồng trà, trà ô long và Nam Dương trà quán — phục vụ đại lý, nhà phân phối và xuất khẩu.",
   path: "/san-pham",
 });
 
@@ -72,12 +74,26 @@ export default async function ProductListPage({
             Sản phẩm trà
           </h1>
           <p className="mt-4 text-tea-muted md:text-lg">
-            Tuyển chọn từ vùng nguyên liệu Nam Dương — phù hợp cho đại lý, nhà
-            phân phối, quán trà và đơn vị xuất khẩu. Liên hệ để nhận bảng giá
-            theo MOQ và mẫu thử miễn phí.
+            Bạch trà shan tuyết, trà đinh ngọc, hồng trà, trà ô long và bộ quà
+            Nam Dương trà quán — tuyển chọn từ vùng nguyên liệu Nam Dương.
+            Liên hệ để nhận bảng giá theo MOQ và mẫu thử miễn phí.
           </p>
         </header>
 
+        <div className="mb-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
+          {PRODUCT_LINES.map((line) => (
+            <ProductCategoryCard
+              key={line.slug}
+              name={line.name}
+              href={line.href}
+              image={line.image}
+              description={line.description}
+            />
+          ))}
+        </div>
+
+        {categories.length > 0 || products.length > 0 ? (
+          <>
         <nav
           aria-label="Lọc theo danh mục"
           className="mb-8 flex flex-wrap items-center gap-2"
@@ -102,6 +118,8 @@ export default async function ProductListPage({
           Đang hiển thị {products.length} sản phẩm
           {category ? ` · danh mục "${category}"` : ""}.
         </p>
+          </>
+        ) : null}
       </section>
     </div>
   );

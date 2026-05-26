@@ -1,12 +1,9 @@
 import type { Metadata } from "next";
 
 import { TetGiftB2bCatalogue } from "@/components/marketing/tet-gift/tet-gift-b2b-catalogue";
+import { TetGiftBrandStrip } from "@/components/marketing/tet-gift/tet-gift-brand-strip";
 import { TetGiftHeroBanner } from "@/components/marketing/tet-gift/tet-gift-hero-banner";
 import { TetGiftPremiumCard } from "@/components/marketing/tet-gift/tet-gift-premium-card";
-import {
-  SOCIAL_POST_VARIANTS,
-  TetGiftSocialPost,
-} from "@/components/marketing/tet-gift/tet-gift-social-post";
 import { buildMetadata } from "@/lib/seo";
 import {
   TET_GIFT_SETS,
@@ -18,12 +15,6 @@ export const metadata: Metadata = buildMetadata({
   description: `Bộ sưu tập ${TRA_QUAN_COLLECTION_NAME} Nam Dương Tea: thất phẩm gỗ chạm khắc, trà tuyển chọn — quà biếu sang trọng cho doanh nghiệp và đại lý.`,
   path: "/nam-duong-tra-quan",
 });
-
-const SOCIAL_LABELS: Record<string, string> = {
-  signature: "Concept 01 — Signature hero",
-  collection: "Concept 02 — Full collection grid",
-  craft: "Concept 03 — Craftsmanship & composition",
-};
 
 export default function NamDuongTraQuanPage() {
   return (
@@ -57,33 +48,7 @@ export default function NamDuongTraQuanPage() {
         </div>
       </section>
 
-      <section className="border-t border-tea-gold/15 bg-tea-deep-brown py-16 md:py-24">
-        <div className="container mx-auto px-4 md:px-6">
-          <header className="mx-auto max-w-2xl text-center">
-            <p className="text-xs font-semibold uppercase tracking-[0.24em] text-tea-gold">
-              Social media
-            </p>
-            <h2 className="mt-2 font-display text-3xl font-extrabold text-tea-ivory">
-              Ba concept bài đăng
-            </h2>
-            <p className="mt-4 text-tea-ivory/70">
-              Tỷ lệ 1:1 — xuất screenshot hoặc mở rộng component cho
-              Facebook / Instagram / Zalo OA.
-            </p>
-          </header>
-
-          <div className="mt-12 flex flex-wrap justify-center gap-10">
-            {SOCIAL_POST_VARIANTS.map((variant) => (
-              <div key={variant} className="flex flex-col items-center gap-3">
-                <TetGiftSocialPost variant={variant} />
-                <p className="text-center text-xs uppercase tracking-widest text-tea-ivory/50">
-                  {SOCIAL_LABELS[variant]}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-      </section>
+      <TetGiftBrandStrip />
 
       <TetGiftB2bCatalogue />
     </>

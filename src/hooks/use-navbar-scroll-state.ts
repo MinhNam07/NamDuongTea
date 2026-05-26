@@ -5,19 +5,19 @@ import { useCallback, useEffect, useState } from "react";
 import { NAV_COLLAPSE_AT, NAV_EXPAND_AT } from "@/lib/header-config";
 
 /**
- * Threshold + hysteresis: collapse at 100px, expand only below 40px.
- * Between 40–100px the state does not flip (prevents jitter).
+ * Thu gọn header khi scroll — chỉ áp dụng trang chủ.
+ * Các trang khác luôn dùng kích thước header mở rộng.
  */
 export function useNavbarCollapsed(isHome: boolean) {
-  const [collapsed, setCollapsed] = useState(!isHome);
+  const [homeScrolled, setHomeScrolled] = useState(false);
 
   const update = useCallback(() => {
     if (!isHome) {
-      setCollapsed(true);
+      setHomeScrolled(false);
       return;
     }
     const y = window.scrollY;
-    setCollapsed((prev) => {
+    setHomeScrolled((prev) => {
       if (y < NAV_EXPAND_AT) return false;
       if (y >= NAV_COLLAPSE_AT) return true;
       return prev;
@@ -30,5 +30,5 @@ export function useNavbarCollapsed(isHome: boolean) {
     return () => window.removeEventListener("scroll", update);
   }, [update]);
 
-  return collapsed;
+  return isHome && homeScrolled;
 }
