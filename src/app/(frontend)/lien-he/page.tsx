@@ -43,7 +43,7 @@ export default async function LienHePage({
               <div>
                 <p className="font-medium">Văn phòng & nhà máy</p>
                 <p className="text-sm text-tea-muted">
-                  Vùng nguyên liệu Nam Dương, Việt Nam
+                Khối 1, Xã Sóc Sơn, Hà Nội, Việt Nam
                 </p>
               </div>
             </li>
@@ -54,10 +54,10 @@ export default async function LienHePage({
               <div>
                 <p className="font-medium">Hotline</p>
                 <a
-                  href="tel:+84000000000"
+                  href="tel:+84913303668"
                   className="text-sm text-tea-muted hover:text-tea-green"
                 >
-                  +84 000 000 000
+                  +84 913 303 668
                 </a>
               </div>
             </li>
@@ -68,10 +68,10 @@ export default async function LienHePage({
               <div>
                 <p className="font-medium">Email B2B</p>
                 <a
-                  href="mailto:hello@namduongtea.vn"
+                  href="mailto:thuynamduong64@gmail.com"
                   className="text-sm text-tea-muted hover:text-tea-green"
                 >
-                  hello@namduongtea.vn
+                  thuynamduong64@gmail.com
                 </a>
               </div>
             </li>

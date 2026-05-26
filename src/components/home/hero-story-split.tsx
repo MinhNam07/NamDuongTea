@@ -6,17 +6,17 @@ import { Button } from "@/components/ui/button";
 
 const STORIES = [
   {
-    title: "Câu chuyện từ chuyên gia trà Việt",
+    title: "Tinh hoa trà Việt",
     description:
       "Hành trình xây dựng thương hiệu Nam Dương Tea — am hiểu văn hóa trà, đam mê chất lượng và sáng tạo cho thị trường hiện đại.",
     image: "/images/hero.JPG",
     href: "/gioi-thieu",
   },
   {
-    title: "Từ đồi chè đến tách trà",
+    title: "Từ nông trường đến tách trà",
     description:
       "Kiểm soát từ vùng nguyên liệu, quy trình chế biến đến đóng gói — minh bạch nguồn gốc cho đối tác B2B.",
-    image: "/images/story-farm.webp",
+    image: "/images/IMG_6559.JPG",
     href: "/gioi-thieu#nguyen-lieu",
   },
 ] as const;

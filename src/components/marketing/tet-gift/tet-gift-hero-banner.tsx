@@ -16,7 +16,7 @@ export function TetGiftHeroBanner() {
   return (
     <section
       aria-label={`${TRA_QUAN_COLLECTION_NAME} — Nam Dương Tea`}
-      className="relative -mt-32 overflow-hidden bg-tea-dark-green pt-32"
+      className="relative -mt-32 overflow-x-hidden bg-tea-dark-green pt-32"
     >
       {/* Background */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
@@ -33,7 +33,7 @@ export function TetGiftHeroBanner() {
       </div>
 
       {/* Container */}
-      <div className="container relative z-10 mx-auto grid min-h-[calc(100svh-8rem)] max-h-[min(calc(100svh-8rem),520px)] items-center gap-8 px-4 py-10 md:grid-cols-[1fr_auto] md:gap-x-12 md:px-6 md:py-12">
+      <div className="container relative z-10 mx-auto grid min-h-[min(100svh-8rem,720px)] items-center gap-8 px-4 py-10 md:grid-cols-[1fr_auto] md:gap-x-12 md:px-6 md:py-12 lg:min-h-[calc(100svh-8rem)]">
         
         {/* LEFT CONTENT */}
         <div className="order-2 flex flex-col justify-center text-white md:order-1">
@@ -105,18 +105,15 @@ export function TetGiftHeroBanner() {
 
         {/* RIGHT IMAGE */}
         <div className="order-1 flex items-center justify-center md:order-2 md:justify-end">
-          <figure className="w-[14rem] sm:w-[16rem] md:w-[23rem] lg:w-[27rem]">
-            
-          <div className="relative aspect-[2/3] w-full overflow-hidden rounded-lg border-2 border-white bg-black shadow-2xl">
-              
-              {/* ✅ FIX: full cover */}
+          <figure className="mx-auto md:mx-0">
+            <div className="relative aspect-[2/3] h-[min(380px,52vh)] w-auto overflow-hidden rounded-lg border-2 border-white bg-black shadow-2xl sm:h-[min(420px,55vh)] md:h-[min(480px,58vh)] lg:h-[min(520px,60vh)]">
               <Image
                 src={NAM_MOC_TRA_QUAN_HERO_SRC}
                 alt={FEATURED.name}
                 fill
                 priority
                 sizes="(min-width: 1024px) 24rem, (min-width: 768px) 20rem, 16rem"
-                className="object-cover object-center"
+                className="object-contain object-center"
               />
 
               {/* overlay */}
@@ -129,7 +126,6 @@ export function TetGiftHeroBanner() {
                 </p>
               </figcaption>
             </div>
-
           </figure>
         </div>
       </div>

@@ -17,7 +17,7 @@ export default function GioiThieuPage() {
           Câu chuyện
         </p>
         <h1 className="mt-2 font-display text-4xl font-bold text-tea-green md:text-5xl">
-          Vùng trà Nam Dương
+          Từ các đồi chè vùng cao
         </h1>
         <div className="mt-8 space-y-5 text-tea-ink leading-relaxed md:text-lg">
           <p>
@@ -26,8 +26,8 @@ export default function GioiThieuPage() {
             B2B ngày càng khắt khe.
           </p>
           <p>
-            Chúng tôi hợp tác trực tiếp với các nông hộ tại vùng nguyên liệu Nam
-            Dương — kiểm soát toàn bộ chuỗi cung ứng từ búp tươi, sao sấy, đóng
+            Chúng tôi hợp tác trực tiếp với các nông hộ tại vùng nguyên liệu tại Phú Thọ, Yên Bái
+            và các vùng khác — kiểm soát toàn bộ chuỗi cung ứng từ búp tươi, sao sấy, đóng
             gói cho tới giao hàng.
           </p>
           <p>

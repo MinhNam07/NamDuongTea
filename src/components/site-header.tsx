@@ -5,45 +5,33 @@ import { usePathname } from "next/navigation";
 import { SiteNavBar } from "@/components/site-nav-bar";
 import { TeaHillBackdrop } from "@/components/ui/tea-hill-backdrop";
 import { useNavbarCollapsed } from "@/hooks/use-navbar-scroll-state";
-import {
-  NAV_HEIGHT_COLLAPSED,
-  NAV_HEIGHT_EXPANDED,
-} from "@/lib/header-config";
+import { NAV_HEIGHT_EXPANDED } from "@/lib/header-config";
 import { cn } from "@/lib/utils";
 
 /**
  * Fixed sticky navbar — overlays hero on home.
- * Thu gọn chiều cao khi scroll trang chủ; mọi trang khác giữ header mở rộng.
+ * Kích thước header/logo giống mọi trang; trang chủ chỉ đổi nền trong suốt khi ở đầu hero.
  */
 export function SiteHeader() {
   const pathname = usePathname();
   const isHome = pathname === "/";
-  const compact = useNavbarCollapsed(isHome);
-
-  const showSolidBar = !isHome || compact;
+  const homeAtHero = isHome && !useNavbarCollapsed(isHome);
 
   return (
     <header
       className={cn(
-        "fixed left-0 right-0 top-0 z-[100] w-full overflow-visible leading-none will-change-[height]",
-        "transition-[height,box-shadow] duration-300 ease-out",
-        compact ? NAV_HEIGHT_COLLAPSED : NAV_HEIGHT_EXPANDED,
-        showSolidBar && "shadow-lg shadow-tea-deep-brown/25",
+        "fixed left-0 right-0 top-0 z-[100] w-full overflow-visible leading-none",
+        NAV_HEIGHT_EXPANDED,
+        "shadow-lg shadow-tea-deep-brown/25",
       )}
     >
-      {showSolidBar ? (
-        <TeaHillBackdrop
-          variant="header"
-          imageBlurClass="blur-sm"
-          className="h-full overflow-visible"
-        >
-          <SiteNavBar collapsed={compact} />
-        </TeaHillBackdrop>
-      ) : (
-        <div className="h-full overflow-visible bg-gradient-to-b from-tea-deep-brown/25 to-transparent">
-          <SiteNavBar collapsed={false} transparent />
-        </div>
-      )}
+      <TeaHillBackdrop
+        variant="header"
+        imageBlurClass="blur-sm"
+        className="h-full overflow-visible"
+      >
+        <SiteNavBar collapsed={false} transparent={homeAtHero} />
+      </TeaHillBackdrop>
     </header>
   );
 }

@@ -78,21 +78,21 @@ export function SiteFooter() {
             <ul className="space-y-3 text-sm text-white/85">
               <li className="flex items-start gap-2">
                 <MapPin className="mt-0.5 h-4 w-4 shrink-0 text-tea-yellow-green" />
-                <span>Vùng nguyên liệu Nam Dương, Việt Nam</span>
+                <span>Khối 1, Xã Sóc Sơn, Hà Nội, Việt Nam</span>
               </li>
               <li className="flex items-center gap-2">
                 <Phone className="h-4 w-4 shrink-0 text-tea-yellow-green" />
-                <a href="tel:+84000000000" className="hover:text-tea-yellow-green">
-                  +84 000 000 000
+                <a href="tel:+84913303668" className="hover:text-tea-yellow-green">
+                  +84 913 303 668
                 </a>
               </li>
               <li className="flex items-center gap-2">
                 <Mail className="h-4 w-4 shrink-0 text-tea-yellow-green" />
                 <a
-                  href="mailto:hello@namduongtea.vn"
+                  href="mailto:thuynamduong64@gmail.com"
                   className="hover:text-tea-yellow-green"
                 >
-                  hello@namduongtea.vn
+                  thuynamduong64@gmail.com
                 </a>
               </li>
             </ul>

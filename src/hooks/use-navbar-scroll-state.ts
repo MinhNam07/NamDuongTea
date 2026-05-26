@@ -5,8 +5,8 @@ import { useCallback, useEffect, useState } from "react";
 import { NAV_COLLAPSE_AT, NAV_EXPAND_AT } from "@/lib/header-config";
 
 /**
- * Thu gọn header khi scroll — chỉ áp dụng trang chủ.
- * Các trang khác luôn dùng kích thước header mở rộng.
+ * Trang chủ: true khi đã scroll qua hero (tắt overlay trong suốt).
+ * Các trang khác luôn false.
  */
 export function useNavbarCollapsed(isHome: boolean) {
   const [homeScrolled, setHomeScrolled] = useState(false);

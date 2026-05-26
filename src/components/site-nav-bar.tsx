@@ -86,15 +86,15 @@ export function SiteNavBar({ collapsed, transparent = false }: SiteNavBarProps) 
       <div className={HEADER_INNER_CLASS}>
         <Link
           href="/"
-          className="-ml-2 flex shrink-0 items-center md:-ml-4 lg:-ml-6 lg:justify-self-start"
+          className="flex shrink-0 items-end self-stretch py-1 lg:justify-self-start"
         >
           <Image
             src={BRAND_LOGO_SRC}
             alt="Nam Dương Tea"
-            width={200}
-            height={48}
+            width={664}
+            height={376}
             className={cn(
-              "w-auto bg-transparent transition-[height] duration-300 ease-out",
+              "max-h-none w-auto shrink-0 bg-transparent object-contain object-left transition-[height] duration-300 ease-out",
               collapsed ? "h-10 md:h-12" : "h-14 md:h-[7rem]",
             )}
             priority
