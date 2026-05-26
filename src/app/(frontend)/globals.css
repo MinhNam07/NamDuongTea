@@ -1,0 +1,120 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Nam Duong brand palette */
+    --tea-deep-brown: #3e3407;
+    --tea-dark-green: #254a0c;
+    --tea-yellow-green: #ccc13a;
+    --tea-moss: #567119;
+    --tea-olive: #a3a53e;
+    --tea-muted-gold: #c4b07a;
+    --tea-warm-ivory: #f7f3ea;
+
+    /* Legacy tea.* aliases mapped to brand */
+    --tea-green-900: #1a3309;
+    --tea-green-800: #254a0c;
+    --tea-green-700: #567119;
+    --tea-green-600: #6d8a2a;
+    --tea-green-50: #f4f6eb;
+
+    --tea-brown-900: #3e3407;
+    --tea-brown-700: #5c4a1a;
+    --tea-brown-500: #8a7340;
+    --tea-brown-300: #ccc13a;
+
+    --cream-50: #faf8f2;
+    --cream-100: #f4f0e6;
+    --white: #ffffff;
+
+    --text-main: #243018;
+    --text-muted: #5c6648;
+    --border-soft: #e2e6d4;
+
+    /* shadcn semantic tokens */
+    --background: 45 33% 96%;
+    --foreground: 88 42% 12%;
+
+    --card: 0 0% 100%;
+    --card-foreground: 88 42% 12%;
+
+    --popover: 0 0% 100%;
+    --popover-foreground: 88 42% 12%;
+
+    --primary: 94 73% 16%;
+    --primary-foreground: 45 33% 96%;
+
+    --secondary: 74 32% 35%;
+    --secondary-foreground: 45 33% 96%;
+
+    --muted: 68 24% 93%;
+    --muted-foreground: 88 12% 40%;
+
+    --accent: 58 54% 52%;
+    --accent-foreground: 88 42% 12%;
+
+    --destructive: 0 50% 52%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 68 20% 85%;
+    --input: 68 20% 85%;
+    --ring: 58 54% 52%;
+
+    --radius: 1rem;
+  }
+
+  .dark {
+    --background: 94 40% 8%;
+    --foreground: 45 33% 96%;
+
+    --card: 94 35% 11%;
+    --card-foreground: 45 33% 96%;
+
+    --popover: 94 35% 11%;
+    --popover-foreground: 45 33% 96%;
+
+    --primary: 58 54% 52%;
+    --primary-foreground: 94 40% 8%;
+
+    --secondary: 74 28% 28%;
+    --secondary-foreground: 45 33% 96%;
+
+    --muted: 94 22% 16%;
+    --muted-foreground: 68 15% 70%;
+
+    --accent: 94 30% 18%;
+    --accent-foreground: 45 33% 96%;
+
+    --destructive: 0 60% 50%;
+    --destructive-foreground: 0 0% 100%;
+
+    --border: 94 18% 22%;
+    --input: 94 18% 22%;
+    --ring: 58 54% 52%;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground antialiased;
+    font-feature-settings: "rlig" 1, "calt" 1;
+  }
+
+  h1,
+  h2,
+  h3,
+  h4 {
+    @apply font-display tracking-tight;
+  }
+}
+
+@layer utilities {
+  .container-prose {
+    @apply max-w-3xl mx-auto;
+  }
+}

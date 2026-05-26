@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: namduongtea-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: namduong
+      POSTGRES_PASSWORD: namduong
+      POSTGRES_DB: namduongtea
+    ports:
+      - "5432:5432"
+    volumes:
+      - namduongtea-db-data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U namduong -d namduongtea"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+volumes:
+  namduongtea-db-data:
