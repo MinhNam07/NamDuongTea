@@ -1,0 +1,188 @@
+{
+  "_meta": {
+    "description": "Catalog hardcode từ product-lines.ts + tet-gift-sets.ts — dùng cùng schema với catalog-items.sql",
+    "table": "catalog_items",
+    "total": 10
+  },
+  "items": [
+    {
+      "slug": "bach-tra-shan-tuyet",
+      "name": "Bạch trà shan tuyết",
+      "kind": "product_line",
+      "href": "/dong-tra/bach-tra-shan-tuyet",
+      "description": "Bạch trà tuyển từ búp shan tuyết vùng cao — hương thanh nhẹ, vị ngọt dịu, ít chất đắng.",
+      "detail": "Bạch trà shan tuyết Nam Dương được chế biến tối giản để giữ trọn vẹn hương vị tự nhiên của búp trà vùng cao. Sắc nước trong, hương thảo mộc nhẹ và vị hậu ngọt dài — phù hợp thưởng thức nguyên chất hoặc phục vụ quán trà cao cấp.",
+      "image": "/images/bach-tra-shan-tuyet/DSC_3122%20copy%202.png",
+      "gallery": [
+        "/images/bach-tra-shan-tuyet/DSC_3122%20copy%202.png",
+        "/images/bach-tra-shan-tuyet/DSC_3139%20copy%202.png"
+      ],
+      "has_detail_page": true
+    },
+    {
+      "slug": "tra-dinh-ngoc",
+      "name": "Trà đinh ngọc",
+      "kind": "product_line",
+      "href": "/dong-tra/tra-dinh-ngoc",
+      "description": "Búp non một tôm một lá, sắc xanh ngọc — đặc trưng vùng trà Nam Dương.",
+      "detail": "Trà đinh ngọc là dòng trà xanh tuyển chọn từ búp non nhất, một tôm một lá. Hương thơm tươi mát, vị thanh ngọt cân bằng — lý tưởng cho pha trà truyền thống và chuỗi F&B cần hồ sơ hương vị ổn định theo mùa.",
+      "image": "/images/tra-dinh-ngoc/DSC_3112%20copy%202.png",
+      "gallery": [
+        "/images/tra-dinh-ngoc/DSC_3112%20copy%202.png",
+        "/images/tra-dinh-ngoc/DSC_3137%20copy%202.png"
+      ],
+      "has_detail_page": true
+    },
+    {
+      "slug": "hong-tra",
+      "name": "Hồng trà",
+      "kind": "product_line",
+      "href": "/dong-tra/hong-tra",
+      "description": "Hồng trà lên men vừa — hương mật ong, vị đậm đà cho pha trà và pha chế.",
+      "detail": "Hồng trà Nam Dương được lên men và sấy khô theo quy trình kiểm soát, cho sắc nước hổ phách ấm và hương ngọt tự nhiên. Phù hợp pha nóng, pha lạnh và ứng dụng đồ uống F&B cần vị trà rõ, ổn định.",
+      "image": "/images/hong-tra/DSC_3117%20copy%202.png",
+      "gallery": [
+        "/images/hong-tra/DSC_3117%20copy%202.png",
+        "/images/hong-tra/DSC_3134%20copy%202.png"
+      ],
+      "has_detail_page": true
+    },
+    {
+      "slug": "tra-o-long",
+      "name": "Trà ô long",
+      "kind": "product_line",
+      "href": "/dong-tra/tra-o-long",
+      "description": "Ô long bán lên men — hương hoa quả nhẹ, thích hợp quán trà và đại lý cao cấp.",
+      "detail": "Trà ô long Nam Dương nằm giữa trà xanh và trà đen: hương thơm đa tầng, vị ngọt thanh, hậu vị kéo dài. Dòng sản phẩm được các quán trà và nhà phân phối ưa chuộng nhờ profile hương vị nhất quán.",
+      "image": "/images/tra-o-long/DSC_3126%20copy%202.png",
+      "gallery": [
+        "/images/tra-o-long/DSC_3126%20copy%202.png",
+        "/images/tra-o-long/DSC_3132%20copy%202.png"
+      ],
+      "has_detail_page": true
+    },
+    {
+      "slug": "nam-duong-tra-quan",
+      "name": "Nam Dương trà quán",
+      "kind": "product_line",
+      "href": "/nam-duong-tra-quan",
+      "description": "Bộ quà biếu thất phẩm gỗ chạm khắc — trà tuyển chọn, trình bày sang trọng.",
+      "detail": "Nam Dương trà quán là bộ sưu tập quà biếu cao cấp gồm năm thất phẩm gỗ chạm khắc, mỗi thất phẩm kể một câu chuyện riêng về trà và nghệ thủ công đóng gói.",
+      "image": "/images/products/tet-gift-sets/nam-moc-tra-quan-hero.JPG",
+      "gallery": ["/images/products/tet-gift-sets/nam-moc-tra-quan-hero.JPG"],
+      "has_detail_page": false
+    },
+    {
+      "slug": "nam-moc-tra-quan",
+      "name": "Nam mộc trà quán",
+      "kind": "tet_gift_set",
+      "image": "/images/products/tet-gift-sets/nam-moc-tra-quan.jpg",
+      "gallery": [
+        "/images/products/tet-gift-sets/nam-moc-tra-quan.jpg",
+        "/images/products/tet-gift-sets/nam-moc-tra-quan-2.jpg"
+      ],
+      "price_vnd": 950000,
+      "stock_note": "25 set",
+      "tagline": "Tinh hoa trà shan & hồng trà trong thất phẩm gỗ",
+      "teas": [
+        { "name": "Bạch trà shan tuyết", "weight": "80gr" },
+        { "name": "Hồng trà", "weight": "80gr" }
+      ],
+      "gift_highlights": [
+        "Hộp gỗ chạm khắc tinh xảo",
+        "Hai dòng trà cao cấp",
+        "Quà biếu Tết sang trọng"
+      ]
+    },
+    {
+      "slug": "son-moc-tra-quan",
+      "name": "Sơn mộc trà quán",
+      "kind": "tet_gift_set",
+      "image": "/images/products/tet-gift-sets/son-moc-tra-quan.jpg",
+      "gallery": [
+        "/images/products/tet-gift-sets/son-moc-tra-quan.jpg",
+        "/images/products/tet-gift-sets/son-moc-tra-quan-2.jpg"
+      ],
+      "price_vnd": 820000,
+      "stock_note": "25 set",
+      "tagline": "Shan tuyết thanh khiết cùng đinh ngọc quý phái",
+      "teas": [
+        { "name": "Bạch trà shan tuyết", "weight": "80gr" },
+        { "name": "Trà đinh ngọc", "weight": "100gr" }
+      ],
+      "gift_highlights": [
+        "Cân bằng vị trà trắng & trà xanh",
+        "Thiết kế quán trà cổ điển",
+        "Phù hợp biếu đối tác B2B"
+      ]
+    },
+    {
+      "slug": "thanh-nhien-tra-quan",
+      "name": "Thanh nhiên trà quán",
+      "kind": "tet_gift_set",
+      "image": "/images/products/tet-gift-sets/thanh-nhien-tra-quan.jpg",
+      "gallery": [
+        "/images/products/tet-gift-sets/thanh-nhien-tra-quan.jpg",
+        "/images/products/tet-gift-sets/thanh-nhien-tra-quan-2.jpg"
+      ],
+      "price_vnd": 750000,
+      "stock_note": "20 set",
+      "tagline": "Ô long thơm lâu, đinh ngọc thanh nhã",
+      "teas": [
+        { "name": "Trà ô long", "weight": "150gr" },
+        { "name": "Trà đinh ngọc", "weight": "100gr" }
+      ],
+      "gift_highlights": [
+        "Dung lượng ô long hào phóng",
+        "Hương vị đa tầng",
+        "Set quà Tết tinh tế"
+      ]
+    },
+    {
+      "slug": "bach-nhien-tra-quan",
+      "name": "Bạch nhiên trà quán",
+      "kind": "tet_gift_set",
+      "image": "/images/products/tet-gift-sets/bach-nhien-tra-quan.jpg",
+      "gallery": [
+        "/images/products/tet-gift-sets/bach-nhien-tra-quan.jpg",
+        "/images/products/tet-gift-sets/bach-nhien-tra-quan-2.jpg"
+      ],
+      "price_vnd": 620000,
+      "stock_note": "25 set",
+      "tagline": "Ba sắc trà trong một thất phẩm thanh nhã",
+      "teas": [
+        { "name": "Trà ô long", "weight": "100gr" },
+        { "name": "Trà đinh ngọc", "weight": "50gr" },
+        { "name": "Hồng trà", "weight": "30gr" }
+      ],
+      "gift_highlights": [
+        "Trải nghiệm ba dòng trà",
+        "Giá trị quà tặng linh hoạt",
+        "Đóng gói cao cấp"
+      ]
+    },
+    {
+      "slug": "van-lo-tra-quan",
+      "name": "Vân lộ trà quán",
+      "kind": "tet_gift_set",
+      "image": "/images/products/tet-gift-sets/van-lo-tra-quan.jpg",
+      "gallery": [
+        "/images/products/tet-gift-sets/van-lo-tra-quan.jpg",
+        "/images/products/tet-gift-sets/van-lo-tra-quan-2.jpg"
+      ],
+      "price_vnd": 690000,
+      "stock_note": "Hết",
+      "tagline": "Tứ vị trà — bộ sưu tập giới hạn",
+      "teas": [
+        { "name": "Trà ô long", "weight": "100gr" },
+        { "name": "Trà đinh ngọc", "weight": "50gr" },
+        { "name": "Bạch trà shan tuyết", "weight": "30gr" }
+      ],
+      "gift_highlights": [
+        "Kết hợp ô long, đinh ngọc, shan",
+        "Thiết kế vân lộ tinh xảo",
+        "Phiên bản đặc biệt"
+      ]
+    }
+  ]
+}

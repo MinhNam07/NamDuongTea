@@ -2,6 +2,7 @@
 
 import { useEffect, useState } from "react";
 import Link from "next/link";
+import { usePathname } from "next/navigation";
 import { ArrowUp, Facebook, MessageCircle } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
@@ -18,6 +19,8 @@ function ZaloIcon({ className }: { className?: string }) {
 
 export function SiteFloatingActions() {
   const [showTop, setShowTop] = useState(false);
+  const pathname = usePathname();
+  const isHome = pathname === "/";
 
   useEffect(() => {
     const onScroll = () => setShowTop(window.scrollY > 400);
@@ -27,12 +30,15 @@ export function SiteFloatingActions() {
   }, []);
 
   const socialBtn =
-    "h-11 w-11 rounded-full border-2 border-tea-olive/70 bg-white text-tea-dark-green shadow-md hover:border-tea-yellow-green hover:bg-tea-green-50";
+    "h-11 w-11 rounded-full border-2 border-tea-olive/70 bg-white/90 text-tea-dark-green shadow-md hover:border-tea-yellow-green hover:bg-tea-green-50";
 
   return (
     <>
       <aside
-        className="fixed left-3 top-1/2 z-40 hidden -translate-y-1/2 flex-col gap-2 md:left-4 md:flex"
+        className={cn(
+          "fixed left-3 top-1/2 z-40 hidden -translate-y-1/2 flex-col gap-2 md:left-4 md:flex",
+          isHome && "top-[70%] opacity-80",
+        )}
         aria-label="Mạng xã hội"
       >
         <Button asChild variant="ghost" size="icon" className={socialBtn}>

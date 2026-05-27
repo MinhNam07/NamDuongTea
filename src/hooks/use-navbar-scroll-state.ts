@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useSyncExternalStore } from "react";
 
 import { NAV_COLLAPSE_AT, NAV_EXPAND_AT } from "@/lib/header-config";
 
@@ -31,4 +31,22 @@ export function useNavbarCollapsed(isHome: boolean) {
   }, [update]);
 
   return isHome && homeScrolled;
+}
+
+/**
+ * Main-branch header glass style:
+ * `true` once user has started scrolling down (small threshold),
+ * independent of hero logic.
+ */
+function subscribe(onStoreChange: () => void) {
+  window.addEventListener("scroll", onStoreChange, { passive: true });
+  return () => window.removeEventListener("scroll", onStoreChange);
+}
+
+export function useHeaderScrolled(threshold: number = 12) {
+  return useSyncExternalStore(
+    subscribe,
+    () => window.scrollY > threshold,
+    () => false,
+  );
 }

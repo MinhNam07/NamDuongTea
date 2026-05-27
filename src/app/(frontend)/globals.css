@@ -117,4 +117,45 @@
   .container-prose {
     @apply max-w-3xl mx-auto;
   }
+
+  @media (prefers-reduced-motion: reduce) {
+    .motion-safe-fade-up,
+    .motion-safe-float {
+      animation: none !important;
+      transform: none !important;
+    }
+  }
+
+  .motion-safe-fade-up {
+    animation: nd-fade-up 800ms cubic-bezier(0.16, 1, 0.3, 1) both;
+  }
+
+  .motion-safe-float {
+    animation: nd-float 3s ease-in-out infinite;
+  }
+}
+
+@layer base {
+  @keyframes nd-fade-up {
+    0% {
+      opacity: 0;
+      transform: translateY(16px);
+    }
+    100% {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes nd-float {
+    0% {
+      transform: translateY(0);
+    }
+    50% {
+      transform: translateY(-10px);
+    }
+    100% {
+      transform: translateY(0);
+    }
+  }
 }

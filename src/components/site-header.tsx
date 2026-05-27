@@ -3,35 +3,34 @@
 import { usePathname } from "next/navigation";
 
 import { SiteNavBar } from "@/components/site-nav-bar";
-import { TeaHillBackdrop } from "@/components/ui/tea-hill-backdrop";
-import { useNavbarCollapsed } from "@/hooks/use-navbar-scroll-state";
-import { NAV_HEIGHT_EXPANDED } from "@/lib/header-config";
+import { useHeaderScrolled } from "@/hooks/use-navbar-scroll-state";
 import { cn } from "@/lib/utils";
 
 /**
- * Fixed sticky navbar — overlays hero on home.
- * Kích thước header/logo giống mọi trang; trang chủ chỉ đổi nền trong suốt khi ở đầu hero.
+ * Full-width white glass header (no pill).
  */
 export function SiteHeader() {
+  const scrolled = useHeaderScrolled();
   const pathname = usePathname();
   const isHome = pathname === "/";
-  const homeAtHero = isHome && !useNavbarCollapsed(isHome);
 
   return (
-    <header
-      className={cn(
-        "fixed left-0 right-0 top-0 z-[100] w-full overflow-visible leading-none",
-        NAV_HEIGHT_EXPANDED,
-        "shadow-lg shadow-tea-deep-brown/25",
-      )}
-    >
-      <TeaHillBackdrop
-        variant="header"
-        imageBlurClass="blur-sm"
-        className="h-full overflow-visible"
+    <header className="pointer-events-none fixed inset-x-0 top-0 z-50">
+      <div
+        className={cn(
+          "pointer-events-auto flex h-16 w-full items-center px-4 transition-[background,box-shadow,border-color] duration-300 ease-out sm:h-18 sm:px-6",
+          isHome && !scrolled
+            ? cn("border-b border-transparent bg-transparent shadow-none")
+            : cn(
+                "border-b border-black/10 backdrop-blur-xl backdrop-saturate-[1.25]",
+                scrolled
+                  ? cn("bg-zinc-100/55", "shadow-[0_10px_30px_rgba(0,0,0,0.12)]")
+                  : cn("bg-zinc-100/35", "shadow-[0_6px_22px_rgba(0,0,0,0.08)]"),
+              ),
+        )}
       >
-        <SiteNavBar collapsed={false} transparent={homeAtHero} />
-      </TeaHillBackdrop>
+        <SiteNavBar />
+      </div>
     </header>
   );
 }
