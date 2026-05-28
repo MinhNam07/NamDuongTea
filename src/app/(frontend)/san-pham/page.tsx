@@ -5,18 +5,20 @@ import { ProductGrid } from "@/components/product-grid";
 import type { ProductCardProduct } from "@/components/product-card";
 import { getPayloadClient } from "@/lib/payload";
 import {
-  ALL_TEA_PICK_ORDER,
-  canonicalNameForProductSlug,
-  fallbackImageForProductSlug,
+  getWhitelistSlugsForTab,
   normalizeProductTab,
-  PRODUCT_SLUG_WHITELIST,
+  prepareCatalogProducts,
   PRODUCT_TABS,
   tabLabel,
 } from "@/lib/product-tab-config";
 import { buildMetadata } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 import { WEBSITE_DATA } from "@/lib/website-data";
-import { TET_GIFT_SETS, TRA_QUAN_COLLECTION_NAME } from "@/lib/tet-gift-sets";
+import {
+  TET_GIFT_SETS,
+  TRA_QUAN_COLLECTION_NAME,
+  tetGiftPrimaryImageSrc,
+} from "@/lib/tet-gift-sets";
 import { ProductCatalogSearch } from "@/components/products/product-catalog-search";
 import { ProductsPagination } from "@/components/products/products-pagination/index";
 import { ProductsHero } from "@/components/products/products-hero";
@@ -49,13 +51,7 @@ export default async function ProductListPage({
     if (tab === "nam-duong-tra-quan") {
       products = [];
     } else {
-      const slugs =
-        tab === "tat-ca"
-          ? [
-              ...PRODUCT_SLUG_WHITELIST["che-xanh"],
-              ...PRODUCT_SLUG_WHITELIST["che-den"],
-            ]
-          : PRODUCT_SLUG_WHITELIST[tab];
+      const slugs = getWhitelistSlugsForTab(tab);
       const { docs } = await payload.find({
         collection: "products",
         where: {
@@ -69,52 +65,7 @@ export default async function ProductListPage({
       });
 
       const candidates = docs as unknown as ProductCardProduct[];
-
-      const hasImage = (p: ProductCardProduct) =>
-        Boolean(p.image) &&
-        (typeof p.image === "string" ||
-          Boolean((p.image as { url?: string | null })?.url) ||
-          Boolean(
-            (p.image as { sizes?: { card?: { url?: string | null } } })?.sizes
-              ?.card?.url,
-          ));
-
-      const withFallbackImage = (p: ProductCardProduct) => {
-        if (hasImage(p)) return p;
-        const fallback = fallbackImageForProductSlug(p.slug);
-        return fallback ? { ...p, image: fallback } : p;
-      };
-
-      const pickFirst = (preferred: string[]) => {
-        for (const s of preferred) {
-          const found = candidates.find((p) => p.slug === s);
-          if (found) return found;
-        }
-        return null;
-      };
-
-      const dinhNgoc = pickFirst([...ALL_TEA_PICK_ORDER.dinhNgoc]);
-      const shanTuyet = pickFirst([...ALL_TEA_PICK_ORDER.shanTuyet]);
-      const oLong = pickFirst([...ALL_TEA_PICK_ORDER.oLong]);
-      const hongTra = pickFirst([...ALL_TEA_PICK_ORDER.hongTra]);
-
-      if (tab === "che-den") {
-        products = hongTra ? [withFallbackImage(hongTra)] : [];
-      } else if (tab === "che-xanh") {
-        products = [dinhNgoc, shanTuyet, oLong]
-          .filter((p): p is ProductCardProduct => Boolean(p))
-          .map(withFallbackImage);
-      } else {
-        // tat-ca: 4 loại trà, phần trà quán render riêng phía dưới
-        products = [dinhNgoc, shanTuyet, oLong, hongTra]
-          .filter((p): p is ProductCardProduct => Boolean(p))
-          .map(withFallbackImage);
-      }
-
-      products = products.map((p) => {
-        const canonical = canonicalNameForProductSlug(p.slug);
-        return canonical ? { ...p, name: canonical } : p;
-      });
+      products = prepareCatalogProducts(candidates, tab);
     }
   } catch {
     products = [];
@@ -126,7 +77,7 @@ export default async function ProductListPage({
     slug: set.slug,
     shortDescription: set.tagline,
     origin: null,
-    image: `/images/products/tet-gift-sets/${set.slug}.png`,
+    image: tetGiftPrimaryImageSrc(set.slug),
     category: TRA_QUAN_COLLECTION_NAME,
   }));
 

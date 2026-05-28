@@ -12,6 +12,7 @@ import { ProductDetailStickyPanel } from "@/components/products/product-detail-s
 import { ProductDetailTabs } from "@/components/products/product-detail-tabs";
 import { getPayloadClient } from "@/lib/payload";
 import { getProductDetailTabs } from "@/lib/product-detail-tabs";
+import { getCuratedTeaImages } from "@/lib/product-lines";
 import { buildMetadata } from "@/lib/seo";
 import { TET_GIFT_SETS, TRA_QUAN_COLLECTION_NAME } from "@/lib/tet-gift-sets";
 
@@ -174,21 +175,28 @@ export default async function ProductDetailPage({
     category?: { name?: string; slug?: string } | null;
   };
 
-  const heroUrl = p.image?.url ?? p.gallery?.[0]?.image?.url ?? null;
+  const curated = getCuratedTeaImages(p.slug);
+  const rawHeroUrl = p.image?.url ?? p.gallery?.[0]?.image?.url ?? null;
+  const heroUrl = curated?.primary ?? rawHeroUrl;
   const heroAlt = p.image?.alt ?? p.name;
   const tabs = getProductDetailTabs(p.slug);
-  const galleryImages = [
-    ...(heroUrl ? [{ src: heroUrl, alt: heroAlt }] : []),
-    ...(p.gallery ?? [])
-      .map((g, i) => ({
-        src: g.image?.url ?? "",
-        alt: g.image?.alt ?? `${p.name} - ${i + 1}`,
+  const galleryImages = curated
+    ? curated.gallery.map((src, i) => ({
+        src,
+        alt: i === 0 ? heroAlt : `${p.name} — ảnh ${i + 1}`,
       }))
-      .filter((i) => Boolean(i.src)),
-  ];
+    : [
+        ...(heroUrl ? [{ src: heroUrl, alt: heroAlt }] : []),
+        ...(p.gallery ?? [])
+          .map((g, i) => ({
+            src: g.image?.url ?? "",
+            alt: g.image?.alt ?? `${p.name} - ${i + 1}`,
+          }))
+          .filter((i) => Boolean(i.src)),
+      ];
 
   const specs = [
-    ...(p.origin ? [{ label: "Vùng nguyên liệu", value: p.origin }] : []),
+    ...(p.origin ? [{ label: "Xuất xứ", value: "Vùng Cao, Việt Nam" }] : []),
     ...(p.moq ? [{ label: "MOQ", value: p.moq }] : []),
     ...(p.specs ?? []).map((s) => ({ label: s.label, value: s.value })),
   ];

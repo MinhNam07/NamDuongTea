@@ -110,6 +110,33 @@ export function getProductLineBySlug(slug: string): ProductLine | undefined {
   return TEA_PRODUCT_LINES.find((p) => p.slug === slug);
 }
 
+/** Map catalog / Payload slugs to static image folders in public/images. */
+export function canonicalTeaLineSlug(slug: string): string | null {
+  if (slug === "tra-dinh-ngoc" || slug === "tra-xanh-dinh-ngoc") {
+    return "tra-dinh-ngoc";
+  }
+  if (slug === "bach-tra-shan-tuyet" || slug === "tra-xanh-shan-tuyet") {
+    return "bach-tra-shan-tuyet";
+  }
+  if (slug === "hong-tra" || slug === "hong-tra-len-men-vua") {
+    return "hong-tra";
+  }
+  if (slug === "tra-o-long" || slug.startsWith("o-long-")) {
+    return "tra-o-long";
+  }
+  return null;
+}
+
+export function getCuratedTeaImages(
+  slug: string,
+): { primary: string; gallery: string[] } | null {
+  const canonical = canonicalTeaLineSlug(slug);
+  if (!canonical) return null;
+  const line = getProductLineBySlug(canonical);
+  if (!line) return null;
+  return { primary: line.image, gallery: [...line.gallery] };
+}
+
 /** @deprecated Dùng PRODUCT_LINES */
 export const PRODUCT_CATEGORIES = PRODUCT_LINES.map((line) => ({
   name: line.name,

@@ -105,7 +105,7 @@ export function ProductCard({
         </CardTitle>
         {product.origin ? (
           <p className="text-xs text-tea-muted uppercase tracking-wide">
-            Vùng nguyên liệu · {product.origin}
+            Vùng Cao, Việt Nam
           </p>
         ) : null}
       </CardHeader>

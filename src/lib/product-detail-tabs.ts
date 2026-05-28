@@ -23,7 +23,7 @@ const DEFAULT_TABS: ProductDetailTabContent[] = [
     label: "Đặc điểm hương vị",
     heading: "Bản giao hưởng của hương và vị",
     paragraphs: [
-      "Mỗi mẻ trà được tuyển chọn và chế tác để giữ trọn đặc tính tự nhiên của vùng nguyên liệu: hương thơm thanh, vị cân bằng và hậu ngọt sâu.",
+      "Mỗi mẻ trà được tuyển chọn và chế tác để giữ trọn đặc tính tự nhiên của vùng cao: hương thơm thanh, vị cân bằng và hậu ngọt sâu.",
       "Thiết kế hương vị hướng đến tính ổn định cho đối tác phân phối và chuỗi F&B: dễ ứng dụng, dễ chuẩn hoá, và nhất quán theo mùa vụ.",
     ],
     bullets: [

@@ -5,24 +5,7 @@ export const TRA_QUAN_COLLECTION_NAME = "Nam Dương trà quán";
 export const NAM_MOC_TRA_QUAN_HERO_SRC =
   "/images/products/tet-gift-sets/nam-moc-tra-quan-hero.JPG";
 
-/** Hiển thị ảnh `-2` trước (ảnh thứ 2 trong folder gốc). */
-export const TET_GIFT_SLIDES_REVERSED = new Set([
-  "bach-nhien-tra-quan",
-  "son-moc-tra-quan",
-  "thanh-nhien-tra-quan",
-]);
-
 export type TetGiftSlideSuffix = "" | "-2";
-
-export function tetGiftSlideSuffixes(
-  slug: string,
-  gallery = true,
-): TetGiftSlideSuffix[] {
-  const order: TetGiftSlideSuffix[] = TET_GIFT_SLIDES_REVERSED.has(slug)
-    ? ["-2", ""]
-    : ["", "-2"];
-  return gallery ? order : [order[0]];
-}
 
 export type TetGiftTeaLine = {
   name: string;
@@ -124,6 +107,29 @@ export const TET_GIFT_SETS: TetGiftSet[] = [
     ],
   },
 ];
+
+/** Hiển thị ảnh `-2` trước (ảnh thứ 2 trong `public/images/products/tet-gift-sets/`). */
+export const TET_GIFT_SLIDES_REVERSED = new Set([
+  "bach-nhien-tra-quan",
+  "son-moc-tra-quan",
+  "thanh-nhien-tra-quan",
+]);
+
+/** Ảnh mặc định trên card / thumbnail (không gallery). */
+export function tetGiftPrimaryImageSrc(slug: string): string {
+  const suffix = TET_GIFT_SLIDES_REVERSED.has(slug) ? "-2" : "";
+  return `/images/products/tet-gift-sets/${slug}${suffix}.png`;
+}
+
+export function tetGiftSlideSuffixes(
+  slug: string,
+  gallery = true,
+): TetGiftSlideSuffix[] {
+  const order: TetGiftSlideSuffix[] = TET_GIFT_SLIDES_REVERSED.has(slug)
+    ? ["-2", ""]
+    : ["", "-2"];
+  return gallery ? order : [order[0]];
+}
 
 export function formatVnd(amount: number | null) {
   if (amount == null) return null;

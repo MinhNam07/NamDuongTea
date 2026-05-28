@@ -100,7 +100,7 @@ function seedProducts(): SeedProduct[] {
       categorySlug: "tra-xanh",
       shortDescription:
         "Búp non một tôm một lá, hương cốm thanh — phù hợp pha nóng/lạnh và chuỗi F&B cần chất lượng ổn định.",
-      origin: "Nam Dương, Việt Nam",
+      origin: "Vùng Cao, Việt Nam",
       moq: "50kg",
       imagePath: candidates[1],
     },
@@ -110,7 +110,7 @@ function seedProducts(): SeedProduct[] {
       categorySlug: "tra-xanh",
       shortDescription:
         "Hương thảo mộc dịu, vị ngọt hậu — lựa chọn premium cho trà nguyên liệu và quà tặng.",
-      origin: "Vùng cao",
+      origin: "Vùng Cao, Việt Nam",
       moq: "30kg",
       imagePath: candidates[0],
     },
@@ -120,7 +120,7 @@ function seedProducts(): SeedProduct[] {
       categorySlug: "tra-den",
       shortDescription:
         "Sắc nước hổ phách, hương mật ong nhẹ — nền trà rõ vị cho trà sữa và đồ uống đóng chai.",
-      origin: "Nam Dương, Việt Nam",
+      origin: "Vùng Cao, Việt Nam",
       moq: "100kg",
       imagePath: candidates[2],
     },
@@ -130,29 +130,19 @@ function seedProducts(): SeedProduct[] {
       categorySlug: "tra-den",
       shortDescription:
         "Vị đậm, hậu ngọt — tối ưu chi phí cho pha chế số lượng lớn và hệ thống phân phối.",
-      origin: "Nam Dương, Việt Nam",
+      origin: "Vùng Cao, Việt Nam",
       moq: "200kg",
       imagePath: candidates[4],
     },
     {
-      name: "Ô Long Bán Lên Men",
-      slug: "o-long-ban-len-men",
+      name: "Trà Ô Long",
+      slug: "tra-o-long",
       categorySlug: "tra-o-long",
       shortDescription:
-        "Hương hoa quả đa tầng, hậu vị dài — phù hợp quán trà và đại lý cao cấp.",
-      origin: "Nam Dương, Việt Nam",
+        "Hương hoa quả nhẹ, hậu vị dài — phù hợp quán trà cao cấp và kênh phân phối premium.",
+      origin: "Vùng Cao, Việt Nam",
       moq: "50kg",
       imagePath: candidates[3],
-    },
-    {
-      name: "Ô Long Rang Nhẹ",
-      slug: "o-long-rang-nhe",
-      categorySlug: "tra-o-long",
-      shortDescription:
-        "Rang nhẹ giữ hương thanh, vị cân bằng — profile ổn định cho menu signature.",
-      origin: "Nam Dương, Việt Nam",
-      moq: "50kg",
-      imagePath: candidates[5],
     },
   ];
 }

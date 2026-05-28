@@ -7,9 +7,8 @@ import { Button } from "@/components/ui/button";
 import { ProductsHero } from "@/components/products/products-hero";
 import { getPayloadClient } from "@/lib/payload";
 import {
-  canonicalNameForProductSlug,
-  fallbackImageForProductSlug,
-  PRODUCT_SLUG_WHITELIST,
+  getWhitelistSlugsForTab,
+  prepareCatalogProducts,
 } from "@/lib/product-tab-config";
 import { buildMetadata } from "@/lib/seo";
 
@@ -25,7 +24,7 @@ export const metadata: Metadata = buildMetadata({
 async function loadProducts(): Promise<ProductCardProduct[]> {
   try {
     const payload = await getPayloadClient();
-    const slugs = PRODUCT_SLUG_WHITELIST["che-xanh"];
+    const slugs = getWhitelistSlugsForTab("che-xanh");
     const { docs } = await payload.find({
       collection: "products",
       where: {
@@ -36,26 +35,7 @@ async function loadProducts(): Promise<ProductCardProduct[]> {
     });
 
     const candidates = docs as unknown as ProductCardProduct[];
-
-    const hasImage = (p: ProductCardProduct) =>
-      Boolean(p.image) &&
-      (typeof p.image === "string" ||
-        Boolean((p.image as { url?: string | null })?.url) ||
-        Boolean(
-          (p.image as { sizes?: { card?: { url?: string | null } } })?.sizes
-            ?.card?.url,
-        ));
-
-    const withFallbackImage = (p: ProductCardProduct) => {
-      if (hasImage(p)) return p;
-      const fallback = fallbackImageForProductSlug(p.slug);
-      return fallback ? { ...p, image: fallback } : p;
-    };
-
-    return candidates.map((p) => {
-      const canonical = canonicalNameForProductSlug(p.slug);
-      return withFallbackImage(canonical ? { ...p, name: canonical } : p);
-    });
+    return prepareCatalogProducts(candidates, "che-xanh");
   } catch {
     return [];
   }
@@ -91,4 +71,3 @@ export default async function CheXanhPage() {
     </div>
   );
 }
-

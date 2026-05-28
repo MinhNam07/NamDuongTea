@@ -4,10 +4,12 @@ import Image from "next/image";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import {
   useCallback,
+  useEffect,
   useMemo,
   useRef,
   useState,
   type PointerEvent,
+  type TransitionEvent,
 } from "react";
 
 import {
@@ -19,6 +21,7 @@ import { cn } from "@/lib/utils";
 
 const EXTENSIONS = [".jpg", ".jpeg", ".png", ".webp"] as const;
 const SWIPE_THRESHOLD_PX = 48;
+const SLIDE_MS = 300;
 
 function slideSources(slug: string, suffix: TetGiftSlideSuffix) {
   return EXTENSIONS.map(
@@ -70,7 +73,6 @@ type TetGiftProductImageProps = {
   className?: string;
   priority?: boolean;
   sizes?: string;
-  /** When false, only the first photo is shown (e.g. small table thumbs). */
   gallery?: boolean;
 };
 
@@ -95,8 +97,15 @@ function Placeholder({ name, className }: { name: string; className?: string }) 
   );
 }
 
+function dotIndexFromTrackPosition(position: number, slideCount: number) {
+  if (slideCount <= 1) return 0;
+  if (position <= 0) return slideCount - 1;
+  if (position >= slideCount + 1) return 0;
+  return position - 1;
+}
+
 /**
- * Product photos — object-contain, optional 2-slide gallery (swipe or arrows).
+ * Infinite gallery: edge clones + instant reposition after wrap (no visible jump).
  */
 export function TetGiftProductImage({
   slug,
@@ -114,37 +123,105 @@ export function TetGiftProductImage({
     }));
   }, [slug, name, gallery]);
 
-  const [activeIndex, setActiveIndex] = useState(0);
   const [availableKeys, setAvailableKeys] = useState<Set<string>>(
     () => new Set(slides.map((s) => s.key)),
   );
-  const pointerStartX = useRef<number | null>(null);
 
   const visibleSlides = slides.filter((s) => availableKeys.has(s.key));
   const slideCount = visibleSlides.length;
-  const safeIndex =
-    slideCount === 0 ? 0 : Math.min(activeIndex, slideCount - 1);
 
-  const markUnavailable = useCallback((key: string) => {
-    setAvailableKeys((prev) => {
-      if (!prev.has(key)) return prev;
-      const next = new Set(prev);
-      next.delete(key);
-      return next;
-    });
-    setActiveIndex((i) => Math.max(0, i - 1));
+  const [trackPosition, setTrackPosition] = useState(1);
+  const [slideTransition, setSlideTransition] = useState(false);
+  const trackRef = useRef<HTMLDivElement>(null);
+  const positionRef = useRef(1);
+  const isJumpingRef = useRef(false);
+  const pointerStartX = useRef<number | null>(null);
+
+  const trackSlides = useMemo(() => {
+    if (slideCount <= 1) return visibleSlides;
+    const first = visibleSlides[0]!;
+    const last = visibleSlides[slideCount - 1]!;
+    return [last, ...visibleSlides, first];
+  }, [visibleSlides, slideCount]);
+
+  const activeDotIndex = dotIndexFromTrackPosition(trackPosition, slideCount);
+  const useInfiniteTrack = slideCount > 1;
+
+  const moveTo = useCallback((pos: number, animate: boolean) => {
+    positionRef.current = pos;
+    setSlideTransition(animate);
+    setTrackPosition(pos);
   }, []);
 
-  const goTo = useCallback(
-    (index: number) => {
-      if (slideCount <= 1) return;
-      setActiveIndex(((index % slideCount) + slideCount) % slideCount);
+  const jumpToPosition = useCallback((pos: number) => {
+    if (isJumpingRef.current) return;
+    isJumpingRef.current = true;
+    positionRef.current = pos;
+    setSlideTransition(false);
+    setTrackPosition(pos);
+    void trackRef.current?.offsetHeight;
+    requestAnimationFrame(() => {
+      isJumpingRef.current = false;
+    });
+  }, []);
+
+  useEffect(() => {
+    setAvailableKeys(new Set(slides.map((s) => s.key)));
+    const startPos = slides.length > 1 ? 1 : 0;
+    moveTo(startPos, false);
+  }, [slug, gallery, slides, moveTo]);
+
+  const markUnavailable = useCallback(
+    (key: string) => {
+      setAvailableKeys((prev) => {
+        if (!prev.has(key)) return prev;
+        const next = new Set(prev);
+        next.delete(key);
+        return next;
+      });
+      jumpToPosition(1);
     },
-    [slideCount],
+    [jumpToPosition],
   );
 
-  const goNext = useCallback(() => goTo(safeIndex + 1), [goTo, safeIndex]);
-  const goPrev = useCallback(() => goTo(safeIndex - 1), [goTo, safeIndex]);
+  const onTrackTransitionEnd = useCallback(
+    (e: TransitionEvent<HTMLDivElement>) => {
+      if (e.target !== e.currentTarget) return;
+      if (e.propertyName !== "transform") return;
+      if (isJumpingRef.current) return;
+
+      const pos = positionRef.current;
+      if (slideCount <= 1) return;
+
+      if (pos === slideCount + 1) {
+        jumpToPosition(1);
+      } else if (pos === 0) {
+        jumpToPosition(slideCount);
+      }
+    },
+    [jumpToPosition, slideCount],
+  );
+
+  const goNext = useCallback(() => {
+    if (slideCount <= 1 || isJumpingRef.current) return;
+    moveTo(positionRef.current + 1, true);
+  }, [slideCount, moveTo]);
+
+  const goPrev = useCallback(() => {
+    if (slideCount <= 1 || isJumpingRef.current) return;
+    moveTo(positionRef.current - 1, true);
+  }, [slideCount, moveTo]);
+
+  const goToDot = useCallback(
+    (dotIndex: number) => {
+      if (slideCount <= 1 || isJumpingRef.current) return;
+      const target = dotIndex + 1;
+      const current = positionRef.current;
+      if (target === current) return;
+      moveTo(target, true);
+    },
+    [slideCount, moveTo],
+  );
 
   const onPointerDown = (e: PointerEvent<HTMLDivElement>) => {
     if (slideCount <= 1) return;
@@ -204,24 +281,37 @@ export function TetGiftProductImage({
         onPointerCancel={onPointerCancel}
       >
         <div
-          className="flex h-full transition-transform duration-300 ease-out"
-          style={{ transform: `translateX(-${safeIndex * 100}%)` }}
+          ref={trackRef}
+          className="flex h-full will-change-transform"
+          style={{
+            transform: `translateX(-${(useInfiniteTrack ? trackPosition : 0) * 100}%)`,
+            transition: slideTransition
+              ? `transform ${SLIDE_MS}ms ease-out`
+              : "none",
+          }}
+          onTransitionEnd={onTrackTransitionEnd}
         >
-          {visibleSlides.map((slide, index) => (
-            <div
-              key={slide.key}
-              className="relative h-full min-w-full shrink-0 bg-black"
-              aria-hidden={index !== safeIndex}
-            >
-              <SlideImage
-                sources={slide.sources}
-                alt={slide.alt}
-                priority={priority && index === 0}
-                sizes={sizes}
-                onUnavailable={() => markUnavailable(slide.key)}
-              />
-            </div>
-          ))}
+          {(useInfiniteTrack ? trackSlides : visibleSlides).map((slide, index) => {
+            const isActive = useInfiniteTrack
+              ? index === trackPosition
+              : index === activeDotIndex;
+
+            return (
+              <div
+                key={useInfiniteTrack ? `${slide.key}-${index}` : slide.key}
+                className="relative h-full min-w-full shrink-0 bg-black"
+                aria-hidden={!isActive}
+              >
+                <SlideImage
+                  sources={slide.sources}
+                  alt={slide.alt}
+                  priority={priority && activeDotIndex === 0 && isActive}
+                  sizes={sizes}
+                  onUnavailable={() => markUnavailable(slide.key)}
+                />
+              </div>
+            );
+          })}
         </div>
       </div>
 
@@ -260,12 +350,12 @@ export function TetGiftProductImage({
                 key={slide.key}
                 type="button"
                 role="tab"
-                aria-selected={index === safeIndex}
+                aria-selected={index === activeDotIndex}
                 aria-label={`Ảnh ${index + 1}`}
-                onClick={() => setActiveIndex(index)}
+                onClick={() => goToDot(index)}
                 className={cn(
                   "h-1.5 rounded-full transition-all",
-                  index === safeIndex
+                  index === activeDotIndex
                     ? "w-5 bg-tea-gold"
                     : "w-1.5 bg-white/35 hover:bg-white/55",
                 )}
