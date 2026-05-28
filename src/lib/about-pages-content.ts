@@ -34,7 +34,6 @@ export const COMPANY_INTRO_PAGE = {
     image: "/images/IMG_6570.JPG",
   },
   stats: [
-    { value: "120+", label: "Đại lý", description: "Phủ sót trong nước" },
     { value: "8", label: "Quốc gia", description: "Xuất khẩu" },
     { value: "HACCP", label: "Chứng nhận", description: "An toàn thực phẩm" },
     { value: "ISO 22000", label: "Hệ thống", description: "Quản lý chất lượng" },

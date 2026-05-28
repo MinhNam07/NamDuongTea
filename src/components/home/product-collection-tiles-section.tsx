@@ -203,10 +203,6 @@ function HomeProductCard({ product }: { product: ProductPreviewItem }) {
             sizes="(min-width: 1024px) 33vw, 100vw"
             className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           />
-
-          <span className="absolute left-4 top-4 rounded-full bg-white/85 px-3 py-1 text-xs font-semibold text-tea-dark-green backdrop-blur">
-            Bán sỉ
-          </span>
         </div>
       </Link>
 

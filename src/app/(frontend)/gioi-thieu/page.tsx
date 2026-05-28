@@ -3,7 +3,6 @@ import type { Metadata } from "next";
 import { AboutAlternatingBlock } from "@/components/about/about-alternating-block";
 import { AboutCtaStrip } from "@/components/about/about-cta-strip";
 import { AboutPageHero } from "@/components/about/about-page-hero";
-import { AboutStatBand } from "@/components/about/about-stat-band";
 import { AboutValueCards } from "@/components/about/about-value-cards";
 import { COMPANY_INTRO_PAGE } from "@/lib/about-pages-content";
 import { buildMetadata } from "@/lib/seo";
@@ -25,8 +24,8 @@ export default function GioiThieuPage() {
         title={content.hero.title}
         subtitle={content.hero.subtitle}
         image={content.hero.image}
+        stats={[...content.stats]}
       />
-      <AboutStatBand stats={[...content.stats]} />
       <AboutValueCards items={[...content.values]} />
       <AboutAlternatingBlock {...content.story} />
       <AboutCtaStrip {...content.cta} />
