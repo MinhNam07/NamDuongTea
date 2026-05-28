@@ -1,0 +1,94 @@
+import type { Metadata } from "next";
+import Link from "next/link";
+
+import { ProductGrid } from "@/components/product-grid";
+import type { ProductCardProduct } from "@/components/product-card";
+import { Button } from "@/components/ui/button";
+import { ProductsHero } from "@/components/products/products-hero";
+import { getPayloadClient } from "@/lib/payload";
+import {
+  canonicalNameForProductSlug,
+  fallbackImageForProductSlug,
+  PRODUCT_SLUG_WHITELIST,
+} from "@/lib/product-tab-config";
+import { buildMetadata } from "@/lib/seo";
+
+export const revalidate = 300;
+
+export const metadata: Metadata = buildMetadata({
+  title: "Chè xanh",
+  description:
+    "Bộ sưu tập Chè xanh Nam Dương Tea — hương tươi mát, hậu vị thanh, phù hợp thưởng trà và kênh phân phối.",
+  path: "/san-pham/che-xanh",
+});
+
+async function loadProducts(): Promise<ProductCardProduct[]> {
+  try {
+    const payload = await getPayloadClient();
+    const slugs = PRODUCT_SLUG_WHITELIST["che-xanh"];
+    const { docs } = await payload.find({
+      collection: "products",
+      where: {
+        and: [{ status: { equals: "published" } }, { slug: { in: slugs } }],
+      },
+      depth: 1,
+      limit: 50,
+    });
+
+    const candidates = docs as unknown as ProductCardProduct[];
+
+    const hasImage = (p: ProductCardProduct) =>
+      Boolean(p.image) &&
+      (typeof p.image === "string" ||
+        Boolean((p.image as { url?: string | null })?.url) ||
+        Boolean(
+          (p.image as { sizes?: { card?: { url?: string | null } } })?.sizes
+            ?.card?.url,
+        ));
+
+    const withFallbackImage = (p: ProductCardProduct) => {
+      if (hasImage(p)) return p;
+      const fallback = fallbackImageForProductSlug(p.slug);
+      return fallback ? { ...p, image: fallback } : p;
+    };
+
+    return candidates.map((p) => {
+      const canonical = canonicalNameForProductSlug(p.slug);
+      return withFallbackImage(canonical ? { ...p, name: canonical } : p);
+    });
+  } catch {
+    return [];
+  }
+}
+
+export default async function CheXanhPage() {
+  const products = await loadProducts();
+
+  return (
+    <div className="bg-tea-cream">
+      <ProductsHero
+        eyebrow="Danh mục"
+        title="Chè xanh"
+        description="Profile hương vị tươi mát, hậu vị thanh. Tuyển chọn phù hợp kênh đại lý và mô hình F&B cần chất lượng ổn định theo mùa."
+      >
+        <div className="flex flex-wrap justify-center gap-3">
+          <Button
+            asChild
+            variant="outline"
+            className="rounded-full border-white/60 bg-white/20 text-white backdrop-blur-md hover:bg-white/30 hover:text-white"
+          >
+            <Link href="/san-pham">Xem tất cả sản phẩm</Link>
+          </Button>
+          <Button asChild className="rounded-full">
+            <Link href="/lien-he">Yêu cầu báo giá</Link>
+          </Button>
+        </div>
+      </ProductsHero>
+
+      <section className="container mx-auto px-4 pb-16 pt-12 md:px-6 md:pb-24 md:pt-14">
+        <ProductGrid products={products} />
+      </section>
+    </div>
+  );
+}
+

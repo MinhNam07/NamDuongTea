@@ -10,6 +10,8 @@ export function FrontendMain({ children }: { children: React.ReactNode }) {
   const isHome = pathname === "/";
 
   return (
-    <main className={cn("flex-1", isHome ? "pt-0" : "pt-20")}>{children}</main>
+    <main className={cn("flex-1", isHome ? "pt-0" : "pt-24 md:pt-28")}>
+      {children}
+    </main>
   );
 }

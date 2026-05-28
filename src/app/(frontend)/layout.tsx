@@ -7,18 +7,18 @@ import { SiteHeader } from "@/components/site-header";
 import { Toaster } from "sonner";
 import { fontVariables } from "@/lib/fonts";
 import { buildMetadata } from "@/lib/seo";
+import { WEBSITE_DATA } from "@/lib/website-data";
 
 import "./globals.css";
 
 export const metadata: Metadata = buildMetadata({
-  title: "Nam Dương Tea — Trà Việt cho đại lý & xuất khẩu",
-  description:
-    "Nhà cung cấp trà nguyên liệu và thành phẩm: trà xanh, trà đen, trà ô-long. Phục vụ đại lý, nhà phân phối, quán trà, đơn vị xuất khẩu.",
+  title: WEBSITE_DATA.site.defaultTitle,
+  description: WEBSITE_DATA.site.defaultDescription,
   path: "/",
 });
 
 export const viewport: Viewport = {
-  themeColor: "#254A0C",
+  themeColor: WEBSITE_DATA.brand.colors.teaDarkGreen,
   width: "device-width",
   initialScale: 1,
 };

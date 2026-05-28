@@ -1,4 +1,5 @@
 import { PRODUCT_LINES } from "@/lib/product-lines";
+import { WEBSITE_DATA } from "@/lib/website-data";
 
 export type NavChild = {
   label: string;
@@ -50,12 +51,12 @@ export const FOOTER_PRODUCT_LINKS: NavChild[] = PRODUCT_LINES.map((line) => ({
 }));
 
 export const SOCIAL_LINKS = {
-  facebook: "https://facebook.com/",
-  zalo: "https://zalo.me/",
-  messenger: "https://m.me/",
-  youtube: "https://youtube.com/",
+  facebook: WEBSITE_DATA.navigation.social.facebook,
+  zalo: WEBSITE_DATA.navigation.social.zalo,
+  messenger: WEBSITE_DATA.navigation.social.messenger,
+  youtube: WEBSITE_DATA.navigation.social.youtube,
 } as const;
 
-export const SUPPORT_CHAT_URL = SOCIAL_LINKS.zalo;
+export const SUPPORT_CHAT_URL = WEBSITE_DATA.navigation.social.supportChatUrl;
 
 export { PRODUCT_LINES as PRODUCT_CATEGORIES } from "@/lib/product-lines";

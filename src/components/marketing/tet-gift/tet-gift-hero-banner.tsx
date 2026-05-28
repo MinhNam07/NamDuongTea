@@ -3,7 +3,7 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { BRAND_LOGO_SRC, TRA_QUAN_HERO_BG_SRC } from "@/lib/site-assets";
+import { BRAND_LOGO_SRC } from "@/lib/site-assets";
 import {
   NAM_MOC_TRA_QUAN_HERO_SRC,
   TET_GIFT_SETS,
@@ -11,29 +11,31 @@ import {
 } from "@/lib/tet-gift-sets";
 
 const FEATURED = TET_GIFT_SETS[0];
+const TRA_QUAN_BG_SRC = "/images/IMG_6548.JPG";
 
 export function TetGiftHeroBanner() {
   return (
     <section
       aria-label={`${TRA_QUAN_COLLECTION_NAME} — Nam Dương Tea`}
-      className="relative -mt-32 overflow-x-hidden bg-tea-dark-green pt-32"
+      // Match ProductsHero layout (cancel <FrontendMain> padding, full-bleed bg)
+      className="relative -mt-24 flex min-h-[100svh] items-center overflow-x-hidden bg-tea-dark-green px-6 pb-20 pt-32 md:-mt-28 md:px-[5vw]"
     >
       {/* Background */}
       <div aria-hidden className="pointer-events-none absolute inset-0">
         <Image
-          src={TRA_QUAN_HERO_BG_SRC}
+          src={TRA_QUAN_BG_SRC}
           alt=""
           fill
           priority
           sizes="100vw"
           className="object-cover"
         />
-        <div className="absolute inset-0 bg-tea-dark-green/75" />
-        <div className="absolute inset-0 bg-gradient-to-r from-tea-dark-green/90 via-tea-dark-green/70 to-tea-dark-green/55" />
+        {/* Deep overlay for text legibility (match home hero) */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(7,27,0,0.82),rgba(7,27,0,0.45),rgba(246,252,235,0.92))] mix-blend-multiply" />
       </div>
 
       {/* Container */}
-      <div className="container relative z-10 mx-auto grid min-h-[min(100svh-8rem,720px)] items-center gap-8 px-4 py-10 md:grid-cols-[1fr_auto] md:gap-x-12 md:px-6 md:py-12 lg:min-h-[calc(100svh-8rem)]">
+      <div className="relative z-10 mx-auto grid w-full max-w-[1440px] items-center gap-8 py-10 md:grid-cols-[1fr_auto] md:gap-x-12 md:py-12">
         
         {/* LEFT CONTENT */}
         <div className="order-2 flex flex-col justify-center text-white md:order-1">

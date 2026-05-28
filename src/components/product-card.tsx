@@ -62,7 +62,9 @@ export function ProductCard({
   return (
     <Card
       className={cn(
-        "group flex flex-col border border-tea-moss/20 bg-white transition-all hover:border-tea-moss/50 hover:shadow-md",
+        "group flex flex-col overflow-hidden rounded-[28px] border border-border/60 bg-white/85 transition-all",
+        "shadow-[0_10px_34px_rgba(37,74,12,0.06)] hover:shadow-[0_18px_60px_rgba(37,74,12,0.10)]",
+        "hover:border-border",
         className,
       )}
     >
@@ -74,7 +76,7 @@ export function ProductCard({
               alt={alt}
               fill
               sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
-              className="object-cover transition-transform duration-500 group-hover:scale-105"
+              className="object-cover transition-transform duration-700 group-hover:scale-[1.04]"
             />
           ) : (
             <div className="flex h-full items-center justify-center text-tea-green/50 font-display text-2xl">
@@ -84,7 +86,7 @@ export function ProductCard({
           {category ? (
             <Badge
               variant="muted"
-              className="absolute left-3 top-3 backdrop-blur"
+              className="absolute left-4 top-4 border border-border/40 bg-white/70 text-tea-dark-green backdrop-blur-md"
             >
               {category}
             </Badge>
@@ -92,11 +94,11 @@ export function ProductCard({
         </div>
       </Link>
 
-      <CardHeader className="pb-2">
-        <CardTitle className="line-clamp-2">
+      <CardHeader className="pb-2 pt-6">
+        <CardTitle className="line-clamp-2 text-lg font-extrabold text-tea-dark-green md:text-xl">
           <Link
             href={`/san-pham/${product.slug}`}
-            className="hover:text-tea-green transition-colors"
+            className="transition-colors hover:text-tea-moss"
           >
             {product.name}
           </Link>
@@ -110,18 +112,28 @@ export function ProductCard({
 
       <CardContent className="flex-1">
         {description ? (
-          <p className="text-sm text-tea-muted line-clamp-3">{description}</p>
+          <p className="text-sm leading-relaxed text-tea-muted line-clamp-3">
+            {description}
+          </p>
         ) : null}
       </CardContent>
 
-      <CardFooter className="flex items-center justify-between gap-2 pt-0">
-        <Button asChild variant="outline" size="sm">
-          <Link href={`/san-pham/${product.slug}`}>Xem chi tiết</Link>
+      <CardFooter className="flex flex-col items-stretch gap-2.5 pt-3">
+        <Button
+          asChild
+          variant="default"
+          size="default"
+          className="w-full rounded-full"
+        >
+          <Link href={`/lien-he?product=${product.slug}#rfq`}>Yêu cầu báo giá</Link>
         </Button>
-        <Button asChild variant="default" size="sm">
-          <Link href={`/lien-he?product=${product.slug}#rfq`}>
-            Yêu cầu báo giá
-          </Link>
+        <Button
+          asChild
+          variant="outline"
+          size="default"
+          className="w-full rounded-full bg-white hover:bg-tea-dark-green"
+        >
+          <Link href={`/san-pham/${product.slug}`}>Xem chi tiết</Link>
         </Button>
       </CardFooter>
     </Card>

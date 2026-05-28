@@ -1,40 +1,53 @@
 import Link from "next/link";
-import { ArrowRight } from "lucide-react";
+import { ArrowRight, ChevronDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
+import { WEBSITE_DATA } from "@/lib/website-data";
 
 export function HeaderHeroContent() {
+  const hero = WEBSITE_DATA.pages.home.hero;
   return (
-    <div className="container mx-auto max-w-3xl text-center">
-      <p className="text-sm font-semibold uppercase tracking-[0.2em] text-tea-yellow-green/95">
-        Trà Việt · Nam Dương
-      </p>
-      <h1 className="mt-4 font-display text-3xl font-extrabold leading-tight text-white drop-shadow-sm sm:text-4xl md:text-5xl lg:text-[3.25rem]">
-        Hương vị bền vững từ vùng trà Nam Dương
+    <div className="w-full max-w-5xl">
+      <div className="opacity-0 motion-safe-fade-up">
+        <span className="mb-8 inline-flex items-center gap-3 text-xs uppercase tracking-[0.2em] text-[rgba(243,226,166,0.95)] md:text-sm">
+          <span className="h-px w-8 bg-[rgba(243,226,166,0.95)]" />
+          {hero.eyebrow}
+          <span className="h-px w-8 bg-[rgba(243,226,166,0.95)]" />
+        </span>
+      </div>
+
+      <h1 className="opacity-0 motion-safe-fade-up [animation-delay:100ms] font-display text-5xl font-light leading-[1.1] tracking-tight text-white md:text-7xl lg:text-8xl">
+        {hero.title}{" "}
+        <span className="font-serif italic font-normal text-[rgba(214,198,140,1)]">
+          {hero.titleEmphasis}
+        </span>
       </h1>
-      <p className="mx-auto mt-4 max-w-2xl text-base leading-relaxed text-white/90 md:text-lg">
-        Cung cấp trà nguyên liệu và thành phẩm cho đại lý, nhà phân phối, quán
-        trà và đơn vị xuất khẩu — chất lượng ổn định, nguồn gốc rõ ràng.
+
+      <p className="opacity-0 motion-safe-fade-up [animation-delay:200ms] mx-auto mt-8 max-w-2xl text-lg font-light leading-relaxed text-[rgba(223,229,212,1)] md:text-xl">
+        {hero.subtitle}
       </p>
-      <div className="mt-8 flex flex-wrap items-center justify-center gap-3">
+
+      <div className="opacity-0 motion-safe-fade-up [animation-delay:300ms] mt-12 flex w-full flex-col items-center justify-center gap-5 sm:flex-row">
         <Button
           asChild
           size="lg"
-          className="bg-tea-yellow-green text-tea-deep-brown shadow-lg hover:bg-tea-olive hover:ring-2 hover:ring-white/30"
+          className="w-full rounded-full bg-[rgba(243,226,166,1)] px-10 py-6 text-sm font-medium text-[rgba(7,27,0,1)] hover:bg-[rgba(214,198,140,1)] sm:w-auto"
         >
-          <Link href="/san-pham">
-            Xem catalog <ArrowRight className="h-4 w-4" />
+          <Link href={hero.primaryCta.href}>
+            {hero.primaryCta.label} <ArrowRight className="h-4 w-4" />
           </Link>
         </Button>
-        <Button
-          asChild
-          size="lg"
-          variant="outline"
-          className="border-white/50 bg-white/5 text-white hover:bg-white/15 hover:text-white"
-        >
-          <Link href="/lien-he#rfq">Yêu cầu báo giá B2B</Link>
-        </Button>
       </div>
+
+      <Link
+        href={hero.scrollHint.href}
+        className="opacity-0 motion-safe-fade-up [animation-delay:300ms] motion-safe-float absolute bottom-10 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-2 text-[rgba(223,229,212,0.6)] transition-colors hover:text-[rgba(223,229,212,0.9)]"
+      >
+        <span className="text-xs uppercase tracking-[0.15em]">
+          {hero.scrollHint.label}
+        </span>
+        <ChevronDown className="h-8 w-8" aria-hidden />
+      </Link>
     </div>
   );
 }

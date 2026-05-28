@@ -4,63 +4,87 @@
 
 @layer base {
   :root {
-    /* Nam Duong brand palette */
-    --tea-deep-brown: #3e3407;
-    --tea-dark-green: #254a0c;
-    --tea-yellow-green: #ccc13a;
-    --tea-moss: #567119;
-    --tea-olive: #a3a53e;
-    --tea-muted-gold: #c4b07a;
-    --tea-warm-ivory: #f7f3ea;
+    /* Design.md palette (Heritage & Harvest) */
+    --nd-background: #fbf9f3;
+    --nd-on-background: #1b1c19;
+    --nd-surface: #fbf9f3;
+    --nd-surface-dim: #dcdad4;
+    --nd-surface-container-lowest: #ffffff;
+    --nd-surface-container-low: #f5f3ee;
+    --nd-surface-container: #f0eee8;
+    --nd-surface-container-high: #eae8e2;
+    --nd-surface-container-highest: #e4e2dd;
+    --nd-surface-variant: #e4e2dd;
+    --nd-on-surface: #1b1c19;
+    --nd-on-surface-variant: #43493d;
+    --nd-outline: #73796c;
+    --nd-outline-variant: #c3c9b9;
 
-    /* Legacy tea.* aliases mapped to brand */
-    --tea-green-900: #1a3309;
-    --tea-green-800: #254a0c;
-    --tea-green-700: #567119;
+    --nd-primary: #133200;
+    --nd-on-primary: #ffffff;
+    --nd-secondary: #6a5e2e;
+    --nd-on-secondary: #ffffff;
+    --nd-tertiary: #676000;
+    --nd-on-tertiary: #ffffff;
+    --nd-tertiary-container: #b9ae27;
+    --nd-on-tertiary-container: #464100;
+
+    /* Keep tea-* API but map to design palette */
+    --tea-deep-brown: var(--nd-on-tertiary-container);
+    --tea-dark-green: var(--nd-primary);
+    --tea-yellow-green: var(--nd-tertiary-container);
+    --tea-moss: #416828;
+    --tea-olive: #8eba6f;
+    --tea-muted-gold: #d7c68c;
+    --tea-warm-ivory: var(--nd-background);
+
+    --tea-green-900: var(--nd-primary);
+    --tea-green-800: var(--nd-primary);
+    --tea-green-700: #416828;
     --tea-green-600: #6d8a2a;
-    --tea-green-50: #f4f6eb;
+    --tea-green-50: var(--nd-surface-container-low);
 
-    --tea-brown-900: #3e3407;
-    --tea-brown-700: #5c4a1a;
+    --tea-brown-900: var(--nd-on-tertiary-container);
+    --tea-brown-700: var(--nd-secondary);
     --tea-brown-500: #8a7340;
-    --tea-brown-300: #ccc13a;
+    --tea-brown-300: var(--nd-tertiary-container);
 
-    --cream-50: #faf8f2;
-    --cream-100: #f4f0e6;
+    --cream-50: var(--nd-background);
+    --cream-100: var(--nd-surface-container-low);
     --white: #ffffff;
 
-    --text-main: #243018;
-    --text-muted: #5c6648;
-    --border-soft: #e2e6d4;
+    --text-main: var(--nd-on-background);
+    --text-muted: var(--nd-on-surface-variant);
+    --border-soft: var(--nd-outline-variant);
 
     /* shadcn semantic tokens */
-    --background: 45 33% 96%;
-    --foreground: 88 42% 12%;
+    --background: 45 50% 97%;
+    --foreground: 80 6% 10%;
 
     --card: 0 0% 100%;
-    --card-foreground: 88 42% 12%;
+    --card-foreground: 80 6% 10%;
 
     --popover: 0 0% 100%;
-    --popover-foreground: 88 42% 12%;
+    --popover-foreground: 80 6% 10%;
 
-    --primary: 94 73% 16%;
-    --primary-foreground: 45 33% 96%;
+    --primary: 97 100% 10%;
+    --primary-foreground: 45 50% 97%;
 
-    --secondary: 74 32% 35%;
-    --secondary-foreground: 45 33% 96%;
+    --secondary: 48 39% 30%;
+    --secondary-foreground: 45 50% 97%;
 
-    --muted: 68 24% 93%;
-    --muted-foreground: 88 12% 40%;
+    --muted: 45 21% 93%;
+    --muted-foreground: 90 9% 26%;
 
-    --accent: 58 54% 52%;
-    --accent-foreground: 88 42% 12%;
+    --accent: 55 65% 44%;
+    --accent-foreground: 80 6% 10%;
 
     --destructive: 0 50% 52%;
     --destructive-foreground: 0 0% 100%;
 
-    --border: 68 20% 85%;
-    --input: 68 20% 85%;
-    --ring: 58 54% 52%;
+    --border: 83 13% 76%;
+    --input: 83 13% 76%;
+    --ring: 55 65% 44%;
 
     --radius: 1rem;
   }
@@ -116,6 +140,27 @@
 @layer utilities {
   .container-prose {
     @apply max-w-3xl mx-auto;
+  }
+
+  /* Utilities aligned with DESIGN.md + stitch code.html naming */
+  .max-w-max-width {
+    @apply max-w-screen-2xl;
+  }
+
+  .px-margin-mobile {
+    @apply px-5;
+  }
+
+  .px-margin-desktop {
+    @apply px-20;
+  }
+
+  .gap-gutter {
+    @apply gap-6;
+  }
+
+  .glass-panel {
+    @apply border border-border/40 bg-white/70 backdrop-blur-[12px];
   }
 
   @media (prefers-reduced-motion: reduce) {

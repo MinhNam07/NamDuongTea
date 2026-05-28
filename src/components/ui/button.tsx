@@ -10,13 +10,13 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-tea-dark-green text-tea-cream shadow hover:bg-tea-moss hover:ring-2 hover:ring-tea-yellow-green/50",
+          "bg-primary text-primary-foreground shadow hover:bg-secondary hover:text-secondary-foreground",
         brown:
-          "bg-tea-deep-brown text-tea-cream shadow hover:bg-tea-moss",
+          "bg-secondary text-secondary-foreground shadow hover:bg-secondary/90",
         outline:
-          "border border-tea-dark-green text-tea-dark-green bg-transparent hover:bg-tea-dark-green hover:text-tea-cream",
+          "border border-border bg-transparent text-foreground hover:bg-muted",
         accent:
-          "bg-tea-yellow-green text-tea-deep-brown shadow hover:bg-tea-olive",
+          "bg-accent text-accent-foreground shadow hover:bg-accent/80",
         secondary:
           "bg-secondary text-secondary-foreground hover:bg-secondary/80",
         ghost:

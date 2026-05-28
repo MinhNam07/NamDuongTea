@@ -9,7 +9,14 @@ let cached: Promise<Payload> | null = null;
  */
 export async function getPayloadClient(): Promise<Payload> {
   if (!cached) {
-    cached = getPayload({ config });
+    const p = getPayload({ config });
+    // Nếu init thất bại (ví dụ DB chưa chạy), tránh unhandledRejection
+    // và cho phép retry ở lần gọi sau.
+    p.catch(() => {});
+    cached = p.catch((err) => {
+      cached = null;
+      throw err;
+    });
   }
   return cached;
 }

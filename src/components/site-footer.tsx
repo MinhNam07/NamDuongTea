@@ -1,10 +1,11 @@
 import Link from "next/link";
-import { Mail, MapPin, Phone } from "lucide-react";
+import { Mail, MapPin } from "lucide-react";
 
 import {
   FOOTER_QUICK_LINKS,
   FOOTER_PRODUCT_LINKS,
 } from "@/lib/site-navigation";
+import { WEBSITE_DATA } from "@/lib/website-data";
 import { cn } from "@/lib/utils";
 
 const footerLinkClass = cn(
@@ -49,8 +50,7 @@ export function SiteFooter() {
               Nam Dương Tea
             </Link>
             <p className="mt-6 max-w-xs text-sm font-light leading-relaxed text-tea-muted">
-              Nhà cung cấp trà Việt cho đại lý, nhà phân phối, quán trà và đơn vị
-              xuất khẩu — từ đồi chè Nam Dương đến tách trà trên bàn bạn.
+              {WEBSITE_DATA.brand.footerTagline}
             </p>
           </div>
 
@@ -81,19 +81,7 @@ export function SiteFooter() {
                   className="mt-0.5 h-[18px] w-[18px] shrink-0 text-tea-olive"
                   aria-hidden
                 />
-                <span>Khối 1, Xã Sóc Sơn, Hà Nội, Việt Nam</span>
-              </li>
-              <li className="flex items-start gap-3">
-                <Phone
-                  className="mt-0.5 h-[18px] w-[18px] shrink-0 text-tea-olive"
-                  aria-hidden
-                />
-                <a
-                  href="tel:+84913303668"
-                  className={cn(footerLinkClass, "hover:translate-x-0")}
-                >
-                  +84 913 303 668
-                </a>
+                <span>{WEBSITE_DATA.navigation.footer.contact.location}</span>
               </li>
               <li className="flex items-start gap-3">
                 <Mail
@@ -101,10 +89,10 @@ export function SiteFooter() {
                   aria-hidden
                 />
                 <a
-                  href="mailto:thuynamduong64@gmail.com"
+                  href={`mailto:${WEBSITE_DATA.navigation.footer.contact.email}`}
                   className={cn(footerLinkClass, "hover:translate-x-0")}
                 >
-                  thuynamduong64@gmail.com
+                  {WEBSITE_DATA.navigation.footer.contact.email}
                 </a>
               </li>
             </ul>

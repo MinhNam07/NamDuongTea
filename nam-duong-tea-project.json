@@ -1,0 +1,698 @@
+{
+  "_meta": {
+    "description": "Snapshot toàn bộ dữ liệu tĩnh, nội dung copy và thiết kế website Nam Dương Tea",
+    "generated_at": "2026-05-28",
+    "source_repo": "namduongtea",
+    "locale": "vi-VN",
+    "note": "Sản phẩm (products), bài viết (posts) và danh mục CMS lưu trong Payload/Postgres — không có trong file này nếu DB trống. Catalog dòng trà & quà Tết lấy từ mã nguồn."
+  },
+  "project": {
+    "name": "namduongtea",
+    "version": "0.1.0",
+    "stack": {
+      "framework": "Next.js 15 (App Router)",
+      "react": "19",
+      "cms": "Payload CMS 3 + PostgreSQL",
+      "styling": "Tailwind CSS 3 + shadcn/ui (new-york)",
+      "forms": "react-hook-form + zod",
+      "icons": "lucide-react",
+      "toasts": "sonner"
+    },
+    "package_manager": "pnpm@9.12.3",
+    "node": ">=20.9.0"
+  },
+  "brand": {
+    "site_name": "Nam Dương Tea",
+    "legal_name": "Công ty TNHH Sản xuất và Thương mại Trà Nam Dương",
+    "legal_name_en": "Nam Dương Tea Company",
+    "tagline": "Tinh hoa trà Việt",
+    "default_description": "Nhà cung cấp trà nguyên liệu và thành phẩm cho đại lý, nhà phân phối và xuất khẩu.",
+    "locale": "vi_VN",
+    "theme_color": "#254A0C",
+    "site_url_env": "NEXT_PUBLIC_SITE_URL",
+    "default_site_url": "http://localhost:3000"
+  },
+  "contact": {
+    "address": "Khối 1, Xã Sóc Sơn, Hà Nội, Việt Nam",
+    "phone": "+84 913 303 668",
+    "phone_href": "tel:+84913303668",
+    "email_b2b": "thuynamduong64@gmail.com",
+    "response_sla": "24h làm việc"
+  },
+  "social": {
+    "facebook": "https://facebook.com/",
+    "zalo": "https://zalo.me/",
+    "messenger": "https://m.me/",
+    "youtube": "https://youtube.com/",
+    "support_chat_url": "https://zalo.me/"
+  },
+  "design": {
+    "ui_kit": {
+      "style": "new-york",
+      "base_color": "neutral",
+      "css_variables": true,
+      "icon_library": "lucide",
+      "config_file": "components.json"
+    },
+    "fonts": {
+      "sans": {
+        "family": "Be Vietnam Pro",
+        "variable": "--font-be-vietnam",
+        "weights": ["300", "400", "500", "600", "700"],
+        "usage": "body"
+      },
+      "display": {
+        "family": "Nunito",
+        "variable": "--font-nunito",
+        "weights": ["400", "500", "600", "700", "800"],
+        "usage": "headings (h1–h4)"
+      }
+    },
+    "colors": {
+      "brand": {
+        "tea_deep_brown": "#3e3407",
+        "tea_dark_green": "#254a0c",
+        "tea_yellow_green": "#ccc13a",
+        "tea_moss": "#567119",
+        "tea_olive": "#a3a53e",
+        "tea_muted_gold": "#c4b07a",
+        "tea_warm_ivory": "#f7f3ea"
+      },
+      "legacy_green_scale": {
+        "tea_green_900": "#1a3309",
+        "tea_green_800": "#254a0c",
+        "tea_green_700": "#567119",
+        "tea_green_600": "#6d8a2a",
+        "tea_green_50": "#f4f6eb"
+      },
+      "legacy_brown_scale": {
+        "tea_brown_900": "#3e3407",
+        "tea_brown_700": "#5c4a1a",
+        "tea_brown_500": "#8a7340",
+        "tea_brown_300": "#ccc13a"
+      },
+      "cream": {
+        "cream_50": "#faf8f2",
+        "cream_100": "#f4f0e6"
+      },
+      "text": {
+        "text_main": "#243018",
+        "text_muted": "#5c6648",
+        "border_soft": "#e2e6d4"
+      },
+      "shadcn_hsl_light": {
+        "background": "45 33% 96%",
+        "foreground": "88 42% 12%",
+        "primary": "94 73% 16%",
+        "secondary": "74 32% 35%",
+        "accent": "58 54% 52%",
+        "muted": "68 24% 93%",
+        "destructive": "0 50% 52%",
+        "border": "68 20% 85%",
+        "ring": "58 54% 52%"
+      },
+      "nav_accent": {
+        "active_border": "#d8c83a",
+        "active_bg": "#253b08",
+        "panel_green": "#163006",
+        "hover_gold": "#d8c83a"
+      },
+      "footer_bg": "#f4f0e6"
+    },
+    "layout": {
+      "border_radius": "1rem",
+      "container_max_2xl": "1280px",
+      "container_padding": { "default": "1rem", "md": "1.5rem", "lg": "2rem" },
+      "hero_min_height": "min-h-[560px] md:min-h-[720px]",
+      "footer_rounded_top": "40px",
+      "prose_max_width": "max-w-3xl"
+    },
+    "header": {
+      "type": "fixed full-width glass",
+      "height": "h-16 sm:h-18",
+      "home_transparent_until_scroll": true,
+      "scrolled_bg": "bg-zinc-100/55 backdrop-blur-xl",
+      "nav_collapse_at_px": 100,
+      "nav_expand_at_px": 40
+    },
+    "animations": {
+      "nd_fade_up": "800ms cubic-bezier(0.16, 1, 0.3, 1)",
+      "nd_float": "3s ease-in-out infinite",
+      "fade_in": "0.4s ease-out",
+      "reduced_motion_respected": true
+    },
+    "tailwind_color_aliases": {
+      "tea.deep-brown": "var(--tea-deep-brown)",
+      "tea.dark-green": "var(--tea-dark-green)",
+      "tea.yellow-green": "var(--tea-yellow-green)",
+      "tea.moss": "var(--tea-moss)",
+      "tea.olive": "var(--tea-olive)",
+      "tea.gold": "var(--tea-muted-gold)",
+      "tea.ivory": "var(--tea-warm-ivory)",
+      "tea.ink": "var(--text-main)",
+      "tea.muted": "var(--text-muted)"
+    },
+    "component_patterns": {
+      "section_eyebrow": "text-sm font-semibold uppercase tracking-widest text-tea-olive",
+      "page_eyebrow": "text-sm font-medium uppercase tracking-wider text-tea-brown-700",
+      "card_rounded": "rounded-[2rem]",
+      "form_card": "rounded-2xl border border-tea-green/10 bg-white p-6 shadow-sm",
+      "cta_primary": "bg-tea-yellow-green text-tea-deep-brown hover:bg-tea-olive",
+      "gradient_hero_overlay": "from-tea-dark-green/85 via-tea-deep-brown/72 to-tea-deep-brown/88",
+      "partner_cta_gradient": "from-tea-dark-green via-tea-moss to-tea-deep-brown"
+    }
+  },
+  "navigation": {
+    "primary": [
+      {
+        "label": "Về Nam Dương",
+        "children": [
+          { "label": "Giới thiệu", "href": "/gioi-thieu" },
+          { "label": "Từ đồi chè đến tách trà", "href": "/gioi-thieu#nguyen-lieu" }
+        ]
+      },
+      {
+        "label": "Sản phẩm",
+        "children": [
+          { "label": "Tất cả sản phẩm", "href": "/san-pham" },
+          { "label": "Bạch trà shan tuyết", "href": "/dong-tra/bach-tra-shan-tuyet" },
+          { "label": "Trà đinh ngọc", "href": "/dong-tra/tra-dinh-ngoc" },
+          { "label": "Hồng trà", "href": "/dong-tra/hong-tra" },
+          { "label": "Trà ô long", "href": "/dong-tra/tra-o-long" },
+          { "label": "Nam Dương trà quán", "href": "/nam-duong-tra-quan" }
+        ]
+      },
+      { "label": "Tin tức", "href": "/tin-tuc" },
+      { "label": "Đại lý", "href": "/dang-ky-dai-ly" },
+      { "label": "Liên hệ", "href": "/lien-he" }
+    ],
+    "footer_quick_links": [
+      { "label": "Giới thiệu", "href": "/gioi-thieu" },
+      { "label": "Sản phẩm", "href": "/san-pham" },
+      { "label": "Đăng ký đại lý", "href": "/dang-ky-dai-ly" },
+      { "label": "Tin tức", "href": "/tin-tuc" },
+      { "label": "Liên hệ", "href": "/lien-he" }
+    ],
+    "search": {
+      "action": "/san-pham?q={query}",
+      "placeholder": "Nhập tên sản phẩm…"
+    }
+  },
+  "routes": [
+    {
+      "path": "/",
+      "title": "Nam Dương Tea — Trà Việt cho đại lý & xuất khẩu",
+      "description": "Nhà cung cấp trà nguyên liệu và thành phẩm: trà xanh, trà đen, trà ô-long. Phục vụ đại lý, nhà phân phối, quán trà, đơn vị xuất khẩu.",
+      "has_hero": true,
+      "sections": ["home_hero", "hero_story_split", "product_overview", "news_events", "partner_cta"]
+    },
+    {
+      "path": "/gioi-thieu",
+      "title": "Giới thiệu Nam Dương Tea",
+      "description": "Câu chuyện vùng trà Nam Dương — từ búp tươi đến đối tác tin cậy của ngành trà Việt."
+    },
+    {
+      "path": "/san-pham",
+      "title": "Sản phẩm trà",
+      "description": "Bạch trà shan tuyết, trà đinh ngọc, hồng trà, trà ô long và Nam Dương trà quán — phục vụ đại lý, nhà phân phối và xuất khẩu.",
+      "revalidate_seconds": 300
+    },
+    {
+      "path": "/san-pham/[slug]",
+      "title": "dynamic from Payload products",
+      "cms_collection": "products"
+    },
+    {
+      "path": "/dong-tra/[slug]",
+      "title": "dynamic from product-lines.ts",
+      "static_slugs": ["bach-tra-shan-tuyet", "tra-dinh-ngoc", "hong-tra", "tra-o-long"]
+    },
+    {
+      "path": "/nam-duong-tra-quan",
+      "title": "Nam Dương trà quán — Quà biếu cao cấp",
+      "sections": ["tet_gift_hero", "gift_collection_grid", "brand_strip", "b2b_catalogue_table"]
+    },
+    {
+      "path": "/tin-tuc",
+      "title": "Tin tức",
+      "cms_collection": "posts",
+      "revalidate_seconds": 300
+    },
+    {
+      "path": "/tin-tuc/[slug]",
+      "cms_collection": "posts"
+    },
+    {
+      "path": "/dang-ky-dai-ly",
+      "title": "Đăng ký đại lý"
+    },
+    {
+      "path": "/lien-he",
+      "title": "Liên hệ & Yêu cầu báo giá",
+      "form_anchor": "#rfq"
+    }
+  ],
+  "pages_content": {
+    "home": {
+      "hero": {
+        "eyebrow": "Trà Việt · Nam Dương",
+        "headline": "Hương vị bền vững từ vùng trà Nam Dương",
+        "subheadline": "Cung cấp trà nguyên liệu và thành phẩm cho đại lý, nhà phân phối, quán trà và đơn vị xuất khẩu — chất lượng ổn định, nguồn gốc rõ ràng.",
+        "cta_primary": { "label": "Xem catalog", "href": "/san-pham" },
+        "cta_secondary": { "label": "Yêu cầu báo giá B2B", "href": "/lien-he#rfq" },
+        "background_image": "/images/tea-hill-header.JPG"
+      },
+      "stories": [
+        {
+          "title": "Tinh hoa trà Việt",
+          "description": "Hành trình xây dựng thương hiệu Nam Dương Tea — am hiểu văn hóa trà, đam mê chất lượng và sáng tạo cho thị trường hiện đại.",
+          "image": "/images/hero.JPG",
+          "href": "/gioi-thieu"
+        },
+        {
+          "title": "Từ nông trường đến tách trà",
+          "description": "Kiểm soát từ vùng nguyên liệu, quy trình chế biến đến đóng gói — minh bạch nguồn gốc cho đối tác B2B.",
+          "image": "/images/IMG_6559.JPG",
+          "href": "/gioi-thieu#nguyen-lieu"
+        }
+      ],
+      "product_overview": {
+        "eyebrow": "Sản phẩm",
+        "title": "Trà Nam Dương",
+        "description": "Tinh hoa trà Việt từ vùng đồi chè Nam Dương — phục vụ đại lý, nhà phân phối và chuỗi F&B với dải sản phẩm đa dạng, chất lượng ổn định.",
+        "cta": { "label": "Tìm hiểu thêm", "href": "/san-pham" },
+        "featured_heading": "Sản phẩm được chọn lọc",
+        "featured_source": "Payload products where isFeatured=true, status=published"
+      },
+      "news": {
+        "eyebrow": "Tin tức & sự kiện",
+        "title": "Tin tức mới nhất",
+        "tabs": ["Tin tức", "Sự kiện"],
+        "empty_message": "Chưa có bài viết. Vui lòng quay lại sau.",
+        "cta": { "label": "Xem tất cả tin tức", "href": "/tin-tuc" },
+        "source": "Payload posts, limit 8, sort -publishedAt"
+      },
+      "partner_cta": {
+        "title": "Bạn muốn trở thành đối tác của chúng tôi?",
+        "description": "Hãy liên hệ với chúng tôi ngay — rất hân hạnh được đồng hành cùng đại lý, nhà phân phối và đơn vị xuất khẩu trên toàn quốc.",
+        "cta_primary": { "label": "Liên hệ với chúng tôi", "href": "/lien-he" },
+        "cta_secondary": { "label": "Đăng ký đại lý", "href": "/dang-ky-dai-ly" }
+      }
+    },
+    "gioi_thieu": {
+      "eyebrow": "Câu chuyện",
+      "title": "Từ các đồi chè vùng cao",
+      "paragraphs": [
+        "Nam Dương Tea bắt đầu từ tâm huyết gìn giữ hương vị trà truyền thống Việt Nam, kết hợp quy trình sản xuất hiện đại để phục vụ thị trường B2B ngày càng khắt khe.",
+        "Chúng tôi hợp tác trực tiếp với các nông hộ tại vùng nguyên liệu tại Phú Thọ, Yên Bái và các vùng khác — kiểm soát toàn bộ chuỗi cung ứng từ búp tươi, sao sấy, đóng gói cho tới giao hàng.",
+        "Sản phẩm Nam Dương Tea hiện có mặt tại hơn 120 đại lý trong nước và xuất khẩu sang 8 quốc gia, đáp ứng đầy đủ chứng nhận HACCP, ISO 22000."
+      ]
+    },
+    "san_pham": {
+      "eyebrow": "Catalog",
+      "title": "Sản phẩm trà",
+      "description": "Bạch trà shan tuyết, trà đinh ngọc, hồng trà, trà ô long và bộ quà Nam Dương trà quán — tuyển chọn từ vùng nguyên liệu Nam Dương. Liên hệ để nhận bảng giá theo MOQ và mẫu thử miễn phí."
+    },
+    "dang_ky_dai_ly": {
+      "eyebrow": "Hợp tác phân phối",
+      "title": "Đăng ký đại lý",
+      "description": "Cùng Nam Dương Tea xây dựng kênh phân phối trà Việt chất lượng cao tại địa phương của bạn.",
+      "benefits": [
+        "Chiết khấu cạnh tranh theo cấp đại lý.",
+        "Hỗ trợ vật phẩm POSM, catalog, sample.",
+        "Đào tạo kiến thức pha chế, kiểm tra chất lượng.",
+        "Giao hàng nhanh, công nợ linh hoạt."
+      ]
+    },
+    "lien_he": {
+      "eyebrow": "Liên hệ",
+      "title": "Sẵn sàng phục vụ",
+      "description": "Gửi yêu cầu báo giá hoặc liên hệ trực tiếp — đội ngũ Nam Dương Tea sẽ phản hồi trong vòng 24h.",
+      "rfq_title": "Yêu cầu báo giá",
+      "rfq_subtitle": "Cung cấp số lượng dự kiến để nhận bảng giá theo MOQ."
+    },
+    "nam_duong_tra_quan": {
+      "collection_name": "Nam Dương trà quán",
+      "hero": {
+        "badge": "Bộ sưu tập 2026",
+        "headline": "Nam Dương trà quán",
+        "subheadline": "Quà biếu tinh tế — từ vùng trà Nam Dương",
+        "description": "Thất phẩm gỗ chạm khắc, đóng gói cao cấp, tôn vinh nghệ thủ công trà Việt. Mỗi set là một câu chuyện quà tặng sang trọng, đậm chất Đông phương hiện đại.",
+        "bullets": ["Hộp gỗ nguyên khối", "Trà tuyển chọn", "Quà Tết doanh nghiệp"],
+        "featured_set_slug": "nam-moc-tra-quan",
+        "background_image": "/images/IMG_6548.JPG",
+        "featured_image": "/images/products/tet-gift-sets/nam-moc-tra-quan-hero.JPG"
+      },
+      "collection_section": {
+        "eyebrow": "Bộ sưu tập",
+        "title": "Năm thất phẩm Nam Dương trà quán",
+        "description": "Thất phẩm gỗ chạm khắc — mỗi thất phẩm là một câu chuyện quà biếu riêng, trình bày trung thực, tinh tế, tôn vinh bao bì và nghệ thủ công đóng gói."
+      },
+      "b2b_catalogue": {
+        "eyebrow": "Catalogue B2B",
+        "title": "Nam Dương trà quán — đặt hàng sỉ & quà doanh nghiệp",
+        "description": "Bảng giá tham khảo từ bảng sản phẩm nội bộ. Liên hệ để nhận chính sách chiết khấu theo số lượng, in ấn thiệp chúc và giao hàng toàn quốc.",
+        "partner_cta": "Đăng ký đại lý & đối tác phân phối"
+      },
+      "tet_gift_slides_reversed": ["bach-nhien-tra-quan", "son-moc-tra-quan", "thanh-nhien-tra-quan"]
+    },
+    "footer": {
+      "tagline": "Nhà cung cấp trà Việt cho đại lý, nhà phân phối, quán trà và đơn vị xuất khẩu — từ đồi chè Nam Dương đến tách trà trên bàn bạn.",
+      "copyright_suffix": "Tinh hoa trà Việt."
+    }
+  },
+  "catalog": {
+    "product_lines": [
+      {
+        "slug": "bach-tra-shan-tuyet",
+        "name": "Bạch trà shan tuyết",
+        "kind": "product_line",
+        "href": "/dong-tra/bach-tra-shan-tuyet",
+        "description": "Bạch trà tuyển từ búp shan tuyết vùng cao — hương thanh nhẹ, vị ngọt dịu, ít chất đắng.",
+        "detail": "Bạch trà shan tuyết Nam Dương được chế biến tối giản để giữ trọn vẹn hương vị tự nhiên của búp trà vùng cao. Sắc nước trong, hương thảo mộc nhẹ và vị hậu ngọt dài — phù hợp thưởng thức nguyên chất hoặc phục vụ quán trà cao cấp.",
+        "image": "/images/bach-tra-shan-tuyet/DSC_3122%20copy%202.png",
+        "gallery": [
+          "/images/bach-tra-shan-tuyet/DSC_3122%20copy%202.png",
+          "/images/bach-tra-shan-tuyet/DSC_3139%20copy%202.png"
+        ],
+        "has_detail_page": true
+      },
+      {
+        "slug": "tra-dinh-ngoc",
+        "name": "Trà đinh ngọc",
+        "kind": "product_line",
+        "href": "/dong-tra/tra-dinh-ngoc",
+        "description": "Búp non một tôm một lá, sắc xanh ngọc — đặc trưng vùng trà Nam Dương.",
+        "detail": "Trà đinh ngọc là dòng trà xanh tuyển chọn từ búp non nhất, một tôm một lá. Hương thơm tươi mát, vị thanh ngọt cân bằng — lý tưởng cho pha trà truyền thống và chuỗi F&B cần hồ sơ hương vị ổn định theo mùa.",
+        "image": "/images/tra-dinh-ngoc/DSC_3112%20copy%202.png",
+        "gallery": [
+          "/images/tra-dinh-ngoc/DSC_3112%20copy%202.png",
+          "/images/tra-dinh-ngoc/DSC_3137%20copy%202.png"
+        ],
+        "has_detail_page": true
+      },
+      {
+        "slug": "hong-tra",
+        "name": "Hồng trà",
+        "kind": "product_line",
+        "href": "/dong-tra/hong-tra",
+        "description": "Hồng trà lên men vừa — hương mật ong, vị đậm đà cho pha trà và pha chế.",
+        "detail": "Hồng trà Nam Dương được lên men và sấy khô theo quy trình kiểm soát, cho sắc nước hổ phách ấm và hương ngọt tự nhiên. Phù hợp pha nóng, pha lạnh và ứng dụng đồ uống F&B cần vị trà rõ, ổn định.",
+        "image": "/images/hong-tra/DSC_3117%20copy%202.png",
+        "gallery": [
+          "/images/hong-tra/DSC_3117%20copy%202.png",
+          "/images/hong-tra/DSC_3134%20copy%202.png"
+        ],
+        "has_detail_page": true
+      },
+      {
+        "slug": "tra-o-long",
+        "name": "Trà ô long",
+        "kind": "product_line",
+        "href": "/dong-tra/tra-o-long",
+        "description": "Ô long bán lên men — hương hoa quả nhẹ, thích hợp quán trà và đại lý cao cấp.",
+        "detail": "Trà ô long Nam Dương nằm giữa trà xanh và trà đen: hương thơm đa tầng, vị ngọt thanh, hậu vị kéo dài. Dòng sản phẩm được các quán trà và nhà phân phối ưa chuộng nhờ profile hương vị nhất quán.",
+        "image": "/images/tra-o-long/DSC_3126%20copy%202.png",
+        "gallery": [
+          "/images/tra-o-long/DSC_3126%20copy%202.png",
+          "/images/tra-o-long/DSC_3132%20copy%202.png"
+        ],
+        "has_detail_page": true
+      },
+      {
+        "slug": "nam-duong-tra-quan",
+        "name": "Nam Dương trà quán",
+        "kind": "product_line",
+        "href": "/nam-duong-tra-quan",
+        "description": "Bộ quà biếu thất phẩm gỗ chạm khắc — trà tuyển chọn, trình bày sang trọng.",
+        "detail": "Nam Dương trà quán là bộ sưu tập quà biếu cao cấp gồm năm thất phẩm gỗ chạm khắc, mỗi thất phẩm kể một câu chuyện riêng về trà và nghệ thủ công đóng gói.",
+        "image": "/images/products/tet-gift-sets/nam-moc-tra-quan-hero.JPG",
+        "gallery": ["/images/products/tet-gift-sets/nam-moc-tra-quan-hero.JPG"],
+        "has_detail_page": false
+      }
+    ],
+    "tet_gift_sets": [
+      {
+        "slug": "nam-moc-tra-quan",
+        "name": "Nam mộc trà quán",
+        "image": "/images/products/tet-gift-sets/nam-moc-tra-quan.jpg",
+        "gallery": [
+          "/images/products/tet-gift-sets/nam-moc-tra-quan.jpg",
+          "/images/products/tet-gift-sets/nam-moc-tra-quan-2.jpg"
+        ],
+        "price_vnd": 950000,
+        "stock_note": "25 set",
+        "tagline": "Tinh hoa trà shan & hồng trà trong thất phẩm gỗ",
+        "teas": [
+          { "name": "Bạch trà shan tuyết", "weight": "80gr" },
+          { "name": "Hồng trà", "weight": "80gr" }
+        ],
+        "gift_highlights": [
+          "Hộp gỗ chạm khắc tinh xảo",
+          "Hai dòng trà cao cấp",
+          "Quà biếu Tết sang trọng"
+        ]
+      },
+      {
+        "slug": "son-moc-tra-quan",
+        "name": "Sơn mộc trà quán",
+        "image": "/images/products/tet-gift-sets/son-moc-tra-quan.jpg",
+        "gallery": [
+          "/images/products/tet-gift-sets/son-moc-tra-quan.jpg",
+          "/images/products/tet-gift-sets/son-moc-tra-quan-2.jpg"
+        ],
+        "price_vnd": 820000,
+        "stock_note": "25 set",
+        "tagline": "Shan tuyết thanh khiết cùng đinh ngọc quý phái",
+        "teas": [
+          { "name": "Bạch trà shan tuyết", "weight": "80gr" },
+          { "name": "Trà đinh ngọc", "weight": "100gr" }
+        ],
+        "gift_highlights": [
+          "Cân bằng vị trà trắng & trà xanh",
+          "Thiết kế quán trà cổ điển",
+          "Phù hợp biếu đối tác B2B"
+        ]
+      },
+      {
+        "slug": "thanh-nhien-tra-quan",
+        "name": "Thanh nhiên trà quán",
+        "image": "/images/products/tet-gift-sets/thanh-nhien-tra-quan.jpg",
+        "gallery": [
+          "/images/products/tet-gift-sets/thanh-nhien-tra-quan.jpg",
+          "/images/products/tet-gift-sets/thanh-nhien-tra-quan-2.jpg"
+        ],
+        "price_vnd": 750000,
+        "stock_note": "20 set",
+        "tagline": "Ô long thơm lâu, đinh ngọc thanh nhã",
+        "teas": [
+          { "name": "Trà ô long", "weight": "150gr" },
+          { "name": "Trà đinh ngọc", "weight": "100gr" }
+        ],
+        "gift_highlights": [
+          "Dung lượng ô long hào phóng",
+          "Hương vị đa tầng",
+          "Set quà Tết tinh tế"
+        ]
+      },
+      {
+        "slug": "bach-nhien-tra-quan",
+        "name": "Bạch nhiên trà quán",
+        "image": "/images/products/tet-gift-sets/bach-nhien-tra-quan.jpg",
+        "gallery": [
+          "/images/products/tet-gift-sets/bach-nhien-tra-quan.jpg",
+          "/images/products/tet-gift-sets/bach-nhien-tra-quan-2.jpg"
+        ],
+        "price_vnd": 620000,
+        "stock_note": "25 set",
+        "tagline": "Ba sắc trà trong một thất phẩm thanh nhã",
+        "teas": [
+          { "name": "Trà ô long", "weight": "100gr" },
+          { "name": "Trà đinh ngọc", "weight": "50gr" },
+          { "name": "Hồng trà", "weight": "30gr" }
+        ],
+        "gift_highlights": [
+          "Trải nghiệm ba dòng trà",
+          "Giá trị quà tặng linh hoạt",
+          "Đóng gói cao cấp"
+        ]
+      },
+      {
+        "slug": "van-lo-tra-quan",
+        "name": "Vân lộ trà quán",
+        "image": "/images/products/tet-gift-sets/van-lo-tra-quan.jpg",
+        "gallery": [
+          "/images/products/tet-gift-sets/van-lo-tra-quan.jpg",
+          "/images/products/tet-gift-sets/van-lo-tra-quan-2.jpg"
+        ],
+        "price_vnd": 690000,
+        "stock_note": "Hết",
+        "tagline": "Tứ vị trà — bộ sưu tập giới hạn",
+        "teas": [
+          { "name": "Trà ô long", "weight": "100gr" },
+          { "name": "Trà đinh ngọc", "weight": "50gr" },
+          { "name": "Bạch trà shan tuyết", "weight": "30gr" }
+        ],
+        "gift_highlights": [
+          "Kết hợp ô long, đinh ngọc, shan",
+          "Thiết kế vân lộ tinh xảo",
+          "Phiên bản đặc biệt"
+        ]
+      }
+    ]
+  },
+  "forms": {
+    "quote_request": {
+      "endpoint": "POST /api/public/quote-request",
+      "fields": [
+        { "name": "name", "label": "Họ tên", "required": true },
+        { "name": "phone", "label": "Số điện thoại", "required": true },
+        { "name": "email", "label": "Email", "required": false },
+        { "name": "company", "label": "Công ty", "required": false },
+        { "name": "quantity", "label": "Số lượng dự kiến", "required": true },
+        { "name": "note", "label": "Ghi chú", "required": false }
+      ],
+      "optional_params": ["productSlug"],
+      "success_title": "Đã nhận yêu cầu báo giá",
+      "cms_collection": "quote-requests"
+    },
+    "agent_register": {
+      "endpoint": "POST /api/public/contact",
+      "body_type": "agent",
+      "fields": [
+        { "name": "name", "label": "Họ tên", "required": true },
+        { "name": "phone", "label": "Số điện thoại", "required": true },
+        { "name": "email", "label": "Email", "required": false },
+        { "name": "company", "label": "Tên đơn vị", "required": true },
+        { "name": "message", "label": "Tin nhắn", "required": false }
+      ],
+      "success_title": "Cảm ơn bạn!",
+      "cms_collection": "contacts"
+    },
+    "newsletter": {
+      "endpoint": "POST /api/public/newsletter"
+    }
+  },
+  "cms": {
+    "admin_path": "/admin",
+    "collections": [
+      {
+        "slug": "users",
+        "purpose": "Admin authentication"
+      },
+      {
+        "slug": "media",
+        "purpose": "Uploaded images/files"
+      },
+      {
+        "slug": "categories",
+        "fields": ["name", "slug", "description"]
+      },
+      {
+        "slug": "products",
+        "fields": [
+          "name",
+          "slug",
+          "category",
+          "shortDescription",
+          "description",
+          "image",
+          "gallery",
+          "specs",
+          "moq",
+          "origin",
+          "isFeatured",
+          "status",
+          "seo"
+        ],
+        "status_values": ["draft", "published"]
+      },
+      {
+        "slug": "posts",
+        "fields": ["title", "slug", "excerpt", "coverImage", "body", "publishedAt", "status"]
+      },
+      {
+        "slug": "contacts",
+        "purpose": "Contact & agent registration"
+      },
+      {
+        "slug": "quote-requests",
+        "fields": ["name", "phone", "email", "company", "product", "quantity", "note", "status"],
+        "status_values": ["new", "quoting", "won", "lost"]
+      }
+    ],
+    "public_api": [
+      "GET /api/public/products",
+      "GET /api/public/products/[slug]",
+      "POST /api/public/quote-request",
+      "POST /api/public/contact",
+      "POST /api/public/newsletter"
+    ],
+    "runtime_data_note": "products, posts, categories — export từ Payload admin hoặc DB khi cần đồng bộ đầy đủ"
+  },
+  "layout_shell": {
+    "components": [
+      "SiteHeader (fixed glass)",
+      "FrontendMain",
+      "SiteFooter",
+      "SiteFloatingActions",
+      "Toaster (sonner, top-center)"
+    ],
+    "floating_actions": {
+      "social_left": ["zalo", "messenger", "facebook"],
+      "bottom_right": ["support_chat", "scroll_to_top"],
+      "scroll_top_threshold_px": 400
+    }
+  },
+  "static_assets": {
+    "brand": {
+      "logo_png": "/images/logo.png",
+      "logo_svg": "/images/logo.svg"
+    },
+    "heroes": {
+      "tea_hill_header": "/images/tea-hill-header.JPG",
+      "tea_hill_footer": "/images/tea-hill-footer.JPG",
+      "home_story": "/images/hero.JPG",
+      "farm_story": "/images/IMG_6559.JPG",
+      "tra_quan_page_bg": "/images/IMG_6548.JPG"
+    },
+    "product_image_folders": [
+      "public/images/bach-tra-shan-tuyet",
+      "public/images/tra-dinh-ngoc",
+      "public/images/hong-tra",
+      "public/images/tra-o-long",
+      "public/images/products/tet-gift-sets"
+    ],
+    "tet_gift_set_files": [
+      "/images/products/tet-gift-sets/nam-moc-tra-quan.png",
+      "/images/products/tet-gift-sets/nam-moc-tra-quan-2.png",
+      "/images/products/tet-gift-sets/nam-moc-tra-quan-hero.JPG",
+      "/images/products/tet-gift-sets/son-moc-tra-quan.png",
+      "/images/products/tet-gift-sets/son-moc-tra-quan-2.png",
+      "/images/products/tet-gift-sets/thanh-nhien-tra-quan.png",
+      "/images/products/tet-gift-sets/thanh-nhien-tra-quan-2.png",
+      "/images/products/tet-gift-sets/bach-nhien-tra-quan.png",
+      "/images/products/tet-gift-sets/bach-nhien-tra-quan-2.png",
+      "/images/products/tet-gift-sets/van-lo-tra-quan.png",
+      "/images/products/tet-gift-sets/van-lo-tra-quan-2.png"
+    ]
+  },
+  "source_files_reference": {
+    "catalog_data": [
+      "src/lib/product-lines.ts",
+      "src/lib/tet-gift-sets.ts",
+      "supabase/catalog-items.json"
+    ],
+    "design": [
+      "src/app/(frontend)/globals.css",
+      "tailwind.config.ts",
+      "src/lib/fonts.ts",
+      "src/lib/header-config.ts"
+    ],
+    "navigation_content": [
+      "src/lib/site-navigation.ts",
+      "src/lib/site-assets.ts",
+      "src/lib/seo.ts"
+    ]
+  }
+}

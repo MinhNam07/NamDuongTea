@@ -1,0 +1,385 @@
+{
+  "_meta": {
+    "exportedAt": "2026-05-28",
+    "siteName": "Nam Dương Tea",
+    "locale": "vi-VN",
+    "description": "Tổng hợp dữ liệu website Nam Dương Tea từ mã nguồn (config, nội dung tĩnh, form, route). Sản phẩm và bài viết động lấy từ Supabase — mảng dynamicContent có thể rỗng nếu chưa kết nối DB.",
+    "sources": [
+      "src/config/site.ts",
+      "src/config/nav.ts",
+      "src/data/mockData.ts",
+      "src/features/tet-gift/data/tet-gift-sets.ts",
+      "src/app/(site)/**/page.tsx",
+      "docs/STITCH_WEBSITE_EXPORT.md"
+    ]
+  },
+  "site": {
+    "name": "Nam Dương Tea",
+    "defaultTitle": "Nam Dương Tea — Trà Việt cho đại lý & xuất khẩu",
+    "defaultDescription": "Nhà cung cấp trà nguyên liệu và thành phẩm: trà xanh, trà đen, trà ô-long. Phục vụ đại lý, nhà phân phối, quán trà, đơn vị xuất khẩu.",
+    "type": "B2B marketing + catalog + lead capture",
+    "targetUsers": [
+      "Đại lý, nhà phân phối",
+      "Chuỗi F&B, quán trà",
+      "Đơn vị xuất khẩu",
+      "Khách quà Tết / trà quán cao cấp"
+    ]
+  },
+  "brand": {
+    "assets": {
+      "logo": "/images/logo.png",
+      "logoSvg": "/images/logo.svg",
+      "teaHillHeader": "/images/tea-hill-header.JPG",
+      "teaHillHeaderWebp": "/images/tea-hill-header.webp",
+      "teaHillFooter": "/images/tea-hill-footer.JPG",
+      "teaHillFooterWebp": "/images/tea-hill-footer.webp",
+      "hero": "/images/hero.JPG",
+      "storyFarm": "/images/story-farm.webp",
+      "heroDoiche": "/images/Hero/doiche.webp"
+    },
+    "header": {
+      "glassBase": "#163006",
+      "brandGold": "#d8c83a",
+      "scrollThresholdPx": 12,
+      "layoutOffsetClass": "pt-24",
+      "heroContentOffsetClass": "pt-24 md:pt-28",
+      "heroMinHeightClass": "min-h-[560px] md:min-h-[720px]"
+    },
+    "colors": {
+      "teaDeepBrown": "#3e3407",
+      "teaDarkGreen": "#254a0c",
+      "teaYellowGreen": "#ccc13a",
+      "teaMoss": "#567119",
+      "teaOlive": "#a3a53e",
+      "teaMutedGold": "#c4b07a",
+      "teaWarmIvory": "#f7f3ea",
+      "cream50": "#faf8f2",
+      "textMain": "#243018",
+      "textMuted": "#5c6648",
+      "radius": "1rem"
+    },
+    "fonts": {
+      "body": "Roboto (--font-roboto)",
+      "display": "Roboto (font-display)"
+    },
+    "footerTagline": "Tinh hoa trà Việt. Mang đến những giá trị nguyên bản từ những đồi trà truyền thống, kết nối thiên nhiên với người thưởng thức."
+  },
+  "navigation": {
+    "primary": [
+      {
+        "label": "Về Nam Dương",
+        "children": [
+          { "label": "Giới thiệu", "href": "/gioi-thieu" },
+          { "label": "Từ đồi chè đến tách trà", "href": "/gioi-thieu#nguyen-lieu" }
+        ]
+      },
+      {
+        "label": "Sản phẩm",
+        "children": [
+          { "label": "Tất cả sản phẩm", "href": "/san-pham" },
+          { "label": "Nam Dương trà quán", "href": "/nam-duong-tra-quan" },
+          { "label": "Trà xanh", "href": "/san-pham?category=tra-xanh" },
+          { "label": "Trà đen", "href": "/san-pham?category=tra-den" },
+          { "label": "Trà ô-long", "href": "/san-pham?category=tra-o-long" }
+        ]
+      },
+      { "label": "Tin tức", "href": "/tin-tuc" },
+      { "label": "Đại lý", "href": "/dang-ky-dai-ly" },
+      { "label": "Liên hệ", "href": "/lien-he" }
+    ],
+    "footer": {
+      "quickLinks": [
+        { "label": "Giới thiệu", "href": "/gioi-thieu" },
+        { "label": "Sản phẩm", "href": "/san-pham" },
+        { "label": "Đăng ký đại lý", "href": "/dang-ky-dai-ly" },
+        { "label": "Tin tức", "href": "/tin-tuc" },
+        { "label": "Liên hệ", "href": "/lien-he" }
+      ],
+      "productLinks": [
+        { "label": "Trà xanh", "href": "/san-pham?category=tra-xanh" },
+        { "label": "Trà đen", "href": "/san-pham?category=tra-den" },
+        { "label": "Trà ô-long", "href": "/san-pham?category=tra-o-long" }
+      ],
+      "discoveryLinks": [
+        { "label": "Về Nam Dương", "href": "/gioi-thieu" },
+        { "label": "Sản phẩm nguyên liệu", "href": "/san-pham" },
+        { "label": "Câu chuyện thương hiệu", "href": "/#story" }
+      ],
+      "supportLinks": [
+        { "label": "Chính sách đối tác", "href": "/dang-ky-dai-ly" },
+        { "label": "Yêu cầu mẫu thử", "href": "/lien-he" },
+        { "label": "Kiểm định chất lượng", "href": "/gioi-thieu#nguyen-lieu" }
+      ],
+      "contact": {
+        "location": "Hà Nội, Việt Nam",
+        "email": "contact@namduongtea.vn"
+      }
+    },
+    "social": {
+      "facebook": "https://facebook.com/",
+      "zalo": "https://zalo.me/",
+      "messenger": "https://m.me/",
+      "youtube": "https://youtube.com/",
+      "supportChatUrl": "https://zalo.me/"
+    }
+  },
+  "productCategories": [
+    {
+      "name": "Trà xanh",
+      "slug": "tra-xanh",
+      "href": "/san-pham?category=tra-xanh",
+      "image": "/images/story-farm.webp",
+      "description": "Búp tươi, hương thanh mát từ vùng trà Nam Dương."
+    },
+    {
+      "name": "Trà đen",
+      "slug": "tra-den",
+      "href": "/san-pham?category=tra-den",
+      "image": "/images/hero.JPG",
+      "description": "Đậm vị, ổn định cho pha trà và pha chế F&B."
+    },
+    {
+      "name": "Trà ô-long",
+      "slug": "tra-o-long",
+      "href": "/san-pham?category=tra-o-long",
+      "image": "/images/story-farm.webp",
+      "description": "Hương hoa quả nhẹ, phù hợp quán trà cao cấp."
+    },
+    {
+      "name": "Nguyên liệu B2B",
+      "slug": "nguyen-lieu",
+      "href": "/san-pham",
+      "image": "/images/hero.JPG",
+      "description": "Cung ứng số lượng lớn cho đại lý và xuất khẩu."
+    }
+  ],
+  "routes": [
+    {
+      "path": "/",
+      "title": "Trang chủ",
+      "file": "src/app/(site)/page.tsx",
+      "sections": [
+        "CinematicHeroSection",
+        "AlternatingStorySection",
+        "CraftTimelineSection",
+        "ProductCollectionTilesSection",
+        "NewsEventsSectionRedesign",
+        "PartnerFormSection"
+      ],
+      "dataSources": ["mockData", "getFeaturedProductsForHome(6)", "getPostsForHome(8)"]
+    },
+    {
+      "path": "/gioi-thieu",
+      "title": "Giới thiệu Nam Dương Tea",
+      "description": "Câu chuyện vùng trà Nam Dương — từ búp tươi đến đối tác tin cậy của ngành trà Việt.",
+      "file": "src/app/(site)/gioi-thieu/page.tsx"
+    },
+    {
+      "path": "/san-pham",
+      "title": "Sản phẩm trà",
+      "description": "Catalog trà xanh, trà đen, trà ô-long Nam Dương — phục vụ đại lý, nhà phân phối và xuất khẩu.",
+      "file": "src/app/(site)/san-pham/page.tsx",
+      "queryParams": ["category", "q (search — chưa implement filter)"]
+    },
+    {
+      "path": "/san-pham/[slug]",
+      "title": "Chi tiết sản phẩm",
+      "file": "src/app/(site)/san-pham/[slug]/page.tsx"
+    },
+    {
+      "path": "/tin-tuc",
+      "title": "Tin tức ngành trà",
+      "description": "Cập nhật về văn hóa thưởng trà, kỹ thuật canh tác và xu hướng thị trường trà Việt.",
+      "file": "src/app/(site)/tin-tuc/page.tsx"
+    },
+    {
+      "path": "/tin-tuc/[slug]",
+      "title": "Chi tiết bài viết",
+      "file": "src/app/(site)/tin-tuc/[slug]/page.tsx"
+    },
+    {
+      "path": "/nam-duong-tra-quan",
+      "title": "Nam Dương trà quán — Quà biếu cao cấp",
+      "description": "Bộ sưu tập Nam Dương trà quán Nam Dương Tea: thất phẩm gỗ chạm khắc, trà tuyển chọn — quà biếu sang trọng cho doanh nghiệp và đại lý.",
+      "file": "src/app/(site)/nam-duong-tra-quan/page.tsx"
+    },
+    {
+      "path": "/dang-ky-dai-ly",
+      "title": "Đăng ký đại lý",
+      "description": "Trở thành đại lý phân phối Nam Dương Tea — chính sách rõ ràng, hỗ trợ marketing và đào tạo bài bản.",
+      "file": "src/app/(site)/dang-ky-dai-ly/page.tsx"
+    },
+    {
+      "path": "/lien-he",
+      "title": "Liên hệ & Yêu cầu báo giá",
+      "description": "Liên hệ Nam Dương Tea để nhận catalog, mẫu thử và báo giá B2B theo nhu cầu.",
+      "file": "src/app/(site)/lien-he/page.tsx",
+      "queryParams": ["product (pre-fill RFQ)"]
+    }
+  ],
+  "redirects": [
+    { "from": "/set-tra-tet", "to": "/nam-duong-tra-quan", "permanent": true },
+    { "from": "/set-tra-tet/:path*", "to": "/nam-duong-tra-quan/:path*", "permanent": true }
+  ],
+  "pages": {
+    "home": {
+      "hero": {
+        "eyebrow": "Tuyệt tác từ thiên nhiên",
+        "title": "Tinh hoa",
+        "titleEmphasis": "Trà Việt",
+        "subtitle": "Cung cấp giải pháp trà nguyên liệu cao cấp. Khởi nguồn từ những vùng trà cổ thụ trứ danh, mang đến hương vị nguyên bản và chất lượng ổn định.",
+        "primaryCta": { "label": "Khám phá sản phẩm", "href": "/san-pham" },
+        "scrollHint": { "label": "Cuộn để khám phá", "href": "#story" },
+        "backgroundImage": {
+          "src": "/images/Hero/doiche.webp",
+          "alt": "Đồi chè xanh uốn lượn"
+        }
+      },
+      "alternatingStories": [
+        {
+          "id": "quality",
+          "label": "Chất Lượng Kế Thừa",
+          "title": "Từ Nông Trại",
+          "emphasis": "Đến Tách Trà",
+          "paragraphs": [
+            "Hành trình của Nam Dương Tea bắt đầu từ những ngọn đồi sương mù nguyên sơ nhất. Chúng tôi làm việc trực tiếp với các nghệ nhân làm trà địa phương, gìn giữ phương pháp chế biến truyền thống kết hợp quy chuẩn hiện đại.",
+            "Mỗi búp trà đều trải qua quy trình kiểm soát chất lượng khắt khe để giữ lại trọn vẹn hương vị tinh khiết, đáp ứng tiêu chuẩn khắt khe của hệ thống F&B toàn cầu."
+          ],
+          "statCard": {
+            "value": "100%",
+            "label": "Kiểm định",
+            "description": "Đạt tiêu chuẩn chất lượng quốc tế"
+          }
+        },
+        {
+          "id": "sustainability",
+          "label": "Phát Triển Bền Vững",
+          "title": "Tôn Trọng",
+          "emphasis": "Tự Nhiên",
+          "paragraphs": [
+            "Chúng tôi cam kết thực hành nông nghiệp sinh thái, bảo vệ đất đai và hệ sinh thái bản địa. Sự phát triển của Nam Dương gắn liền với sự hưng thịnh của cộng đồng nông dân địa phương."
+          ],
+          "link": { "label": "Tìm hiểu về vùng trồng", "href": "/gioi-thieu#nguyen-lieu" }
+        }
+      ],
+      "craftTimeline": [
+        {
+          "id": "harvest",
+          "icon": "eco",
+          "title": "1. Thu hái",
+          "description": "Hái thủ công 1 tôm 2 lá vào sáng sớm khi sương chưa tan."
+        },
+        {
+          "id": "withering",
+          "icon": "wb_sunny",
+          "title": "2. Làm héo",
+          "description": "Phơi héo tự nhiên để giảm độ ẩm và đánh thức hương thơm."
+        },
+        {
+          "id": "rolling",
+          "icon": "blur_on",
+          "title": "3. Vò trà",
+          "description": "Phá vỡ tế bào lá, tạo hình dáng và thúc đẩy quá trình oxy hóa."
+        },
+        {
+          "id": "drying",
+          "icon": "local_fire_department",
+          "title": "4. Sấy khô",
+          "description": "Cố định hương vị và định hình chất lượng cuối cùng của trà."
+        }
+      ],
+      "productCollectionTiles": [
+        {
+          "id": "green-thai-nguyen",
+          "category": "Trà Xanh",
+          "name": "Trà Xanh Thái Nguyên",
+          "description": "Hương thơm cốm non đặc trưng, vị chát dịu và hậu ngọt sâu. Dòng nguyên liệu kinh điển cho pha chế.",
+          "href": "/san-pham"
+        },
+        {
+          "id": "black-ctc",
+          "category": "Trà Đen",
+          "name": "Trà Đen CTC Tiêu Chuẩn",
+          "description": "Màu nước đỏ mận, vị đậm đà mạnh mẽ. Lựa chọn tối ưu cho nền trà sữa và đồ uống đóng chai.",
+          "href": "/san-pham"
+        }
+      ],
+      "newsSection": {
+        "eyebrow": "Tin tức & sự kiện",
+        "title": "Cập nhật mới nhất",
+        "tabs": ["Tin tức", "Sự kiện"]
+      },
+      "partnerForm": {
+        "eyebrowIcon": "handshake",
+        "title": "Kiến Tạo",
+        "titleEmphasis": "Thành Công",
+        "subtitle": "Đồng hành cùng Nam Dương Tea để đảm bảo nguồn nguyên liệu ổn định, chất lượng cao với chính sách hỗ trợ phát triển kinh doanh toàn diện.",
+        "panelTitle": "Liên hệ hợp tác phân phối",
+        "fields": {
+          "companyNamePlaceholder": "Tên doanh nghiệp",
+          "emailPlaceholder": "Email liên hệ"
+        },
+        "submitLabel": "Gửi Yêu Cầu Tư Vấn"
+      }
+    },
+    "about": {
+      "eyebrow": "Câu chuyện",
+      "title": "Vùng trà Nam Dương",
+      "paragraphs": [
+        "Nam Dương Tea bắt đầu từ tâm huyết gìn giữ hương vị trà truyền thống Việt Nam, kết hợp quy trình sản xuất hiện đại để phục vụ thị trường B2B ngày càng khắt khe.",
+        "Chúng tôi hợp tác trực tiếp với các nông hộ tại vùng nguyên liệu Nam Dương — kiểm soát toàn bộ chuỗi cung ứng từ búp tươi, sao sấy, đóng gói cho tới giao hàng.",
+        "Sản phẩm Nam Dương Tea hiện có mặt tại hơn 120 đại lý trong nước và xuất khẩu sang 8 quốc gia, đáp ứng đầy đủ chứng nhận HACCP, ISO 22000."
+      ],
+      "caveats": ["Anchor #nguyen-lieu chưa có section tương ứng trên trang"]
+    },
+    "products": {
+      "eyebrow": "Catalog",
+      "title": "Sản phẩm trà",
+      "description": "Tuyển chọn từ vùng nguyên liệu Nam Dương — phù hợp cho đại lý, nhà phân phối, quán trà và đơn vị xuất khẩu. Liên hệ để nhận bảng giá theo MOQ và mẫu thử miễn phí.",
+      "emptyState": "Không có sản phẩm (khi DB trống)"
+    },
+    "news": {
+      "eyebrow": "Blog",
+      "title": "Tin tức & câu chuyện trà",
+      "emptyState": "Sắp có bài viết đầu tiên. Hãy quay lại sau."
+    },
+    "contact": {
+      "eyebrow": "Liên hệ",
+      "title": "Sẵn sàng phục vụ",
+      "description": "Gửi yêu cầu báo giá hoặc liên hệ trực tiếp — đội ngũ Nam Dương Tea sẽ phản hồi trong vòng 24h.",
+      "office": {
+        "label": "Văn phòng & nhà máy",
+        "address": "Vùng nguyên liệu Nam Dương, Việt Nam"
+      },
+      "hotline": {
+        "label": "Hotline",
+        "phone": "+84 000 000 000",
+        "telHref": "tel:+84000000000",
+        "note": "placeholder"
+      },
+      "email": {
+        "label": "Email B2B",
+        "address": "hello@namduongtea.vn",
+        "mailto": "mailto:hello@namduongtea.vn"
+      },
+      "rfq": {
+        "title": "Yêu cầu báo giá",
+        "description": "Cung cấp số lượng dự kiến để nhận bảng giá theo MOQ.",
+        "anchor": "#rfq"
+      }
+    },
+    "agentRegistration": {
+      "eyebrow": "Hợp tác phân phối",
+      "title": "Đăng ký đại lý",
+      "description": "Cùng Nam Dương Tea xây dựng kênh phân phối trà Việt chất lượng cao tại địa phương của bạn.",
+      "benefits": [
+        "Chiết khấu cạnh tranh theo cấp đại lý.",
+        "Hỗ trợ vật phẩm POSM, catalog, sample.",
+        "Đào tạo kiến thức pha chế, kiểm tra chất lượng.",
+        "Giao hàng nhanh, công nợ linh hoạt."
+      ],
+      "formTitle": "Thông tin đăng ký",
+      "formNote": "Phản hồi trong vòng 24h làm việc."
+    }
+  }
+}

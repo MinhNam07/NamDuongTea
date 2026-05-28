@@ -1,13 +1,11 @@
+import { WEBSITE_DATA } from "@/lib/website-data";
+
 /** Navbar scroll thresholds (hysteresis) */
-export const NAV_COLLAPSE_AT = 100;
-export const NAV_EXPAND_AT = 40;
+export const NAV_COLLAPSE_AT = WEBSITE_DATA.brand.header.scrollThresholdPx;
+export const NAV_EXPAND_AT = WEBSITE_DATA.brand.header.scrollThresholdPx;
 
-/** Fixed navbar heights — chỉ transition giữa hai giá trị này */
-export const NAV_HEIGHT_EXPANDED = "h-32"; /* 128px */
-export const NAV_HEIGHT_COLLAPSED = "h-24"; /* 96px */
-
-/** Padding-top cho trang không có hero (khớp NAV_HEIGHT_EXPANDED) */
-export const NAV_MAIN_OFFSET = "pt-32";
+/** Padding-top cho trang không có hero */
+export const NAV_MAIN_OFFSET = WEBSITE_DATA.brand.header.layoutOffsetClass;
 
 /** Hero block min-height (document flow, không animate khi scroll) */
-export const HERO_MIN_HEIGHT_CLASS = "min-h-[560px] md:min-h-[720px]";
+export const HERO_MIN_HEIGHT_CLASS = WEBSITE_DATA.brand.header.heroMinHeightClass;

@@ -1,123 +1,217 @@
-import Link from "next/link";
 import type { Metadata } from "next";
+import Link from "next/link";
 
-import { ProductCategoryCard } from "@/components/marketing/product-category-card";
 import { ProductGrid } from "@/components/product-grid";
 import type { ProductCardProduct } from "@/components/product-card";
-import { Badge } from "@/components/ui/badge";
 import { getPayloadClient } from "@/lib/payload";
-import { PRODUCT_LINES } from "@/lib/product-lines";
+import {
+  ALL_TEA_PICK_ORDER,
+  canonicalNameForProductSlug,
+  fallbackImageForProductSlug,
+  normalizeProductTab,
+  PRODUCT_SLUG_WHITELIST,
+  PRODUCT_TABS,
+  tabLabel,
+} from "@/lib/product-tab-config";
 import { buildMetadata } from "@/lib/seo";
 import { cn } from "@/lib/utils";
+import { WEBSITE_DATA } from "@/lib/website-data";
+import { TET_GIFT_SETS, TRA_QUAN_COLLECTION_NAME } from "@/lib/tet-gift-sets";
+import { ProductCatalogSearch } from "@/components/products/product-catalog-search";
+import { ProductsPagination } from "@/components/products/products-pagination/index";
+import { ProductsHero } from "@/components/products/products-hero";
 
 export const revalidate = 300;
 
 export const metadata: Metadata = buildMetadata({
-  title: "Sản phẩm trà",
-  description:
-    "Bạch trà shan tuyết, trà đinh ngọc, hồng trà, trà ô long và Nam Dương trà quán — phục vụ đại lý, nhà phân phối và xuất khẩu.",
+  title: WEBSITE_DATA.pages.products.title,
+  description: WEBSITE_DATA.pages.products.description,
   path: "/san-pham",
 });
 
-type SearchParams = Promise<{ category?: string }>;
+type SearchParams = Promise<{ category?: string; q?: string; page?: string }>;
 
 export default async function ProductListPage({
   searchParams,
 }: {
   searchParams: SearchParams;
 }) {
-  const { category } = await searchParams;
+  const { category, q, page } = await searchParams;
+  const tab = normalizeProductTab(category);
+  const query = (q ?? "").trim();
+  const currentPage = Math.max(1, Number.parseInt(page ?? "1", 10) || 1);
+  const pageSize = 8;
 
   let products: ProductCardProduct[] = [];
-  let categories: { id: string; name: string; slug: string }[] = [];
 
   try {
     const payload = await getPayloadClient();
-
-    const [{ docs: categoryDocs }, { docs: productDocs }] = await Promise.all([
-      payload.find({ collection: "categories", limit: 50, sort: "name" }),
-      payload.find({
+    if (tab === "nam-duong-tra-quan") {
+      products = [];
+    } else {
+      const slugs =
+        tab === "tat-ca"
+          ? [
+              ...PRODUCT_SLUG_WHITELIST["che-xanh"],
+              ...PRODUCT_SLUG_WHITELIST["che-den"],
+            ]
+          : PRODUCT_SLUG_WHITELIST[tab];
+      const { docs } = await payload.find({
         collection: "products",
         where: {
           and: [
             { status: { equals: "published" } },
-            ...(category
-              ? [{ "category.slug": { equals: category } }]
-              : []),
+            { slug: { in: slugs } },
           ],
         },
         depth: 1,
-        limit: 24,
-        sort: "-updatedAt",
-      }),
-    ]);
+        limit: 50,
+      });
 
-    categories = categoryDocs.map((c) => ({
-      id: String(c.id),
-      name: c.name as string,
-      slug: c.slug as string,
-    }));
-    products = productDocs as unknown as ProductCardProduct[];
+      const candidates = docs as unknown as ProductCardProduct[];
+
+      const hasImage = (p: ProductCardProduct) =>
+        Boolean(p.image) &&
+        (typeof p.image === "string" ||
+          Boolean((p.image as { url?: string | null })?.url) ||
+          Boolean(
+            (p.image as { sizes?: { card?: { url?: string | null } } })?.sizes
+              ?.card?.url,
+          ));
+
+      const withFallbackImage = (p: ProductCardProduct) => {
+        if (hasImage(p)) return p;
+        const fallback = fallbackImageForProductSlug(p.slug);
+        return fallback ? { ...p, image: fallback } : p;
+      };
+
+      const pickFirst = (preferred: string[]) => {
+        for (const s of preferred) {
+          const found = candidates.find((p) => p.slug === s);
+          if (found) return found;
+        }
+        return null;
+      };
+
+      const dinhNgoc = pickFirst([...ALL_TEA_PICK_ORDER.dinhNgoc]);
+      const shanTuyet = pickFirst([...ALL_TEA_PICK_ORDER.shanTuyet]);
+      const oLong = pickFirst([...ALL_TEA_PICK_ORDER.oLong]);
+      const hongTra = pickFirst([...ALL_TEA_PICK_ORDER.hongTra]);
+
+      if (tab === "che-den") {
+        products = hongTra ? [withFallbackImage(hongTra)] : [];
+      } else if (tab === "che-xanh") {
+        products = [dinhNgoc, shanTuyet, oLong]
+          .filter((p): p is ProductCardProduct => Boolean(p))
+          .map(withFallbackImage);
+      } else {
+        // tat-ca: 4 loại trà, phần trà quán render riêng phía dưới
+        products = [dinhNgoc, shanTuyet, oLong, hongTra]
+          .filter((p): p is ProductCardProduct => Boolean(p))
+          .map(withFallbackImage);
+      }
+
+      products = products.map((p) => {
+        const canonical = canonicalNameForProductSlug(p.slug);
+        return canonical ? { ...p, name: canonical } : p;
+      });
+    }
   } catch {
     products = [];
-    categories = [];
   }
+
+  const traQuanProducts: ProductCardProduct[] = TET_GIFT_SETS.map((set) => ({
+    id: `tet-gift-${set.slug}`,
+    name: set.name,
+    slug: set.slug,
+    shortDescription: set.tagline,
+    origin: null,
+    image: `/images/products/tet-gift-sets/${set.slug}.png`,
+    category: TRA_QUAN_COLLECTION_NAME,
+  }));
+
+  if (tab === "nam-duong-tra-quan") {
+    products = traQuanProducts;
+  }
+
+  const filteredProducts = query
+    ? products.filter((p) => {
+        const haystack = `${p.name ?? ""} ${p.shortDescription ?? ""} ${p.description ?? ""}`
+          .toLowerCase()
+          .normalize("NFKD");
+        const needle = query.toLowerCase().normalize("NFKD");
+        return haystack.includes(needle);
+      })
+    : products;
+
+  const totalItems = filteredProducts.length;
+  const totalPages = Math.max(1, Math.ceil(totalItems / pageSize));
+  const safePage = Math.min(currentPage, totalPages);
+  const start = (safePage - 1) * pageSize;
+  const pagedProducts = filteredProducts.slice(start, start + pageSize);
 
   return (
     <div className="bg-tea-cream">
-      <section className="container mx-auto px-4 py-12 md:px-6 md:py-16">
-        <header className="mb-10 max-w-3xl">
-          <p className="text-sm font-medium uppercase tracking-wider text-tea-brown-700">
-            Catalog
-          </p>
-          <h1 className="mt-2 font-display text-4xl font-bold text-tea-green md:text-5xl">
-            Sản phẩm trà
-          </h1>
-          <p className="mt-4 text-tea-muted md:text-lg">
-            Bạch trà shan tuyết, trà đinh ngọc, hồng trà, trà ô long và bộ quà
-            Nam Dương trà quán — tuyển chọn từ vùng nguyên liệu Nam Dương.
-            Liên hệ để nhận bảng giá theo MOQ và mẫu thử miễn phí.
-          </p>
-        </header>
-
-        <div className="mb-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
-          {PRODUCT_LINES.map((line) => (
-            <ProductCategoryCard
-              key={line.slug}
-              name={line.name}
-              href={line.href}
-              image={line.image}
-              description={line.description}
-            />
-          ))}
+      <ProductsHero
+        eyebrow={WEBSITE_DATA.pages.products.eyebrow}
+        title="Danh mục Sản phẩm"
+        description="Khám phá bộ sưu tập trà tinh hoa từ những vùng nguyên liệu thượng hạng nhất Việt Nam, được chế tác theo câu chuyện biệt dành cho đối tác doanh nghiệp và nhà phân phối."
+      >
+        <div className="w-full max-w-xl">
+          <ProductCatalogSearch defaultValue={query} />
         </div>
+      </ProductsHero>
 
-        {categories.length > 0 || products.length > 0 ? (
+      <section className="container mx-auto px-4 pb-16 pt-12 md:px-6 md:pb-24 md:pt-14">
+        {filteredProducts.length > 0 ? (
           <>
-        <nav
-          aria-label="Lọc theo danh mục"
-          className="mb-8 flex flex-wrap items-center gap-2"
-        >
-          <FilterPill href="/san-pham" active={!category}>
-            Tất cả
-          </FilterPill>
-          {categories.map((c) => (
-            <FilterPill
-              key={c.id}
-              href={`/san-pham?category=${c.slug}`}
-              active={category === c.slug}
+            <nav
+              aria-label="Lọc theo danh mục"
+              className="mb-10 flex flex-wrap items-center justify-center gap-3 md:mb-12"
             >
-              {c.name}
-            </FilterPill>
-          ))}
-        </nav>
+              {PRODUCT_TABS.map((t) => (
+                <FilterChip
+                  key={t.value}
+                  href={t.href}
+                  active={tab === t.value}
+                >
+                  {t.label}
+                </FilterChip>
+              ))}
+            </nav>
 
-        <ProductGrid products={products} />
+            <ProductGrid products={pagedProducts} />
 
-        <p className="mt-12 text-sm text-tea-muted">
-          Đang hiển thị {products.length} sản phẩm
-          {category ? ` · danh mục "${category}"` : ""}.
-        </p>
+            {tab === "tat-ca" ? (
+              <div className="mt-10">
+                <div className="mb-6 flex items-center gap-4">
+                  <div className="h-px flex-1 bg-border/70" />
+                  <p className="text-xs font-semibold uppercase tracking-[0.2em] text-tea-muted">
+                    Nam Dương trà quán
+                  </p>
+                  <div className="h-px flex-1 bg-border/70" />
+                </div>
+                <ProductGrid products={traQuanProducts} />
+              </div>
+            ) : null}
+
+            <div className="mt-12 flex flex-col items-center gap-4">
+              <ProductsPagination
+                page={safePage}
+                totalPages={totalPages}
+                baseHref="/san-pham"
+                params={{
+                  ...(tab && tab !== "tat-ca" ? { category: tab } : {}),
+                  ...(query ? { q: query } : {}),
+                }}
+              />
+
+              <p className="text-sm text-tea-muted">
+                Đang hiển thị {pagedProducts.length} / {filteredProducts.length}{" "}
+                sản phẩm
+              {tab ? ` · ${tabLabel(tab)}` : ""}.
+              </p>
+            </div>
           </>
         ) : null}
       </section>
@@ -125,7 +219,7 @@ export default async function ProductListPage({
   );
 }
 
-function FilterPill({
+function FilterChip({
   href,
   active,
   children,
@@ -135,16 +229,19 @@ function FilterPill({
   children: React.ReactNode;
 }) {
   return (
-    <Link href={href}>
-      <Badge
-        variant={active ? "default" : "outline"}
-        className={cn(
-          "cursor-pointer px-4 py-1.5 text-sm font-medium transition-colors",
-          !active && "hover:bg-tea-green-50",
-        )}
-      >
-        {children}
-      </Badge>
+    <Link
+      href={href}
+      scroll={false}
+      className={cn(
+        "inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium transition-colors",
+        "border bg-white/40 text-tea-muted backdrop-blur",
+        "border-border/70 hover:border-border hover:bg-white/70 hover:text-tea-dark-green",
+        active
+          ? "border-tea-dark-green/20 bg-tea-yellow-green/20 text-tea-dark-green"
+          : "",
+      )}
+    >
+      {children}
     </Link>
   );
 }

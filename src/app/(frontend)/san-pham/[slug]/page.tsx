@@ -1,4 +1,3 @@
-import Image from "next/image";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
@@ -7,8 +6,14 @@ import { ChevronRight, Leaf } from "lucide-react";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { RfqButton } from "@/components/rfq-button";
+import { TetGiftProductImage } from "@/components/marketing/tet-gift/tet-gift-product-image";
+import { ProductDetailGallery } from "@/components/products/product-detail-gallery";
+import { ProductDetailStickyPanel } from "@/components/products/product-detail-sticky-panel";
+import { ProductDetailTabs } from "@/components/products/product-detail-tabs";
 import { getPayloadClient } from "@/lib/payload";
+import { getProductDetailTabs } from "@/lib/product-detail-tabs";
 import { buildMetadata } from "@/lib/seo";
+import { TET_GIFT_SETS, TRA_QUAN_COLLECTION_NAME } from "@/lib/tet-gift-sets";
 
 export const revalidate = 300;
 
@@ -42,6 +47,14 @@ export async function generateMetadata({
   const { slug } = await params;
   const product = await loadProduct(slug);
   if (!product) {
+    const tetGift = TET_GIFT_SETS.find((s) => s.slug === slug);
+    if (tetGift) {
+      return buildMetadata({
+        title: `${tetGift.name} · ${TRA_QUAN_COLLECTION_NAME}`,
+        description: tetGift.tagline,
+        path: `/san-pham/${slug}`,
+      });
+    }
     return buildMetadata({
       title: "Sản phẩm không tồn tại",
       path: `/san-pham/${slug}`,
@@ -64,7 +77,89 @@ export default async function ProductDetailPage({
 }) {
   const { slug } = await params;
   const product = await loadProduct(slug);
-  if (!product) notFound();
+  if (!product) {
+    const tetGift = TET_GIFT_SETS.find((s) => s.slug === slug);
+    if (!tetGift) notFound();
+
+    return (
+      <div className="bg-tea-cream pb-16">
+        <nav
+          aria-label="Breadcrumb"
+          className="container mx-auto flex items-center gap-1 px-4 py-4 text-sm text-tea-muted md:px-6"
+        >
+          <Link href="/" className="hover:text-tea-green">
+            Trang chủ
+          </Link>
+          <ChevronRight className="h-3.5 w-3.5" />
+          <Link href="/san-pham" className="hover:text-tea-green">
+            Sản phẩm
+          </Link>
+          <ChevronRight className="h-3.5 w-3.5" />
+          <span className="text-tea-ink">{tetGift.name}</span>
+        </nav>
+
+        <section className="container mx-auto grid gap-10 px-4 md:grid-cols-2 md:px-6">
+          <div className="space-y-4">
+            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-black">
+              <TetGiftProductImage
+                slug={tetGift.slug}
+                name={tetGift.name}
+                className="absolute inset-0"
+                priority
+                gallery
+                sizes="(min-width: 768px) 50vw, 100vw"
+              />
+            </div>
+          </div>
+
+          <div>
+            <Badge variant="muted" className="mb-3">
+              {TRA_QUAN_COLLECTION_NAME}
+            </Badge>
+            <h1 className="font-display text-3xl font-bold text-tea-green md:text-4xl">
+              {tetGift.name}
+            </h1>
+            <p className="mt-4 text-tea-muted md:text-lg">{tetGift.tagline}</p>
+
+            <dl className="mt-8 grid gap-4 rounded-2xl border border-tea-green/10 bg-white p-6">
+              {tetGift.teas.length > 0 ? (
+                <div className="space-y-2">
+                  <dt className="text-sm text-tea-muted">Thành phần</dt>
+                  <dd className="space-y-1 text-sm font-medium text-tea-ink">
+                    {tetGift.teas.map((t) => (
+                      <div key={`${t.name}-${t.weight}`} className="flex justify-between gap-4">
+                        <span>{t.name}</span>
+                        <span className="shrink-0 text-tea-muted">{t.weight}</span>
+                      </div>
+                    ))}
+                  </dd>
+                </div>
+              ) : null}
+              {tetGift.giftHighlights.length > 0 ? (
+                <div className="space-y-2">
+                  <dt className="text-sm text-tea-muted">Điểm nổi bật</dt>
+                  <dd className="flex flex-wrap gap-2">
+                    {tetGift.giftHighlights.map((h) => (
+                      <Badge key={h} variant="outline">
+                        {h}
+                      </Badge>
+                    ))}
+                  </dd>
+                </div>
+              ) : null}
+            </dl>
+
+            <div className="mt-6 flex flex-wrap gap-3">
+              <RfqButton productSlug={tetGift.slug} productName={tetGift.name} />
+              <Button asChild variant="outline" size="lg">
+                <Link href="/nam-duong-tra-quan#bo-suu-tap">Xem bộ sưu tập</Link>
+              </Button>
+            </div>
+          </div>
+        </section>
+      </div>
+    );
+  }
 
   const p = product as unknown as {
     id: string;
@@ -81,102 +176,71 @@ export default async function ProductDetailPage({
 
   const heroUrl = p.image?.url ?? p.gallery?.[0]?.image?.url ?? null;
   const heroAlt = p.image?.alt ?? p.name;
+  const tabs = getProductDetailTabs(p.slug);
+  const galleryImages = [
+    ...(heroUrl ? [{ src: heroUrl, alt: heroAlt }] : []),
+    ...(p.gallery ?? [])
+      .map((g, i) => ({
+        src: g.image?.url ?? "",
+        alt: g.image?.alt ?? `${p.name} - ${i + 1}`,
+      }))
+      .filter((i) => Boolean(i.src)),
+  ];
+
+  const specs = [
+    ...(p.origin ? [{ label: "Vùng nguyên liệu", value: p.origin }] : []),
+    ...(p.moq ? [{ label: "MOQ", value: p.moq }] : []),
+    ...(p.specs ?? []).map((s) => ({ label: s.label, value: s.value })),
+  ];
 
   return (
-    <div className="bg-tea-cream pb-16">
-      <nav
-        aria-label="Breadcrumb"
-        className="container mx-auto flex items-center gap-1 px-4 py-4 text-sm text-tea-muted md:px-6"
-      >
-        <Link href="/" className="hover:text-tea-green">Trang chủ</Link>
-        <ChevronRight className="h-3.5 w-3.5" />
-        <Link href="/san-pham" className="hover:text-tea-green">Sản phẩm</Link>
-        <ChevronRight className="h-3.5 w-3.5" />
-        <span className="text-tea-ink">{p.name}</span>
-      </nav>
+    <div className="bg-background">
+      <main className="flex-grow pb-20 px-margin-mobile md:px-margin-desktop max-w-max-width mx-auto w-full">
+        <nav
+          aria-label="Breadcrumb"
+          className="mb-8 flex items-center gap-2 text-muted-foreground"
+        >
+          <Link href="/" className="text-xs font-medium hover:text-foreground">
+            Trang chủ
+          </Link>
+          <ChevronRight className="h-4 w-4" />
+          <Link
+            href="/san-pham"
+            className="text-xs font-medium hover:text-foreground"
+          >
+            Sản phẩm
+          </Link>
+          <ChevronRight className="h-4 w-4" />
+          <span className="text-xs font-semibold text-foreground">
+            {p.name}
+          </span>
+        </nav>
 
-      <section className="container mx-auto grid gap-10 px-4 md:grid-cols-2 md:px-6">
-        <div className="space-y-4">
-          <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-tea-green-50">
-            {heroUrl ? (
-              <Image
-                src={heroUrl}
-                alt={heroAlt}
-                fill
-                sizes="(min-width: 768px) 50vw, 100vw"
-                className="object-cover"
-                priority
-              />
+        <section className="grid grid-cols-1 lg:grid-cols-12 gap-gutter mb-20">
+          <div className="lg:col-span-7">
+            {galleryImages.length > 0 ? (
+              <ProductDetailGallery images={galleryImages} />
             ) : (
-              <div className="flex h-full items-center justify-center text-tea-green/40">
+              <div className="flex h-[420px] items-center justify-center rounded-2xl bg-muted text-muted-foreground/60">
                 <Leaf className="h-16 w-16" />
               </div>
             )}
           </div>
-          {p.gallery && p.gallery.length > 0 ? (
-            <div className="grid grid-cols-4 gap-3">
-              {p.gallery.slice(0, 4).map((g, i) => (
-                <div
-                  key={i}
-                  className="relative aspect-square overflow-hidden rounded-xl bg-tea-green-50"
-                >
-                  {g.image?.url ? (
-                    <Image
-                      src={g.image.url}
-                      alt={g.image.alt ?? `${p.name} - ${i + 1}`}
-                      fill
-                      sizes="160px"
-                      className="object-cover"
-                    />
-                  ) : null}
-                </div>
-              ))}
-            </div>
-          ) : null}
-        </div>
 
-        <div>
-          {p.category?.name ? (
-            <Badge variant="muted" className="mb-3">
-              {p.category.name}
-            </Badge>
-          ) : null}
-          <h1 className="font-display text-3xl font-bold text-tea-green md:text-4xl">
-            {p.name}
-          </h1>
-          {p.shortDescription ? (
-            <p className="mt-4 text-tea-muted md:text-lg">{p.shortDescription}</p>
-          ) : null}
-
-          <dl className="mt-8 grid gap-4 rounded-2xl border border-tea-green/10 bg-white p-6">
-            {p.origin ? (
-              <div className="flex justify-between gap-4">
-                <dt className="text-sm text-tea-muted">Vùng nguyên liệu</dt>
-                <dd className="text-sm font-medium text-tea-ink">{p.origin}</dd>
-              </div>
-            ) : null}
-            {p.moq ? (
-              <div className="flex justify-between gap-4">
-                <dt className="text-sm text-tea-muted">MOQ</dt>
-                <dd className="text-sm font-medium text-tea-ink">{p.moq}</dd>
-              </div>
-            ) : null}
-            {p.specs?.map((s) => (
-              <div key={s.label} className="flex justify-between gap-4">
-                <dt className="text-sm text-tea-muted">{s.label}</dt>
-                <dd className="text-sm font-medium text-tea-ink">{s.value}</dd>
-              </div>
-            ))}
-          </dl>
-
-          <div className="mt-6 flex flex-wrap gap-3">
-            <RfqButton productSlug={p.slug} productName={p.name} />
-            <Button asChild variant="outline" size="lg">
-              <Link href="/lien-he">Liên hệ tư vấn</Link>
-            </Button>
+          <div className="lg:col-span-5">
+            <ProductDetailStickyPanel
+              badge={p.category?.name ?? null}
+              title={p.name}
+              description={p.shortDescription ?? null}
+              specs={specs}
+              productSlug={p.slug}
+              productName={p.name}
+            />
           </div>
-        </div>
-      </section>
+        </section>
+
+        <ProductDetailTabs tabs={tabs} />
+      </main>
     </div>
   );
 }
