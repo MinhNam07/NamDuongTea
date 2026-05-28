@@ -17,14 +17,14 @@ export const PRODUCT_TABS: { value: ProductTab; label: string; href: string }[] 
     },
     { value: "che-den", label: "Chè đen", href: "/san-pham?category=che-den" },
     {
-      value: "nam-duong-tra-quan",
-      label: "Nam Dương trà quán",
-      href: "/san-pham?category=nam-duong-tra-quan",
-    },
-    {
       value: "tra-uong-cao-cap",
       label: "Trà uống cao cấp",
       href: "/san-pham?category=tra-uong-cao-cap",
+    },
+    {
+      value: "nam-duong-tra-quan",
+      label: "Nam Dương trà quán",
+      href: "/san-pham?category=nam-duong-tra-quan",
     },
   ];
 

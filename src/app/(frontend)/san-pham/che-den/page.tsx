@@ -72,7 +72,11 @@ export default async function CheDenPage() {
         description="Hương ngọt tự nhiên, vị đậm rõ. Phù hợp hệ đồ uống cần vị trà nền tốt cho pha chế và phục vụ số lượng lớn."
       >
         <div className="flex flex-wrap justify-center gap-3">
-          <Button asChild variant="outline" className="rounded-full">
+          <Button
+            asChild
+            variant="outline"
+            className="rounded-full border-white/60 bg-white/20 text-white backdrop-blur-md hover:bg-white/30 hover:text-white"
+          >
             <Link href="/san-pham">Xem tất cả sản phẩm</Link>
           </Button>
           <Button asChild className="rounded-full">

@@ -4,6 +4,9 @@ export const BRAND_LOGO_SRC = "/images/logo.png";
 /** Hero Nam Dương trà quán — từ IMG_6442.CR2 */
 export const TRA_QUAN_HERO_BG_SRC = "/images/IMG_6548.JPG";
 
+/** Hero “Giới thiệu Nam Dương Tea” */
+export const GIOI_THIEU_HERO_BG_SRC = "/images/IMG_6570.JPG";
+
 export const TEA_HILL_HEADER_SRC = "/images/tea-hill-header.JPG";
 export const TEA_HILL_FOOTER_SRC = "/images/tea-hill-footer.JPG";
 

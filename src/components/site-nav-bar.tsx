@@ -48,8 +48,8 @@ const PRODUCT_DROPDOWN_ITEMS: SimpleNavItem[] = [
   { label: "Tất cả sản phẩm", href: "/san-pham" },
   { label: "Chè xanh", href: "/san-pham/che-xanh" },
   { label: "Chè đen", href: "/san-pham/che-den" },
-  { label: "Nam Dương trà quán", href: "/nam-duong-tra-quan" },
   { label: "Trà uống cao cấp", href: "/san-pham/tra-uong-cao-cap" },
+  { label: "Nam Dương trà quán", href: "/nam-duong-tra-quan" },
 ];
 
 type SiteNavBarProps = {
