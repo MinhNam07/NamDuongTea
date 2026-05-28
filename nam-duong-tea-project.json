@@ -685,8 +685,7 @@
   "source_files_reference": {
     "catalog_data": [
       "src/lib/product-lines.ts",
-      "src/lib/tet-gift-sets.ts",
-      "supabase/catalog-items.json"
+      "src/lib/tet-gift-sets.ts"
     ],
     "design": [
       "src/app/(frontend)/globals.css",

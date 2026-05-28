@@ -3,7 +3,7 @@
     "exportedAt": "2026-05-28",
     "siteName": "Nam Dương Tea",
     "locale": "vi-VN",
-    "description": "Tổng hợp dữ liệu website Nam Dương Tea từ mã nguồn (config, nội dung tĩnh, form, route). Sản phẩm và bài viết động lấy từ Supabase — mảng dynamicContent có thể rỗng nếu chưa kết nối DB.",
+    "description": "Tổng hợp dữ liệu website Nam Dương Tea từ mã nguồn (config, nội dung tĩnh, form, route). Sản phẩm marketing hardcode trong TS; bài viết/sản phẩm CMS qua Payload + PostgreSQL.",
     "sources": [
       "src/config/site.ts",
       "src/config/nav.ts",
