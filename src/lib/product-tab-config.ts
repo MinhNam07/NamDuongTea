@@ -123,6 +123,26 @@ export function applyCanonicalProductName(p: ProductCardProduct): ProductCardPro
   return canonical ? { ...p, name: canonical } : p;
 }
 
+/** Ô long thuộc nhóm trà xanh trên catalog. */
+export const GREEN_TEA_CATEGORY = {
+  name: "Trà xanh",
+  slug: "tra-xanh",
+} as const;
+
+export function canonicalCategoryForProductSlug(
+  slug: string,
+): { name: string; slug: string } | null {
+  if (isOolongSlug(slug)) return GREEN_TEA_CATEGORY;
+  return null;
+}
+
+export function applyCanonicalProductCategory(
+  p: ProductCardProduct,
+): ProductCardProduct {
+  const category = canonicalCategoryForProductSlug(p.slug);
+  return category ? { ...p, category } : p;
+}
+
 export function pickFirstProduct(
   candidates: ProductCardProduct[],
   preferredSlugs: readonly string[],
@@ -169,7 +189,10 @@ export function prepareCatalogProducts(
     tab as Exclude<ProductTab, "nam-duong-tra-quan">,
   );
 
-  return rows.map(withCatalogProductImage).map(applyCanonicalProductName);
+  return rows
+    .map(withCatalogProductImage)
+    .map(applyCanonicalProductName)
+    .map(applyCanonicalProductCategory);
 }
 
 export function fallbackImageForProductSlug(slug: string): string | null {

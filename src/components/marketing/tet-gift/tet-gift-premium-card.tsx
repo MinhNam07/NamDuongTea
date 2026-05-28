@@ -43,13 +43,6 @@ export function TetGiftPremiumCard({
           <Badge className="absolute right-3 top-3 border-0 bg-tea-deep-brown/90 text-tea-ivory">
             Hết hàng
           </Badge>
-        ) : product.stockNote ? (
-          <Badge
-            variant="muted"
-            className="absolute right-3 top-3 border-tea-gold/30 bg-white/90 text-tea-deep-brown"
-          >
-            {product.stockNote}
-          </Badge>
         ) : null}
       </div>
 

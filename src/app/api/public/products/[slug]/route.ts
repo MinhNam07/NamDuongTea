@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 
 import { getPayloadClient } from "@/lib/payload";
+import { canonicalCategoryForProductSlug } from "@/lib/product-tab-config";
 
 export const revalidate = 60;
 
@@ -58,9 +59,11 @@ export async function GET(
       image: p.image?.url ?? null,
       gallery: p.gallery?.map((g) => g.image?.url).filter(Boolean) ?? [],
       specs: p.specs ?? [],
-      category: p.category
-        ? { name: p.category.name ?? null, slug: p.category.slug ?? null }
-        : null,
+      category:
+        canonicalCategoryForProductSlug(p.slug) ??
+        (p.category
+          ? { name: p.category.name ?? null, slug: p.category.slug ?? null }
+          : null),
     });
   } catch (err) {
     console.error("[GET /api/public/products/:slug]", err);

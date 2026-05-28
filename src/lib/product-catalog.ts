@@ -51,7 +51,7 @@ function traQuanCatalogProducts(): CatalogProduct[] {
     slug: set.slug,
     shortDescription: set.tagline,
     origin: null,
-    moq: set.stockNote,
+    moq: null,
     image: tetGiftPrimaryImageSrc(set.slug),
     category: { name: TRA_QUAN_COLLECTION_NAME, slug: "nam-duong-tra-quan" },
   }));

@@ -203,7 +203,7 @@ values
     '["/images/products/tet-gift-sets/van-lo-tra-quan.jpg","/images/products/tet-gift-sets/van-lo-tra-quan-2.jpg"]'::jsonb,
     null,
     690000,
-    'Hết',
+    null,
     'Tứ vị trà — bộ sưu tập giới hạn',
     '[{"name":"Trà ô long","weight":"100gr"},{"name":"Trà đinh ngọc","weight":"50gr"},{"name":"Bạch trà shan tuyết","weight":"30gr"}]'::jsonb,
     '["Kết hợp ô long, đinh ngọc, shan","Thiết kế vân lộ tinh xảo","Phiên bản đặc biệt"]'::jsonb

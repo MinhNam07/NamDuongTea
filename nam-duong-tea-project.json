@@ -531,7 +531,7 @@
           "/images/products/tet-gift-sets/van-lo-tra-quan-2.jpg"
         ],
         "price_vnd": 690000,
-        "stock_note": "Hết",
+        "stock_note": null,
         "tagline": "Tứ vị trà — bộ sưu tập giới hạn",
         "teas": [
           { "name": "Trà ô long", "weight": "100gr" },

@@ -48,9 +48,6 @@ export function TetGiftB2bCatalogue() {
                 <th className="px-4 py-3 font-semibold text-tea-deep-brown">
                   Giá bán
                 </th>
-                <th className="px-4 py-3 font-semibold text-tea-deep-brown">
-                  Tồn kho
-                </th>
                 <th className="px-4 py-3 font-semibold text-tea-deep-brown" />
               </tr>
             </thead>
@@ -104,17 +101,6 @@ export function TetGiftB2bCatalogue() {
                     </td>
                     <td className="px-4 py-4 align-top font-display font-semibold text-tea-dark-green">
                       {formatVnd(set.priceVnd) ?? "—"}
-                    </td>
-                    <td className="px-4 py-4 align-top">
-                      <span
-                        className={
-                          soldOut
-                            ? "text-tea-brown-700"
-                            : "text-tea-moss font-medium"
-                        }
-                      >
-                        {set.stockNote ?? "—"}
-                      </span>
                     </td>
                     <td className="px-4 py-4 align-top">
                       <Button

@@ -13,6 +13,7 @@ import { ProductDetailTabs } from "@/components/products/product-detail-tabs";
 import { getPayloadClient } from "@/lib/payload";
 import { getProductDetailTabs } from "@/lib/product-detail-tabs";
 import { getCuratedTeaImages } from "@/lib/product-lines";
+import { canonicalCategoryForProductSlug } from "@/lib/product-tab-config";
 import { buildMetadata } from "@/lib/seo";
 import { TET_GIFT_SETS, TRA_QUAN_COLLECTION_NAME } from "@/lib/tet-gift-sets";
 
@@ -237,7 +238,11 @@ export default async function ProductDetailPage({
 
           <div className="lg:col-span-5">
             <ProductDetailStickyPanel
-              badge={p.category?.name ?? null}
+              badge={
+                canonicalCategoryForProductSlug(p.slug)?.name ??
+                p.category?.name ??
+                null
+              }
               title={p.name}
               description={p.shortDescription ?? null}
               specs={specs}

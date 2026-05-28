@@ -32,11 +32,6 @@ const CATEGORIES: SeedCategory[] = [
     slug: "tra-den",
     description: "Đậm vị, ổn định cho pha trà và pha chế F&B.",
   },
-  {
-    name: "Trà ô-long",
-    slug: "tra-o-long",
-    description: "Hương hoa quả nhẹ, phù hợp quán trà cao cấp.",
-  },
 ];
 
 function repoPath(...parts: string[]) {
@@ -137,7 +132,7 @@ function seedProducts(): SeedProduct[] {
     {
       name: "Trà Ô Long",
       slug: "tra-o-long",
-      categorySlug: "tra-o-long",
+      categorySlug: "tra-xanh",
       shortDescription:
         "Hương hoa quả nhẹ, hậu vị dài — phù hợp quán trà cao cấp và kênh phân phối premium.",
       origin: "Vùng Cao, Việt Nam",

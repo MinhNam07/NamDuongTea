@@ -98,7 +98,7 @@ export const TET_GIFT_SETS: TetGiftSet[] = [
       { name: "Bạch trà shan tuyết", weight: "30gr" },
     ],
     priceVnd: 690_000,
-    stockNote: "Hết",
+    stockNote: null,
     tagline: "Tứ vị trà — bộ sưu tập giới hạn",
     giftHighlights: [
       "Kết hợp ô long, đinh ngọc, shan",
