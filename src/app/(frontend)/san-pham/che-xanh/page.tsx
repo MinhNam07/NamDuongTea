@@ -2,14 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { ProductGrid } from "@/components/product-grid";
-import type { ProductCardProduct } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import { ProductsHero } from "@/components/products/products-hero";
-import { getPayloadClient } from "@/lib/payload";
-import {
-  getWhitelistSlugsForTab,
-  prepareCatalogProducts,
-} from "@/lib/product-tab-config";
+import { loadCatalogProducts } from "@/lib/product-catalog";
 import { buildMetadata } from "@/lib/seo";
 
 export const revalidate = 300;
@@ -21,28 +16,8 @@ export const metadata: Metadata = buildMetadata({
   path: "/san-pham/che-xanh",
 });
 
-async function loadProducts(): Promise<ProductCardProduct[]> {
-  try {
-    const payload = await getPayloadClient();
-    const slugs = getWhitelistSlugsForTab("che-xanh");
-    const { docs } = await payload.find({
-      collection: "products",
-      where: {
-        and: [{ status: { equals: "published" } }, { slug: { in: slugs } }],
-      },
-      depth: 1,
-      limit: 50,
-    });
-
-    const candidates = docs as unknown as ProductCardProduct[];
-    return prepareCatalogProducts(candidates, "che-xanh");
-  } catch {
-    return [];
-  }
-}
-
 export default async function CheXanhPage() {
-  const products = await loadProducts();
+  const products = await loadCatalogProducts("che-xanh");
 
   return (
     <div className="bg-tea-cream">

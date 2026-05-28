@@ -17,7 +17,7 @@ const STORIES = [
     description:
       "Kiểm soát từ vùng nguyên liệu, quy trình chế biến đến đóng gói — minh bạch nguồn gốc cho đối tác B2B.",
     image: "/images/IMG_6559.JPG",
-    href: "/gioi-thieu#nguyen-lieu",
+    href: "/tim-hieu-vung-trong",
   },
 ] as const;
 

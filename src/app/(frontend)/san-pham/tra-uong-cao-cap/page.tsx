@@ -2,14 +2,9 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { ProductGrid } from "@/components/product-grid";
-import type { ProductCardProduct } from "@/components/product-card";
 import { Button } from "@/components/ui/button";
 import { ProductsHero } from "@/components/products/products-hero";
-import { getPayloadClient } from "@/lib/payload";
-import {
-  getWhitelistSlugsForTab,
-  prepareCatalogProducts,
-} from "@/lib/product-tab-config";
+import { loadCatalogProducts } from "@/lib/product-catalog";
 import { buildMetadata } from "@/lib/seo";
 
 export const revalidate = 300;
@@ -21,28 +16,8 @@ export const metadata: Metadata = buildMetadata({
   path: "/san-pham/tra-uong-cao-cap",
 });
 
-async function loadProducts(): Promise<ProductCardProduct[]> {
-  try {
-    const payload = await getPayloadClient();
-    const slugs = getWhitelistSlugsForTab("tra-uong-cao-cap");
-    const { docs } = await payload.find({
-      collection: "products",
-      where: {
-        and: [{ status: { equals: "published" } }, { slug: { in: slugs } }],
-      },
-      depth: 1,
-      limit: 50,
-    });
-
-    const candidates = docs as unknown as ProductCardProduct[];
-    return prepareCatalogProducts(candidates, "tra-uong-cao-cap");
-  } catch {
-    return [];
-  }
-}
-
 export default async function TraUongCaoCapPage() {
-  const products = await loadProducts();
+  const products = await loadCatalogProducts("tra-uong-cao-cap");
 
   return (
     <div className="bg-tea-cream">

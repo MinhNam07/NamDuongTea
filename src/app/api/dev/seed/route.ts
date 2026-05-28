@@ -95,8 +95,8 @@ function seedProducts(): SeedProduct[] {
 
   return [
     {
-      name: "Trà Xanh Đinh Ngọc",
-      slug: "tra-xanh-dinh-ngoc",
+      name: "Trà Đinh Ngọc",
+      slug: "tra-dinh-ngoc",
       categorySlug: "tra-xanh",
       shortDescription:
         "Búp non một tôm một lá, hương cốm thanh — phù hợp pha nóng/lạnh và chuỗi F&B cần chất lượng ổn định.",
@@ -105,8 +105,8 @@ function seedProducts(): SeedProduct[] {
       imagePath: candidates[1],
     },
     {
-      name: "Trà Xanh Shan Tuyết",
-      slug: "tra-xanh-shan-tuyet",
+      name: "Bạch Trà Shan Tuyết",
+      slug: "bach-tra-shan-tuyet",
       categorySlug: "tra-xanh",
       shortDescription:
         "Hương thảo mộc dịu, vị ngọt hậu — lựa chọn premium cho trà nguyên liệu và quà tặng.",
@@ -115,8 +115,8 @@ function seedProducts(): SeedProduct[] {
       imagePath: candidates[0],
     },
     {
-      name: "Hồng Trà Lên Men Vừa",
-      slug: "hong-tra-len-men-vua",
+      name: "Hồng trà",
+      slug: "hong-tra",
       categorySlug: "tra-den",
       shortDescription:
         "Sắc nước hổ phách, hương mật ong nhẹ — nền trà rõ vị cho trà sữa và đồ uống đóng chai.",

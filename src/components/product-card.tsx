@@ -19,6 +19,7 @@ export type ProductCardProduct = {
   shortDescription?: string | null;
   description?: string | null;
   origin?: string | null;
+  moq?: string | null;
   image?:
     | {
         url?: string | null;
@@ -114,6 +115,11 @@ export function ProductCard({
         {description ? (
           <p className="text-sm leading-relaxed text-tea-muted line-clamp-3">
             {description}
+          </p>
+        ) : null}
+        {product.moq ? (
+          <p className="mt-4 text-sm font-semibold text-tea-deep-brown">
+            <span className="text-tea-muted">Quy cách:</span> {product.moq}
           </p>
         ) : null}
       </CardContent>

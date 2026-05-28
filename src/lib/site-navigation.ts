@@ -12,6 +12,11 @@ export type NavItem = {
   children?: NavChild[];
 };
 
+export const ABOUT_NAV_CHILDREN: NavChild[] = [
+  { label: "Giới thiệu", href: "/gioi-thieu" },
+  { label: "Tìm hiểu về vùng trồng", href: "/tim-hieu-vung-trong" },
+];
+
 const PRODUCT_NAV_CHILDREN: NavChild[] = [
   { label: "Tất cả sản phẩm", href: "/san-pham" },
   ...PRODUCT_LINES.map((line) => ({
@@ -23,10 +28,7 @@ const PRODUCT_NAV_CHILDREN: NavChild[] = [
 export const PRIMARY_NAV: NavItem[] = [
   {
     label: "Về Nam Dương",
-    children: [
-      { label: "Giới thiệu", href: "/gioi-thieu" },
-      { label: "Từ đồi chè đến tách trà", href: "/gioi-thieu#nguyen-lieu" },
-    ],
+    children: ABOUT_NAV_CHILDREN,
   },
   {
     label: "Sản phẩm",

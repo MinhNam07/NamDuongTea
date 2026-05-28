@@ -40,7 +40,7 @@ export const ALL_TEA_PICK_ORDER = {
   dinhNgoc: ["tra-dinh-ngoc", "tra-xanh-dinh-ngoc"],
   shanTuyet: ["bach-tra-shan-tuyet", "tra-xanh-shan-tuyet"],
   oLong: [...OOLONG_SLUGS],
-  hongTra: ["hong-tra", "hong-tra-len-men-vua"],
+  hongTra: ["hong-tra", "hong-tra-len-men-vua"] as const,
 } as const;
 
 export const PRODUCT_SLUG_WHITELIST: Record<
@@ -71,9 +71,11 @@ export const PRODUCT_SLUG_WHITELIST: Record<
 export function normalizeProductTab(raw?: string): ProductTab {
   if (raw === "tat-ca") return "tat-ca";
   if (raw === "tra-uong-cao-cap") return "tra-uong-cao-cap";
-  if (raw === "che-den") return "che-den";
+  if (raw === "che-den" || raw === "tra-den") return "che-den";
   if (raw === "nam-duong-tra-quan") return "nam-duong-tra-quan";
-  if (raw === "che-xanh") return "che-xanh";
+  if (raw === "che-xanh" || raw === "tra-xanh" || raw === "tra-o-long") {
+    return "che-xanh";
+  }
   return "tat-ca";
 }
 
@@ -167,9 +169,7 @@ export function prepareCatalogProducts(
     tab as Exclude<ProductTab, "nam-duong-tra-quan">,
   );
 
-  return rows
-    .map(withCatalogProductImage)
-    .map(applyCanonicalProductName);
+  return rows.map(withCatalogProductImage).map(applyCanonicalProductName);
 }
 
 export function fallbackImageForProductSlug(slug: string): string | null {
@@ -184,7 +184,7 @@ export function canonicalNameForProductSlug(slug: string): string | null {
     return "Bạch Trà Shan Tuyết";
   }
   if (slug === "hong-tra" || slug === "hong-tra-len-men-vua") {
-    return "Hồng Trà";
+    return "Hồng trà";
   }
   if (slug === "tra-o-long" || slug.startsWith("o-long-")) {
     return "Trà Ô Long";

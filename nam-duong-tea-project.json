@@ -168,7 +168,7 @@
         "label": "Về Nam Dương",
         "children": [
           { "label": "Giới thiệu", "href": "/gioi-thieu" },
-          { "label": "Từ đồi chè đến tách trà", "href": "/gioi-thieu#nguyen-lieu" }
+          { "label": "Tìm hiểu về vùng trồng", "href": "/tim-hieu-vung-trong" }
         ]
       },
       {
@@ -208,8 +208,13 @@
     },
     {
       "path": "/gioi-thieu",
-      "title": "Giới thiệu Nam Dương Tea",
-      "description": "Câu chuyện vùng trà Nam Dương — từ búp tươi đến đối tác tin cậy của ngành trà Việt."
+      "title": "Giới thiệu — Công ty Trà Nam Dương",
+      "description": "Giới thiệu về Công ty Trà Nam Dương — tinh hoa trà Việt cho đại lý, nhà phân phối và xuất khẩu."
+    },
+    {
+      "path": "/tim-hieu-vung-trong",
+      "title": "Tìm hiểu về vùng trồng",
+      "description": "Cơ sở hạ tầng, nhà máy, vùng trồng và nguyên liệu của Công ty Trà Nam Dương."
     },
     {
       "path": "/san-pham",
@@ -273,7 +278,7 @@
           "title": "Từ nông trường đến tách trà",
           "description": "Kiểm soát từ vùng nguyên liệu, quy trình chế biến đến đóng gói — minh bạch nguồn gốc cho đối tác B2B.",
           "image": "/images/IMG_6559.JPG",
-          "href": "/gioi-thieu#nguyen-lieu"
+          "href": "/tim-hieu-vung-trong"
         }
       ],
       "product_overview": {

@@ -41,7 +41,7 @@ export default async function LienHePage({
                 <MapPin className="h-5 w-5" />
               </span>
               <div>
-                <p className="font-medium">Văn phòng & nhà máy</p>
+                <p className="font-medium">Văn phòng</p>
                 <p className="text-sm text-tea-muted">
                 Khối 1, Xã Sóc Sơn, Hà Nội, Việt Nam
                 </p>

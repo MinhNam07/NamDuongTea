@@ -21,7 +21,7 @@ export function AlternatingStorySection() {
   return (
     <section
       id="story"
-      className="w-full bg-[#f6fcec] px-6 py-28 md:px-[5vw] md:py-32"
+      className="w-full bg-[#133200] px-6 py-28 md:px-[5vw] md:py-32"
       aria-label="Câu chuyện thương hiệu"
     >
       <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-32">
@@ -34,36 +34,36 @@ export function AlternatingStorySection() {
                 className={idx % 2 === 1 ? "order-2 lg:order-2" : "order-2 lg:order-1"}
               >
                 <div className="flex items-center gap-4">
-                  <div className="h-px w-12 bg-[rgba(106,94,46,1)]" />
-                  <span className="text-sm uppercase tracking-[0.15em] text-[rgba(106,94,46,1)]">
+                  <div className="h-px w-12 bg-[#f3e2a6]/80" />
+                  <span className="text-sm font-medium uppercase tracking-[0.2em] text-[#f3e2a6]">
                     {item.label}
                   </span>
                 </div>
 
-                <h2 className="mt-4 font-display text-4xl font-light leading-tight tracking-tight text-[rgba(7,27,0,1)] lg:text-5xl">
+                <h2 className="mt-4 font-display text-4xl font-light leading-tight tracking-tight text-white lg:text-5xl">
                   {item.title} <br />
-                  <span className="font-serif italic font-normal text-[rgba(106,94,46,1)]">
+                  <span className="font-serif italic font-normal text-tea-olive">
                     {item.emphasis}
                   </span>
                 </h2>
 
-                <div className="mt-6 space-y-6 text-lg font-light leading-relaxed text-[rgba(67,73,61,1)]">
+                <div className="mt-6 space-y-6 text-lg font-light leading-relaxed text-white/75">
                   {item.paragraphs.map((p) => (
                     <p key={p}>{p}</p>
                   ))}
                 </div>
 
                 {item.statCard ? (
-                  <div className="mt-10 inline-block rounded-2xl border border-[rgba(195,200,186,0.6)] bg-[rgba(240,246,229,1)] p-6">
+                  <div className="mt-10 inline-block rounded-2xl border border-white/20 bg-white/5 p-6 backdrop-blur-sm">
                     <div className="mb-2 flex items-end gap-4">
-                      <span className="font-display text-4xl font-light text-[rgba(7,27,0,1)]">
+                      <span className="font-display text-4xl font-light text-white">
                         {item.statCard.value}
                       </span>
-                      <span className="text-sm uppercase tracking-wide text-[rgba(67,73,61,1)]">
+                      <span className="text-sm uppercase tracking-wide text-white/70">
                         {item.statCard.label}
                       </span>
                     </div>
-                    <p className="text-sm font-light text-[rgba(67,73,61,1)]">
+                    <p className="text-sm font-light text-white/65">
                       {item.statCard.description}
                     </p>
                   </div>
@@ -74,7 +74,7 @@ export function AlternatingStorySection() {
                     <Button
                       asChild
                       variant="link"
-                      className="h-auto p-0 text-sm font-medium text-[rgba(7,27,0,1)] underline-offset-8 hover:text-[rgba(106,94,46,1)]"
+                      className="h-auto p-0 text-sm font-medium text-white underline-offset-8 hover:text-[#f3e2a6]"
                     >
                       <Link href={item.link.href}>{item.link.label}</Link>
                     </Button>

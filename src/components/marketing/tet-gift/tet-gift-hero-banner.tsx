@@ -16,10 +16,13 @@ export function TetGiftHeroBanner() {
   return (
     <section
       aria-label={`${TRA_QUAN_COLLECTION_NAME} — Nam Dương Tea`}
-      className="relative -mt-24 flex min-h-[calc(100svh-48px)] items-start overflow-hidden bg-tea-dark-green px-6 pb-12 pt-32 md:-mt-28 md:px-[5vw] md:pb-14 md:pt-36"
+      className="relative flex min-h-[100svh] items-center overflow-hidden bg-tea-dark-green px-6 pb-16 pt-28 md:px-[5vw] md:pb-20 md:pt-32"
     >
-      {/* Background */}
-      <div aria-hidden className="pointer-events-none absolute inset-0">
+      {/* Background — full viewport, no cream fade (avoids white band above next section) */}
+      <div
+        aria-hidden
+        className="pointer-events-none absolute inset-0 z-0 min-h-full overflow-hidden"
+      >
         <Image
           src={TRA_QUAN_BG_SRC}
           alt=""
@@ -29,7 +32,7 @@ export function TetGiftHeroBanner() {
           className="object-cover object-center"
         />
 
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(7,27,0,0.84),rgba(7,27,0,0.48),rgba(246,252,235,0.9))] mix-blend-multiply" />
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(7,27,0,0.88),rgba(7,27,0,0.52),rgba(7,27,0,0.78))] mix-blend-multiply" />
       </div>
 
       {/* Content */}

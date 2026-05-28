@@ -22,6 +22,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
+import { ABOUT_NAV_CHILDREN } from "@/lib/site-navigation";
 import { BRAND_LOGO_SRC } from "@/lib/site-assets";
 import { cn } from "@/lib/utils";
 
@@ -35,9 +36,8 @@ function isActive(pathname: string, href: string) {
 
 type SimpleNavItem = { label: string; href: string };
 
-const HOME_NAV_BEFORE_PRODUCTS: SimpleNavItem[] = [
+const HOME_NAV_BEFORE_DROPDOWNS: SimpleNavItem[] = [
   { label: "Câu chuyện", href: "/#story" },
-  { label: "Về Nam Dương", href: "/gioi-thieu" },
 ];
 
 const HOME_NAV_AFTER_PRODUCTS: SimpleNavItem[] = [
@@ -52,9 +52,27 @@ const PRODUCT_DROPDOWN_ITEMS: SimpleNavItem[] = [
   { label: "Nam Dương trà quán", href: "/nam-duong-tra-quan" },
 ];
 
+function NavDropdownContent({ items }: { items: SimpleNavItem[] }) {
+  return (
+    <div className="grid gap-1">
+      {items.map((it) => (
+        <NavigationMenuLink asChild key={it.href}>
+          <Link
+            href={it.href}
+            className={cn(
+              "rounded-xl px-3 py-2 text-sm font-medium text-tea-ink transition-colors",
+              "hover:bg-black/5 hover:text-tea-dark-green",
+            )}
+          >
+            {it.label}
+          </Link>
+        </NavigationMenuLink>
+      ))}
+    </div>
+  );
+}
+
 type SiteNavBarProps = {
-  // kept for backwards compatibility with existing imports;
-  // design from main doesn't need these flags.
   collapsed?: boolean;
   transparent?: boolean;
   variant?: "dark-on-hero" | "dark-on-light";
@@ -63,6 +81,7 @@ type SiteNavBarProps = {
 export function SiteNavBar({ variant = "dark-on-light" }: SiteNavBarProps) {
   const pathname = usePathname();
   const [mobileOpen, setMobileOpen] = useState(false);
+  const [mobileAboutOpen, setMobileAboutOpen] = useState(false);
   const [mobileProductsOpen, setMobileProductsOpen] = useState(false);
   const onHero = variant === "dark-on-hero";
   const navText = onHero
@@ -71,12 +90,18 @@ export function SiteNavBar({ variant = "dark-on-light" }: SiteNavBarProps) {
   const navActive = onHero ? "text-white bg-white/10" : "text-[rgba(7,27,0,1)] bg-black/5";
   const brandText = onHero ? "text-[rgba(255,255,255,0.92)]" : "text-[rgba(7,27,0,0.92)]";
   const focusRing = onHero ? "focus-visible:ring-white/40" : "focus-visible:ring-black/20";
-  const mobileTrigger =
-    onHero
-      ? "text-white hover:bg-white/10 hover:text-white"
-      : "text-[rgba(7,27,0,0.86)] hover:bg-black/5 hover:text-[rgba(7,27,0,1)]";
+  const mobileTrigger = onHero
+    ? "text-white hover:bg-white/10 hover:text-white"
+    : "text-[rgba(7,27,0,0.86)] hover:bg-black/5 hover:text-[rgba(7,27,0,1)]";
 
+  const isAboutActive =
+    pathname === "/gioi-thieu" || pathname.startsWith("/tim-hieu-vung-trong");
   const isProductsActive = pathname === "/san-pham" || pathname.startsWith("/san-pham/");
+
+  const triggerClass = cn(
+    "rounded-full px-4 py-2 text-sm font-medium tracking-wide transition-colors",
+    navText,
+  );
 
   return (
     <>
@@ -103,19 +128,12 @@ export function SiteNavBar({ variant = "dark-on-light" }: SiteNavBarProps) {
 
         <NavigationMenu className="hidden md:flex" aria-label="Điều hướng">
           <NavigationMenuList className="gap-2">
-            {HOME_NAV_BEFORE_PRODUCTS.map((it) => {
+            {HOME_NAV_BEFORE_DROPDOWNS.map((it) => {
               const active = isActive(pathname, it.href.split("#")[0] ?? it.href);
               return (
                 <NavigationMenuItem key={it.href}>
                   <NavigationMenuLink asChild>
-                    <Link
-                      href={it.href}
-                      className={cn(
-                        "rounded-full px-4 py-2 text-sm font-medium tracking-wide transition-colors",
-                        navText,
-                        active && navActive,
-                      )}
-                    >
+                    <Link href={it.href} className={cn(triggerClass, active && navActive)}>
                       {it.label}
                     </Link>
                   </NavigationMenuLink>
@@ -125,30 +143,23 @@ export function SiteNavBar({ variant = "dark-on-light" }: SiteNavBarProps) {
 
             <NavigationMenuItem>
               <NavigationMenuTrigger
-                className={cn(
-                  "rounded-full px-4 py-2 text-sm font-medium tracking-wide transition-colors",
-                  navText,
-                  isProductsActive && navActive,
-                )}
+                className={cn(triggerClass, isAboutActive && navActive)}
+              >
+                Về Nam Dương
+              </NavigationMenuTrigger>
+              <NavigationMenuContent className="p-2">
+                <NavDropdownContent items={ABOUT_NAV_CHILDREN} />
+              </NavigationMenuContent>
+            </NavigationMenuItem>
+
+            <NavigationMenuItem>
+              <NavigationMenuTrigger
+                className={cn(triggerClass, isProductsActive && navActive)}
               >
                 Sản phẩm
               </NavigationMenuTrigger>
               <NavigationMenuContent className="p-2">
-                <div className="grid gap-1">
-                  {PRODUCT_DROPDOWN_ITEMS.map((it) => (
-                    <NavigationMenuLink asChild key={it.href}>
-                      <Link
-                        href={it.href}
-                        className={cn(
-                          "rounded-xl px-3 py-2 text-sm font-medium text-tea-ink transition-colors",
-                          "hover:bg-black/5 hover:text-tea-dark-green",
-                        )}
-                      >
-                        {it.label}
-                      </Link>
-                    </NavigationMenuLink>
-                  ))}
-                </div>
+                <NavDropdownContent items={PRODUCT_DROPDOWN_ITEMS} />
               </NavigationMenuContent>
             </NavigationMenuItem>
 
@@ -157,14 +168,7 @@ export function SiteNavBar({ variant = "dark-on-light" }: SiteNavBarProps) {
               return (
                 <NavigationMenuItem key={it.href}>
                   <NavigationMenuLink asChild>
-                    <Link
-                      href={it.href}
-                      className={cn(
-                        "rounded-full px-4 py-2 text-sm font-medium tracking-wide transition-colors",
-                        navText,
-                        active && navActive,
-                      )}
-                    >
+                    <Link href={it.href} className={cn(triggerClass, active && navActive)}>
                       {it.label}
                     </Link>
                   </NavigationMenuLink>
@@ -200,7 +204,7 @@ export function SiteNavBar({ variant = "dark-on-light" }: SiteNavBarProps) {
               </SheetHeader>
 
               <nav className="mt-6 flex flex-col gap-2" aria-label="Menu di động">
-                {HOME_NAV_BEFORE_PRODUCTS.map((it) => (
+                {HOME_NAV_BEFORE_DROPDOWNS.map((it) => (
                   <Link
                     key={it.href}
                     href={it.href}
@@ -216,45 +220,23 @@ export function SiteNavBar({ variant = "dark-on-light" }: SiteNavBarProps) {
                   </Link>
                 ))}
 
-                <div className="flex flex-col">
-                  <button
-                    type="button"
-                    onClick={() => setMobileProductsOpen((v) => !v)}
-                    className={cn(
-                      "flex min-h-11 items-center justify-between rounded-xl px-3 text-base font-medium",
-                      "text-white/90 transition-colors hover:bg-white/10 hover:text-white",
-                      isProductsActive && "bg-white/10 text-white",
-                    )}
-                    aria-expanded={mobileProductsOpen}
-                  >
-                    <span>Sản phẩm</span>
-                    <ChevronDown
-                      className={cn(
-                        "h-5 w-5 transition-transform duration-200",
-                        mobileProductsOpen ? "rotate-180" : "rotate-0",
-                      )}
-                      aria-hidden
-                    />
-                  </button>
+                <MobileNavAccordion
+                  label="Về Nam Dương"
+                  open={mobileAboutOpen}
+                  onToggle={() => setMobileAboutOpen((v) => !v)}
+                  active={isAboutActive}
+                  items={ABOUT_NAV_CHILDREN}
+                  onNavigate={() => setMobileOpen(false)}
+                />
 
-                  {mobileProductsOpen ? (
-                    <div className="mt-1 flex flex-col gap-1 pl-2">
-                      {PRODUCT_DROPDOWN_ITEMS.map((it) => (
-                        <Link
-                          key={it.href}
-                          href={it.href}
-                          onClick={() => setMobileOpen(false)}
-                          className={cn(
-                            "flex min-h-10 items-center rounded-xl px-3 text-sm font-medium",
-                            "text-white/80 transition-colors hover:bg-white/10 hover:text-white",
-                          )}
-                        >
-                          {it.label}
-                        </Link>
-                      ))}
-                    </div>
-                  ) : null}
-                </div>
+                <MobileNavAccordion
+                  label="Sản phẩm"
+                  open={mobileProductsOpen}
+                  onToggle={() => setMobileProductsOpen((v) => !v)}
+                  active={isProductsActive}
+                  items={PRODUCT_DROPDOWN_ITEMS}
+                  onNavigate={() => setMobileOpen(false)}
+                />
 
                 {HOME_NAV_AFTER_PRODUCTS.map((it) => (
                   <Link
@@ -286,5 +268,63 @@ export function SiteNavBar({ variant = "dark-on-light" }: SiteNavBarProps) {
         </div>
       </div>
     </>
+  );
+}
+
+function MobileNavAccordion({
+  label,
+  open,
+  onToggle,
+  active,
+  items,
+  onNavigate,
+}: {
+  label: string;
+  open: boolean;
+  onToggle: () => void;
+  active: boolean;
+  items: SimpleNavItem[];
+  onNavigate: () => void;
+}) {
+  return (
+    <div className="flex flex-col">
+      <button
+        type="button"
+        onClick={onToggle}
+        className={cn(
+          "flex min-h-11 items-center justify-between rounded-xl px-3 text-base font-medium",
+          "text-white/90 transition-colors hover:bg-white/10 hover:text-white",
+          active && "bg-white/10 text-white",
+        )}
+        aria-expanded={open}
+      >
+        <span>{label}</span>
+        <ChevronDown
+          className={cn(
+            "h-5 w-5 transition-transform duration-200",
+            open ? "rotate-180" : "rotate-0",
+          )}
+          aria-hidden
+        />
+      </button>
+
+      {open ? (
+        <div className="mt-1 flex flex-col gap-1 pl-2">
+          {items.map((it) => (
+            <Link
+              key={it.href}
+              href={it.href}
+              onClick={onNavigate}
+              className={cn(
+                "flex min-h-10 items-center rounded-xl px-3 text-sm font-medium",
+                "text-white/80 transition-colors hover:bg-white/10 hover:text-white",
+              )}
+            >
+              {it.label}
+            </Link>
+          ))}
+        </div>
+      ) : null}
+    </div>
   );
 }

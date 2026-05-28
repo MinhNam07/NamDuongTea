@@ -2,23 +2,18 @@ import type { Metadata } from "next";
 import Link from "next/link";
 
 import { ProductGrid } from "@/components/product-grid";
-import type { ProductCardProduct } from "@/components/product-card";
-import { getPayloadClient } from "@/lib/payload";
 import {
-  getWhitelistSlugsForTab,
+  loadCatalogProducts,
+  type CatalogProduct,
+} from "@/lib/product-catalog";
+import {
   normalizeProductTab,
-  prepareCatalogProducts,
   PRODUCT_TABS,
   tabLabel,
 } from "@/lib/product-tab-config";
 import { buildMetadata } from "@/lib/seo";
 import { cn } from "@/lib/utils";
 import { WEBSITE_DATA } from "@/lib/website-data";
-import {
-  TET_GIFT_SETS,
-  TRA_QUAN_COLLECTION_NAME,
-  tetGiftPrimaryImageSrc,
-} from "@/lib/tet-gift-sets";
 import { ProductCatalogSearch } from "@/components/products/product-catalog-search";
 import { ProductsPagination } from "@/components/products/products-pagination/index";
 import { ProductsHero } from "@/components/products/products-hero";
@@ -44,45 +39,15 @@ export default async function ProductListPage({
   const currentPage = Math.max(1, Number.parseInt(page ?? "1", 10) || 1);
   const pageSize = 8;
 
-  let products: ProductCardProduct[] = [];
+  const traQuanProducts = await loadCatalogProducts("nam-duong-tra-quan");
 
-  try {
-    const payload = await getPayloadClient();
-    if (tab === "nam-duong-tra-quan") {
-      products = [];
-    } else {
-      const slugs = getWhitelistSlugsForTab(tab);
-      const { docs } = await payload.find({
-        collection: "products",
-        where: {
-          and: [
-            { status: { equals: "published" } },
-            { slug: { in: slugs } },
-          ],
-        },
-        depth: 1,
-        limit: 50,
-      });
-
-      const candidates = docs as unknown as ProductCardProduct[];
-      products = prepareCatalogProducts(candidates, tab);
-    }
-  } catch {
-    products = [];
-  }
-
-  const traQuanProducts: ProductCardProduct[] = TET_GIFT_SETS.map((set) => ({
-    id: `tet-gift-${set.slug}`,
-    name: set.name,
-    slug: set.slug,
-    shortDescription: set.tagline,
-    origin: null,
-    image: tetGiftPrimaryImageSrc(set.slug),
-    category: TRA_QUAN_COLLECTION_NAME,
-  }));
-
+  let products: CatalogProduct[] = [];
   if (tab === "nam-duong-tra-quan") {
     products = traQuanProducts;
+  } else if (tab !== "tat-ca") {
+    products = await loadCatalogProducts(tab);
+  } else {
+    products = await loadCatalogProducts("tra-uong-cao-cap");
   }
 
   const filteredProducts = query
@@ -160,7 +125,7 @@ export default async function ProductListPage({
               <p className="text-sm text-tea-muted">
                 Đang hiển thị {pagedProducts.length} / {filteredProducts.length}{" "}
                 sản phẩm
-              {tab ? ` · ${tabLabel(tab)}` : ""}.
+                {tab ? ` · ${tabLabel(tab)}` : ""}.
               </p>
             </div>
           </>
