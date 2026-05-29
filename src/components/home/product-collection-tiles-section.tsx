@@ -5,6 +5,7 @@ import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import { ArrowRight, Plus } from "lucide-react";
 
+import { SectionEyebrowTitle } from "@/components/marketing/section-eyebrow-title";
 import { Button } from "@/components/ui/button";
 import {
   HOME_CATALOG_TABS,
@@ -93,17 +94,11 @@ export function ProductCollectionTilesSection() {
       <div className="mx-auto w-full max-w-[1440px]">
         <header className="mb-12 grid gap-8 md:grid-cols-[1.05fr_0.95fr] md:items-end">
           <div className="max-w-2xl">
-            <div className="mb-4 flex items-center gap-3">
-              <span className="h-px w-10 bg-tea-moss" />
-              <p className="text-[17px] font-medium uppercase tracking-[0.28em] text-tea-moss">
-                Danh mục sản phẩm
-              </p>
-            </div>
-
-            <h2 className="max-w-2xl text-4xl leading-[1.05] tracking-tight text-tea-dark-green md:text-5xl lg:text-[3.5rem]">
-              <span className="font-sans font-semibold">Những dòng trà</span>{" "}
-              <span className="font-serif italic text-tea-moss">chủ lực</span>
-            </h2>
+            <SectionEyebrowTitle
+              eyebrow="Danh mục sản phẩm"
+              title="Những dòng trà"
+              titleEmphasis="chủ lực"
+            />
 
             <p className="mt-5 max-w-xl text-base leading-relaxed text-tea-muted md:text-lg">
               Tuyển tập những dòng trà nguyên liệu xuất sắc nhất, đáp ứng đa

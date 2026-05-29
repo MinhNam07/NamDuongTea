@@ -3,22 +3,21 @@ import Link from "next/link";
 import { ArrowRight } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import {
-  NAM_MOC_TRA_QUAN_HERO_SRC,
-  TET_GIFT_SETS,
-  TRA_QUAN_COLLECTION_NAME,
-} from "@/lib/tet-gift-sets";
+import { NAM_MOC_TRA_QUAN_HERO_SRC, TRA_QUAN_COLLECTION_NAME } from "@/lib/tra-quan";
+import type { TraQuanProduct } from "@/lib/tra-quan";
 
-const FEATURED = TET_GIFT_SETS[0];
 const TRA_QUAN_BG_SRC = "/images/IMG_6548.JPG";
 
-export function TetGiftHeroBanner() {
+type TetGiftHeroBannerProps = {
+  featured: TraQuanProduct;
+};
+
+export function TetGiftHeroBanner({ featured }: TetGiftHeroBannerProps) {
   return (
     <section
       aria-label={`${TRA_QUAN_COLLECTION_NAME} — Nam Dương Tea`}
       className="relative flex min-h-[100svh] items-center overflow-hidden bg-tea-dark-green px-6 pb-16 pt-28 md:px-[5vw] md:pb-20 md:pt-32"
     >
-      {/* Background — full viewport, no cream fade (avoids white band above next section) */}
       <div
         aria-hidden
         className="pointer-events-none absolute inset-0 z-0 min-h-full overflow-hidden"
@@ -35,9 +34,7 @@ export function TetGiftHeroBanner() {
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(7,27,0,0.88),rgba(7,27,0,0.52),rgba(7,27,0,0.78))] mix-blend-multiply" />
       </div>
 
-      {/* Content */}
       <div className="relative z-10 mx-auto grid w-full max-w-[1440px] items-center gap-8 px-[6vw] pt-8 md:grid-cols-[1fr_auto] md:gap-x-12 md:pt-10 lg:pt-12">
-        {/* Left */}
         <div className="order-2 flex max-w-2xl flex-col justify-center text-white md:order-1">
           <div className="flex items-center gap-3">
             <p className="text-xs uppercase tracking-[0.28em] text-white/90">
@@ -45,10 +42,12 @@ export function TetGiftHeroBanner() {
             </p>
           </div>
 
-          <h1 className="mt-6 font-display text-4xl font-extrabold leading-[1.08] sm:text-5xl lg:text-[3.25rem]">
-            {TRA_QUAN_COLLECTION_NAME}
+          <h1 className="mt-6">
+            <span className="font-serif text-4xl font-light leading-[1.08] tracking-tight text-white sm:text-5xl lg:text-[3rem]">
+              {TRA_QUAN_COLLECTION_NAME}
+            </span>
 
-            <span className="mt-2 block text-2xl font-semibold leading-snug text-white/95 sm:text-3xl">
+            <span className="mt-2 block font-serif text-xl font-light italic leading-snug text-[rgba(214,198,140,1)] sm:text-2xl md:text-[1.75rem]">
               Quà biếu tinh tế — bộ sản phẩm của Trà Nam Dương
             </span>
           </h1>
@@ -93,15 +92,12 @@ export function TetGiftHeroBanner() {
           </div>
         </div>
 
-        {/* Right */}
-        {/* Right */}
-        {/* Right */}
         <div className="order-1 flex items-center justify-center md:order-2 md:justify-start">
           <figure className="mx-auto md:mx-0 md:origin-center md:scale-[1.12] md:-translate-y-4 lg:scale-[1.18] lg:-translate-y-6">
             <div className="relative aspect-[2/3] h-[min(560px,68vh)] w-auto overflow-hidden rounded-lg border-2 border-white bg-black shadow-2xl">
               <Image
                 src={NAM_MOC_TRA_QUAN_HERO_SRC}
-                alt={FEATURED.name}
+                alt={featured.name}
                 fill
                 priority
                 sizes="(min-width: 1024px) 24rem, (min-width: 768px) 20rem, 16rem"
@@ -114,7 +110,7 @@ export function TetGiftHeroBanner() {
                 </p>
 
                 <p className="mt-1 font-display text-lg font-semibold text-white sm:text-xl">
-                  {FEATURED.name}
+                  {featured.name}
                 </p>
               </figcaption>
             </div>

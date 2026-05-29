@@ -52,7 +52,7 @@ export function ProductsHero({
             </p>
           ) : null}
 
-          <h1 className="mt-4 font-display text-4xl font-extrabold leading-tight sm:text-5xl md:text-6xl">
+          <h1 className="mt-4 font-serif text-4xl leading-[1.05] tracking-tight sm:text-5xl md:text-6xl">
             {title}
           </h1>
 

@@ -14,9 +14,9 @@ import {
 
 import {
   TRA_QUAN_COLLECTION_NAME,
-  tetGiftSlideSuffixes,
+  traQuanSlideSuffixes,
   type TetGiftSlideSuffix,
-} from "@/lib/tet-gift-sets";
+} from "@/lib/tra-quan";
 import { cn } from "@/lib/utils";
 
 const EXTENSIONS = [".jpg", ".jpeg", ".png", ".webp"] as const;
@@ -70,6 +70,7 @@ function SlideImage({
 type TetGiftProductImageProps = {
   slug: string;
   name: string;
+  gallerySlidesReversed?: boolean;
   className?: string;
   priority?: boolean;
   sizes?: string;
@@ -110,18 +111,21 @@ function dotIndexFromTrackPosition(position: number, slideCount: number) {
 export function TetGiftProductImage({
   slug,
   name,
+  gallerySlidesReversed = false,
   className,
   priority = false,
   sizes = "(min-width: 1024px) 40vw, 100vw",
   gallery = true,
 }: TetGiftProductImageProps) {
   const slides = useMemo(() => {
-    return tetGiftSlideSuffixes(slug, gallery).map((suffix, index) => ({
-      key: suffix === "-2" ? "secondary" : "primary",
-      sources: slideSources(slug, suffix),
-      alt: index === 0 ? `${name} — ảnh 1` : `${name} — ảnh 2`,
-    }));
-  }, [slug, name, gallery]);
+    return traQuanSlideSuffixes(slug, gallerySlidesReversed, gallery).map(
+      (suffix, index) => ({
+        key: suffix === "-2" ? "secondary" : "primary",
+        sources: slideSources(slug, suffix),
+        alt: index === 0 ? `${name} — ảnh 1` : `${name} — ảnh 2`,
+      }),
+    );
+  }, [slug, name, gallery, gallerySlidesReversed]);
 
   const [availableKeys, setAvailableKeys] = useState<Set<string>>(
     () => new Set(slides.map((s) => s.key)),

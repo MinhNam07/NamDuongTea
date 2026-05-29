@@ -3,41 +3,61 @@ import { cn } from "@/lib/utils";
 
 type AboutStatBandProps = {
   stats: AboutStat[];
-  /** Nằm trong hero — nền trong suốt, dùng chung background ảnh */
-  embedded?: boolean;
+  /** Chồng lên đáy hero — box kem nổi, không dùng chung nền ảnh */
+  overlapping?: boolean;
+  className?: string;
 };
 
-export function AboutStatBand({ stats, embedded = false }: AboutStatBandProps) {
-  return (
-    <section
-      className={cn(
-        embedded
-          ? "relative z-10 mt-auto w-full shrink-0 pb-8 pt-10 md:pb-10 md:pt-12"
-          : "border-y border-tea-moss/15 bg-tea-ivory py-12 md:py-16",
-      )}
-    >
-      <div className={cn(embedded && "relative")}>
+export function AboutStatBand({
+  stats,
+  overlapping = false,
+  className,
+}: AboutStatBandProps) {
+  const gridClassName = cn(
+    "grid gap-8 sm:grid-cols-2",
+    stats.length >= 4 ? "lg:grid-cols-4" : "lg:grid-cols-3",
+  );
+
+  if (overlapping) {
+    return (
+      <section className={cn("relative z-20 px-4 md:px-6", className)}>
         <div
           className={cn(
-            "container mx-auto grid gap-8 px-4 sm:grid-cols-2 md:px-6",
-            stats.length >= 4 ? "lg:grid-cols-4" : "lg:grid-cols-3",
+            "mx-auto w-full max-w-[1440px] rounded-2xl border border-tea-moss/15 bg-tea-ivory px-4 py-10 shadow-lg md:px-8 md:py-12",
+            gridClassName,
           )}
         >
           {stats.map((stat) => (
-            <div key={stat.label} className="text-center">
-              <p className="font-display text-3xl font-extrabold text-tea-dark-green md:text-4xl">
-                {stat.value}
-              </p>
-              <p className="mt-1 text-sm font-semibold uppercase tracking-wider text-tea-brown-700">
-                {stat.label}
-              </p>
-              {stat.description ? (
-                <p className="mt-2 text-sm text-tea-muted">{stat.description}</p>
-              ) : null}
-            </div>
+            <StatItem key={stat.label} stat={stat} />
           ))}
         </div>
+      </section>
+    );
+  }
+
+  return (
+    <section className="border-y border-tea-moss/15 bg-tea-ivory py-12 md:py-16">
+      <div className={cn("container mx-auto px-4 md:px-6", gridClassName)}>
+        {stats.map((stat) => (
+          <StatItem key={stat.label} stat={stat} />
+        ))}
       </div>
     </section>
+  );
+}
+
+function StatItem({ stat }: { stat: AboutStat }) {
+  return (
+    <div className="text-center">
+      <p className="font-display text-3xl font-extrabold text-tea-dark-green md:text-4xl">
+        {stat.value}
+      </p>
+      <p className="mt-1 text-sm font-semibold uppercase tracking-wider text-tea-brown-700">
+        {stat.label}
+      </p>
+      {stat.description ? (
+        <p className="mt-2 text-sm text-tea-muted">{stat.description}</p>
+      ) : null}
+    </div>
   );
 }

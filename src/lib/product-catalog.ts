@@ -8,11 +8,8 @@ import {
   prepareCatalogProducts,
   type ProductTab,
 } from "@/lib/product-tab-config";
-import {
-  TET_GIFT_SETS,
-  TRA_QUAN_COLLECTION_NAME,
-  tetGiftPrimaryImageSrc,
-} from "@/lib/tet-gift-sets";
+import { TRA_QUAN_COLLECTION_NAME } from "@/lib/tra-quan";
+import { loadTraQuanProducts } from "@/lib/tra-quan-products";
 
 export type { HomeCatalogTabKey } from "@/lib/home-catalog-tabs";
 export { HOME_CATALOG_TABS } from "@/lib/home-catalog-tabs";
@@ -42,19 +39,6 @@ export function categorySlugToProductTab(raw?: string | null): ProductTab | null
   }
   if (normalized === "tra-den") return "che-den";
   return normalizeProductTab(normalized);
-}
-
-function traQuanCatalogProducts(): CatalogProduct[] {
-  return TET_GIFT_SETS.map((set) => ({
-    id: `tet-gift-${set.slug}`,
-    name: set.name,
-    slug: set.slug,
-    shortDescription: set.tagline,
-    origin: null,
-    moq: null,
-    image: tetGiftPrimaryImageSrc(set.slug),
-    category: { name: TRA_QUAN_COLLECTION_NAME, slug: "nam-duong-tra-quan" },
-  }));
 }
 
 function productImageUrl(image: ProductCardProduct["image"]): string | null {
@@ -101,7 +85,17 @@ export async function loadCatalogProducts(
   options?: { limit?: number },
 ): Promise<CatalogProduct[]> {
   if (tab === "nam-duong-tra-quan") {
-    const items = traQuanCatalogProducts();
+    const traQuan = await loadTraQuanProducts();
+    const items: CatalogProduct[] = traQuan.map((p) => ({
+      id: p.id,
+      name: p.name,
+      slug: p.slug,
+      shortDescription: p.tagline,
+      origin: null,
+      moq: null,
+      image: p.imageUrl,
+      category: { name: TRA_QUAN_COLLECTION_NAME, slug: "nam-duong-tra-quan" },
+    }));
     return options?.limit ? items.slice(0, options.limit) : items;
   }
 

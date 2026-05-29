@@ -16,9 +16,9 @@ export function HeaderHeroContent() {
         </span>
       </div>
 
-      <h1 className="opacity-0 motion-safe-fade-up [animation-delay:100ms] font-display text-5xl font-light leading-[1.1] tracking-tight text-white md:text-7xl lg:text-8xl">
+      <h1 className="opacity-0 motion-safe-fade-up [animation-delay:100ms] font-serif text-5xl font-light leading-[1.1] tracking-tight text-white md:text-7xl lg:text-8xl">
         {hero.title}{" "}
-        <span className="font-serif italic font-normal text-[rgba(214,198,140,1)]">
+        <span className="italic font-normal text-[rgba(214,198,140,1)]">
           {hero.titleEmphasis}
         </span>
       </h1>

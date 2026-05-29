@@ -2,16 +2,13 @@ import Link from "next/link";
 
 import { TetGiftProductImage } from "@/components/marketing/tet-gift/tet-gift-product-image";
 import { Button } from "@/components/ui/button";
-import {
-  TET_GIFT_SETS,
-  TRA_QUAN_COLLECTION_NAME,
-  formatVnd,
-} from "@/lib/tet-gift-sets";
+import { TRA_QUAN_COLLECTION_NAME, formatVnd, type TraQuanProduct } from "@/lib/tra-quan";
 
-/**
- * B2B catalogue section — clean table + product thumbs for wholesale buyers.
- */
-export function TetGiftB2bCatalogue() {
+type TetGiftB2bCatalogueProps = {
+  products: TraQuanProduct[];
+};
+
+export function TetGiftB2bCatalogue({ products }: TetGiftB2bCatalogueProps) {
   return (
     <section
       id="catalogue-b2b"
@@ -52,9 +49,7 @@ export function TetGiftB2bCatalogue() {
               </tr>
             </thead>
             <tbody>
-              {TET_GIFT_SETS.map((set, i) => {
-                const soldOut = set.stockNote?.toLowerCase() === "hết";
-                return (
+              {products.map((set, i) => (
                   <tr
                     key={set.slug}
                     id={set.slug}
@@ -70,6 +65,7 @@ export function TetGiftB2bCatalogue() {
                           <TetGiftProductImage
                             slug={set.slug}
                             name={set.name}
+                            gallerySlidesReversed={set.gallerySlidesReversed}
                             className="absolute inset-0"
                             sizes="56px"
                             gallery={false}
@@ -106,12 +102,7 @@ export function TetGiftB2bCatalogue() {
                       <Button
                         asChild
                         size="sm"
-                        variant={soldOut ? "outline" : "default"}
-                        className={
-                          soldOut
-                            ? undefined
-                            : "bg-tea-dark-green hover:bg-tea-moss"
-                        }
+                        className="bg-tea-dark-green hover:bg-tea-moss"
                       >
                         <Link
                           href={`/lien-he?product=${set.slug}&campaign=tet-gift#rfq`}
@@ -121,8 +112,7 @@ export function TetGiftB2bCatalogue() {
                       </Button>
                     </td>
                   </tr>
-                );
-              })}
+              ))}
             </tbody>
           </table>
         </div>

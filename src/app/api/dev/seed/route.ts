@@ -4,6 +4,7 @@ import path from "node:path";
 import { NextResponse } from "next/server";
 
 import { getPayloadClient } from "@/lib/payload";
+import { TRA_QUAN_SEED_PRODUCTS } from "@/lib/tra-quan-seed-data";
 
 type SeedCategory = {
   name: string;
@@ -18,7 +19,7 @@ type SeedProduct = {
   shortDescription: string;
   origin?: string;
   moq?: string;
-  imagePath?: string; // absolute file path in workspace
+  imagePath?: string;
 };
 
 const CATEGORIES: SeedCategory[] = [
@@ -31,6 +32,11 @@ const CATEGORIES: SeedCategory[] = [
     name: "Trà đen",
     slug: "tra-den",
     description: "Đậm vị, ổn định cho pha trà và pha chế F&B.",
+  },
+  {
+    name: "Nam Dương trà quán",
+    slug: "nam-duong-tra-quan",
+    description: "Thất phẩm gỗ chạm khắc — quà biếu cao cấp.",
   },
 ];
 
@@ -55,7 +61,6 @@ async function uploadMediaFromFile(
   const filename = path.basename(filePath);
   const buf = await fs.readFile(filePath);
 
-  // Payload upload API expects a file object; this shape works with Payload v3.
   const created = await payload.create({
     collection: "media",
     data: { alt },
@@ -78,7 +83,6 @@ async function uploadMediaFromFile(
 }
 
 function seedProducts(): SeedProduct[] {
-  // Prefer curated product-line images if present, fallback to site hero.
   const candidates = [
     repoPath("public/images/bach-tra-shan-tuyet/DSC_3122 copy 2.png"),
     repoPath("public/images/tra-dinh-ngoc/DSC_3112 copy 2.png"),
@@ -142,6 +146,11 @@ function seedProducts(): SeedProduct[] {
   ];
 }
 
+function traQuanImagePath(slug: string, reversed: boolean) {
+  const suffix = reversed ? "-2" : "";
+  return repoPath("public/images/products/tet-gift-sets", `${slug}${suffix}.png`);
+}
+
 export async function POST(req: Request) {
   if (process.env.NODE_ENV === "production") {
     return NextResponse.json({ error: "Not allowed." }, { status: 403 });
@@ -155,7 +164,6 @@ export async function POST(req: Request) {
 
   const payload = await getPayloadClient();
 
-  // Upsert categories
   const categoryIdBySlug = new Map<string, number>();
   for (const c of CATEGORIES) {
     const existing = await payload.find({
@@ -183,58 +191,111 @@ export async function POST(req: Request) {
     }
   }
 
-  const products = seedProducts();
   let createdCount = 0;
+  let updatedCount = 0;
   let skippedCount = 0;
 
-  for (const p of products) {
+  async function upsertProduct(
+    p: SeedProduct & {
+      priceVnd?: number | null;
+      giftTeas?: { name: string; weight: string }[];
+      giftHighlights?: { text: string }[];
+      gallerySlidesReversed?: boolean;
+      isFeatured?: boolean;
+    },
+  ) {
     const existing = await payload.find({
       collection: "products",
       where: { slug: { equals: p.slug } },
       limit: 1,
     });
-    if (existing.docs[0]) {
-      skippedCount += 1;
-      continue;
-    }
 
     const categoryId = categoryIdBySlug.get(p.categorySlug) ?? null;
     let mediaId: number | null = null;
+    const imagePath =
+      p.imagePath ??
+      (p.categorySlug === "nam-duong-tra-quan"
+        ? traQuanImagePath(p.slug, Boolean(p.gallerySlidesReversed))
+        : undefined);
 
-    if (p.imagePath && (await fileExists(p.imagePath))) {
+    if (imagePath && (await fileExists(imagePath))) {
       try {
-        mediaId = await uploadMediaFromFile(payload, p.imagePath, p.name);
+        mediaId = await uploadMediaFromFile(payload, imagePath, p.name);
       } catch {
         mediaId = null;
       }
     }
 
+    const data = {
+      name: p.name,
+      slug: p.slug,
+      category: categoryId,
+      shortDescription: p.shortDescription,
+      origin: p.origin,
+      moq: p.moq,
+      priceVnd: p.priceVnd ?? undefined,
+      giftTeas: p.giftTeas,
+      giftHighlights: p.giftHighlights?.map((item) =>
+        typeof item === "string" ? { text: item } : item,
+      ),
+      gallerySlidesReversed: p.gallerySlidesReversed ?? false,
+      ...(mediaId ? { image: mediaId } : {}),
+      status: "published" as const,
+      isFeatured: p.isFeatured ?? false,
+      seo: {
+        metaTitle: p.name,
+        metaDescription: p.shortDescription,
+      },
+    };
+
+    if (existing.docs[0]) {
+      await payload.update({
+        collection: "products",
+        id: existing.docs[0].id,
+        data,
+      });
+      updatedCount += 1;
+      return;
+    }
+
     await payload.create({
       collection: "products",
-      data: {
-        name: p.name,
-        slug: p.slug,
-        category: categoryId,
-        shortDescription: p.shortDescription,
-        origin: p.origin,
-        moq: p.moq,
-        image: mediaId,
-        status: "published",
-        isFeatured: true,
-        seo: {
-          metaTitle: p.name,
-          metaDescription: p.shortDescription,
-        },
-      },
+      data,
     });
     createdCount += 1;
+  }
+
+  for (const p of seedProducts()) {
+    try {
+      await upsertProduct(p);
+    } catch {
+      skippedCount += 1;
+    }
+  }
+
+  for (const set of TRA_QUAN_SEED_PRODUCTS) {
+    try {
+      await upsertProduct({
+        name: set.name,
+        slug: set.slug,
+        categorySlug: "nam-duong-tra-quan",
+        shortDescription: set.tagline,
+        priceVnd: set.priceVnd,
+        giftTeas: set.teas,
+        giftHighlights: set.giftHighlights.map((text) => ({ text })),
+        gallerySlidesReversed: set.gallerySlidesReversed,
+        isFeatured: set.isFeatured ?? false,
+      });
+    } catch {
+      skippedCount += 1;
+    }
   }
 
   return NextResponse.json({
     ok: true,
     categories: CATEGORIES.length,
     productsCreated: createdCount,
+    productsUpdated: updatedCount,
     productsSkipped: skippedCount,
   });
 }
-

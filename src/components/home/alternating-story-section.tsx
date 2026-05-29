@@ -40,11 +40,23 @@ export function AlternatingStorySection() {
                   </span>
                 </div>
 
-                <h2 className="mt-4 font-display text-4xl font-light leading-tight tracking-tight text-white lg:text-5xl">
-                  {item.title} <br />
-                  <span className="font-serif italic font-normal text-tea-olive">
-                    {item.emphasis}
-                  </span>
+                <h2 className="mt-4 font-serif text-4xl font-light leading-tight tracking-tight text-white lg:text-5xl">
+                  {item.id === "sustainability" ? (
+                    <>
+                      {item.title}{" "}
+                      <span className="italic font-normal text-tea-olive">
+                        {item.emphasis}
+                      </span>
+                    </>
+                  ) : (
+                    <>
+                      {item.title}
+                      <br />
+                      <span className="italic font-normal text-tea-olive">
+                        {item.emphasis}
+                      </span>
+                    </>
+                  )}
                 </h2>
 
                 <div className="mt-6 space-y-6 text-lg font-light leading-relaxed text-white/75">

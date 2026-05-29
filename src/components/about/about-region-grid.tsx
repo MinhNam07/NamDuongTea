@@ -8,14 +8,14 @@ type AboutRegionGridProps = {
 
 export function AboutRegionGrid({ regions }: AboutRegionGridProps) {
   return (
-    <section className="bg-[#f6fcec] py-14 md:py-20">
+    <section className="py-14 md:py-20">
       <div className="container mx-auto px-4 md:px-6">
         <header className="mx-auto max-w-2xl text-center">
-          <p className="text-xs font-semibold uppercase tracking-[0.24em] text-tea-olive">
+          <p className="mb-4 font-sans text-[17px] font-medium uppercase tracking-[0.28em] text-tea-moss">
             Vùng nguyên liệu
           </p>
-          <h2 className="mt-2 font-display text-3xl font-extrabold text-tea-deep-brown md:text-4xl">
-            Đồi chè & nông trường hợp tác
+          <h2 className="text-3xl leading-[1.05] tracking-tight text-tea-dark-green md:text-4xl lg:text-5xl">
+            <span className="font-serif">Đồi chè & nông trường hợp tác</span>{" "}
           </h2>
           <p className="mt-4 text-tea-muted">
             Hợp tác trực tiếp với nông hộ tại các vùng trồng trọng điểm — kiểm soát

@@ -3,10 +3,7 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { ChevronRight, Leaf } from "lucide-react";
 
-import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
-import { RfqButton } from "@/components/rfq-button";
-import { TetGiftProductImage } from "@/components/marketing/tet-gift/tet-gift-product-image";
+import { TraQuanProductDetailView } from "@/components/products/tra-quan-product-detail-view";
 import { ProductDetailGallery } from "@/components/products/product-detail-gallery";
 import { ProductDetailStickyPanel } from "@/components/products/product-detail-sticky-panel";
 import { ProductDetailTabs } from "@/components/products/product-detail-tabs";
@@ -15,7 +12,7 @@ import { getProductDetailTabs } from "@/lib/product-detail-tabs";
 import { getCuratedTeaImages } from "@/lib/product-lines";
 import { canonicalCategoryForProductSlug } from "@/lib/product-tab-config";
 import { buildMetadata } from "@/lib/seo";
-import { TET_GIFT_SETS, TRA_QUAN_COLLECTION_NAME } from "@/lib/tet-gift-sets";
+import { TRA_QUAN_CATEGORY_SLUG, TRA_QUAN_COLLECTION_NAME } from "@/lib/tra-quan";
 
 export const revalidate = 300;
 
@@ -49,22 +46,20 @@ export async function generateMetadata({
   const { slug } = await params;
   const product = await loadProduct(slug);
   if (!product) {
-    const tetGift = TET_GIFT_SETS.find((s) => s.slug === slug);
-    if (tetGift) {
-      return buildMetadata({
-        title: `${tetGift.name} · ${TRA_QUAN_COLLECTION_NAME}`,
-        description: tetGift.tagline,
-        path: `/san-pham/${slug}`,
-      });
-    }
     return buildMetadata({
       title: "Sản phẩm không tồn tại",
       path: `/san-pham/${slug}`,
     });
   }
   const seo = (product as { seo?: { metaTitle?: string; metaDescription?: string } }).seo;
+  const categorySlug = (product as { category?: { slug?: string } }).category?.slug;
+  const title =
+    seo?.metaTitle ||
+    (categorySlug === TRA_QUAN_CATEGORY_SLUG
+      ? `${product.name as string} · ${TRA_QUAN_COLLECTION_NAME}`
+      : (product.name as string));
   return buildMetadata({
-    title: seo?.metaTitle || (product.name as string),
+    title,
     description:
       seo?.metaDescription ||
       ((product as { shortDescription?: string }).shortDescription ?? undefined),
@@ -79,89 +74,7 @@ export default async function ProductDetailPage({
 }) {
   const { slug } = await params;
   const product = await loadProduct(slug);
-  if (!product) {
-    const tetGift = TET_GIFT_SETS.find((s) => s.slug === slug);
-    if (!tetGift) notFound();
-
-    return (
-      <div className="bg-tea-cream pb-16">
-        <nav
-          aria-label="Breadcrumb"
-          className="container mx-auto flex items-center gap-1 px-4 py-4 text-sm text-tea-muted md:px-6"
-        >
-          <Link href="/" className="hover:text-tea-green">
-            Trang chủ
-          </Link>
-          <ChevronRight className="h-3.5 w-3.5" />
-          <Link href="/san-pham" className="hover:text-tea-green">
-            Sản phẩm
-          </Link>
-          <ChevronRight className="h-3.5 w-3.5" />
-          <span className="text-tea-ink">{tetGift.name}</span>
-        </nav>
-
-        <section className="container mx-auto grid gap-10 px-4 md:grid-cols-2 md:px-6">
-          <div className="space-y-4">
-            <div className="relative aspect-[4/3] overflow-hidden rounded-2xl bg-black">
-              <TetGiftProductImage
-                slug={tetGift.slug}
-                name={tetGift.name}
-                className="absolute inset-0"
-                priority
-                gallery
-                sizes="(min-width: 768px) 50vw, 100vw"
-              />
-            </div>
-          </div>
-
-          <div>
-            <Badge variant="muted" className="mb-3">
-              {TRA_QUAN_COLLECTION_NAME}
-            </Badge>
-            <h1 className="font-display text-3xl font-bold text-tea-green md:text-4xl">
-              {tetGift.name}
-            </h1>
-            <p className="mt-4 text-tea-muted md:text-lg">{tetGift.tagline}</p>
-
-            <dl className="mt-8 grid gap-4 rounded-2xl border border-tea-green/10 bg-white p-6">
-              {tetGift.teas.length > 0 ? (
-                <div className="space-y-2">
-                  <dt className="text-sm text-tea-muted">Thành phần</dt>
-                  <dd className="space-y-1 text-sm font-medium text-tea-ink">
-                    {tetGift.teas.map((t) => (
-                      <div key={`${t.name}-${t.weight}`} className="flex justify-between gap-4">
-                        <span>{t.name}</span>
-                        <span className="shrink-0 text-tea-muted">{t.weight}</span>
-                      </div>
-                    ))}
-                  </dd>
-                </div>
-              ) : null}
-              {tetGift.giftHighlights.length > 0 ? (
-                <div className="space-y-2">
-                  <dt className="text-sm text-tea-muted">Điểm nổi bật</dt>
-                  <dd className="flex flex-wrap gap-2">
-                    {tetGift.giftHighlights.map((h) => (
-                      <Badge key={h} variant="outline">
-                        {h}
-                      </Badge>
-                    ))}
-                  </dd>
-                </div>
-              ) : null}
-            </dl>
-
-            <div className="mt-6 flex flex-wrap gap-3">
-              <RfqButton productSlug={tetGift.slug} productName={tetGift.name} />
-              <Button asChild variant="outline" size="lg">
-                <Link href="/nam-duong-tra-quan#bo-suu-tap">Xem bộ sưu tập</Link>
-              </Button>
-            </div>
-          </div>
-        </section>
-      </div>
-    );
-  }
+  if (!product) notFound();
 
   const p = product as unknown as {
     id: string;
@@ -170,11 +83,19 @@ export default async function ProductDetailPage({
     shortDescription?: string;
     origin?: string;
     moq?: string;
+    priceVnd?: number | null;
+    giftTeas?: { name: string; weight: string }[] | null;
+    giftHighlights?: { text: string }[] | null;
+    gallerySlidesReversed?: boolean | null;
     image?: { url?: string; alt?: string } | null;
     gallery?: { image?: { url?: string; alt?: string } }[];
     specs?: { label: string; value: string }[];
     category?: { name?: string; slug?: string } | null;
   };
+
+  if (p.category?.slug === TRA_QUAN_CATEGORY_SLUG) {
+    return <TraQuanProductDetailView product={p} />;
+  }
 
   const curated = getCuratedTeaImages(p.slug);
   const rawHeroUrl = p.image?.url ?? p.gallery?.[0]?.image?.url ?? null;

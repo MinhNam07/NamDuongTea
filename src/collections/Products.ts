@@ -90,6 +90,35 @@ export const Products: CollectionConfig = {
       },
     },
     {
+      name: "priceVnd",
+      type: "number",
+      label: "Giá bán (VND)",
+      admin: {
+        description: "Chủ yếu cho set quà Nam Dương trà quán.",
+      },
+    },
+    {
+      name: "giftTeas",
+      type: "array",
+      label: "Trà trong set (trà quán)",
+      fields: [
+        { name: "name", type: "text", required: true, label: "Loại trà" },
+        { name: "weight", type: "text", required: true, label: "Định lượng" },
+      ],
+    },
+    {
+      name: "giftHighlights",
+      type: "array",
+      label: "Điểm nổi bật (trà quán)",
+      fields: [{ name: "text", type: "text", required: true, label: "Nội dung" }],
+    },
+    {
+      name: "gallerySlidesReversed",
+      type: "checkbox",
+      label: "Đảo thứ tự ảnh gallery (-2 trước)",
+      defaultValue: false,
+    },
+    {
       name: "origin",
       type: "text",
       label: "Vùng nguyên liệu",

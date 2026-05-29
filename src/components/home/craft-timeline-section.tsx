@@ -36,11 +36,9 @@ export function CraftTimelineSection() {
 
       <div className="relative z-10 mx-auto w-full max-w-[1440px] px-6 md:px-[5vw]">
         <header className="mx-auto mb-20 max-w-3xl text-center">
-          <h2 className="font-display text-3xl font-light tracking-tight text-white md:text-5xl">
+          <h2 className="font-serif text-3xl font-light tracking-tight text-white md:text-5xl">
             Nghệ Thuật{" "}
-            <span className="font-serif italic text-[rgba(214,198,140,1)]">
-              Chế Tác
-            </span>
+            <span className="italic text-[rgba(214,198,140,1)]">Chế Tác</span>
           </h2>
           <p className="mt-6 text-lg font-light text-[rgba(223,229,212,1)]">
             Quy trình tỉ mỉ để đánh thức hương vị tiềm ẩn trong từng búp trà.

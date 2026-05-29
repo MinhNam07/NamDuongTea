@@ -18,7 +18,7 @@ export const metadata: Metadata = buildMetadata({
 
 export default function GioiThieuPage() {
   return (
-    <div className="bg-tea-cream">
+    <div className="nd-about-surface">
       <AboutPageHero
         eyebrow={content.hero.eyebrow}
         title={content.hero.title}

@@ -1,29 +1,20 @@
 import Link from "next/link";
 
 import { TetGiftProductImage } from "@/components/marketing/tet-gift/tet-gift-product-image";
-import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
-import {
-  TRA_QUAN_COLLECTION_NAME,
-  formatVnd,
-  type TetGiftSet,
-} from "@/lib/tet-gift-sets";
+import { TRA_QUAN_COLLECTION_NAME, formatVnd, type TraQuanProduct } from "@/lib/tra-quan";
 
 type TetGiftPremiumCardProps = {
-  product: TetGiftSet;
+  product: TraQuanProduct;
   className?: string;
 };
 
-/**
- * Premium product card — ivory field, gold accents, object-contain product.
- */
 export function TetGiftPremiumCard({
   product,
   className,
 }: TetGiftPremiumCardProps) {
   const price = formatVnd(product.priceVnd);
-  const soldOut = product.stockNote?.toLowerCase() === "hết";
 
   return (
     <article
@@ -36,14 +27,10 @@ export function TetGiftPremiumCard({
         <TetGiftProductImage
           slug={product.slug}
           name={product.name}
+          gallerySlidesReversed={product.gallerySlidesReversed}
           className="absolute inset-0"
           sizes="(min-width: 1024px) 25vw, (min-width: 640px) 50vw, 100vw"
         />
-        {soldOut ? (
-          <Badge className="absolute right-3 top-3 border-0 bg-tea-deep-brown/90 text-tea-ivory">
-            Hết hàng
-          </Badge>
-        ) : null}
       </div>
 
       <div className="flex flex-1 flex-col p-6 md:p-7">
@@ -94,14 +81,13 @@ export function TetGiftPremiumCard({
               variant="default"
               size="sm"
               className="bg-tea-dark-green hover:bg-tea-moss"
-              disabled={soldOut}
             >
               <Link href={`/lien-he?product=${product.slug}&campaign=tet-gift#rfq`}>
                 Yêu cầu báo giá
               </Link>
             </Button>
             <Button asChild variant="outline" size="sm" className="border-tea-gold/40">
-              <Link href={`/nam-duong-tra-quan#${product.slug}`}>Chi tiết</Link>
+              <Link href={`/san-pham/${product.slug}`}>Chi tiết</Link>
             </Button>
           </div>
         </div>
