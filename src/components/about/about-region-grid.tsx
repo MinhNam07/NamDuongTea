@@ -1,5 +1,6 @@
 import { MapPin } from "lucide-react";
 
+import { SectionEyebrowTitle } from "@/components/marketing/section-eyebrow-title";
 import type { AboutRegion } from "@/lib/about-pages-content";
 
 type AboutRegionGridProps = {
@@ -8,31 +9,30 @@ type AboutRegionGridProps = {
 
 export function AboutRegionGrid({ regions }: AboutRegionGridProps) {
   return (
-    <section className="py-14 md:py-20">
+    <section className="bg-tea-ivory/70 py-20 md:py-28">
       <div className="container mx-auto px-4 md:px-6">
-        <header className="mx-auto max-w-2xl text-center">
-          <p className="mb-4 font-sans text-[17px] font-medium uppercase tracking-[0.28em] text-tea-moss">
-            Vùng nguyên liệu
-          </p>
-          <h2 className="text-3xl leading-[1.05] tracking-tight text-tea-dark-green md:text-4xl lg:text-5xl">
-            <span className="font-serif">Đồi chè & nông trường hợp tác</span>{" "}
-          </h2>
-          <p className="mt-4 text-tea-muted">
-            Hợp tác trực tiếp với nông hộ tại các vùng trồng trọng điểm — kiểm soát
-            nguồn búp tươi từ thu hoạch đến vận chuyển về nhà máy.
-          </p>
-        </header>
+        <SectionEyebrowTitle
+          eyebrow="Vùng nguyên liệu"
+          title="Đồi chè & nông trường hợp tác"
+          centered
+          headingClassName="max-w-none"
+        />
 
-        <div className="mt-10 grid gap-6 md:grid-cols-3">
+        <p className="mx-auto mt-5 max-w-2xl text-center text-sm font-light leading-relaxed text-tea-muted md:text-base">
+          Hợp tác trực tiếp với nông hộ tại các vùng trồng trọng điểm, kiểm soát
+          nguồn búp tươi từ thu hoạch đến vận chuyển về nhà máy.
+        </p>
+
+        <div className="mt-12 grid gap-6 md:grid-cols-3">
           {regions.map((region) => (
             <article
               key={region.id}
-              className="rounded-2xl border border-tea-moss/15 bg-white p-8 shadow-sm"
+              className="rounded-[28px] border border-tea-moss/15 bg-white/85 p-8 shadow-[0_18px_48px_rgba(37,74,12,0.07)] transition duration-300 hover:-translate-y-1 hover:shadow-[0_24px_60px_rgba(37,74,12,0.11)]"
             >
-              <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-tea-green-50 text-tea-green">
+              <div className="flex h-11 w-11 items-center justify-center rounded-2xl bg-tea-green-50 text-tea-green">
                 <MapPin className="h-5 w-5" aria-hidden />
               </div>
-              <h3 className="mt-4 font-display text-xl font-bold text-tea-dark-green">
+              <h3 className="mt-5 font-display text-xl font-bold text-tea-dark-green">
                 {region.name}
               </h3>
               <p className="mt-3 text-sm leading-relaxed text-tea-muted md:text-base">
