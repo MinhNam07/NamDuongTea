@@ -3,7 +3,7 @@ import type { CollectionConfig } from "payload";
 import {
   isManagerOrAbove,
   isStaff,
-  publishedDraftOnly,
+  staffOrPublishedDraftOnly,
 } from "@/access";
 import { seoGroupField } from "@/fields/seoFields";
 import { generateSlugFromField } from "@/hooks/generateSlug";
@@ -26,10 +26,11 @@ export const ProductLines: CollectionConfig = {
     group: "Nội dung",
   },
   access: {
-    read: publishedDraftOnly,
+    read: staffOrPublishedDraftOnly,
     create: isStaff,
     update: isStaff,
     delete: isManagerOrAbove,
+    readVersions: isStaff,
   },
   versions: {
     drafts: true,

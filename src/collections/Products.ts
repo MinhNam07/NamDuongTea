@@ -3,7 +3,7 @@ import type { CollectionConfig } from "payload";
 import {
   isManagerOrAbove,
   isStaff,
-  publishedOnly,
+  staffOrPublishedOnly,
 } from "@/access";
 import { canPublish } from "@/access/roles";
 import { seoGroupField } from "@/fields/seoFields";
@@ -33,10 +33,11 @@ export const Products: CollectionConfig = {
     },
   },
   access: {
-    read: publishedOnly,
+    read: staffOrPublishedOnly,
     create: isStaff,
     update: isStaff,
     delete: isManagerOrAbove,
+    readVersions: isStaff,
   },
   versions: {
     drafts: {

@@ -1,6 +1,6 @@
 import type { GlobalConfig } from "payload";
 
-import { isStaff, publishedDraftOnly } from "@/access";
+import { isStaff, staffOrPublishedDraftOnly } from "@/access";
 import { seoGroupField } from "@/fields/seoFields";
 import { revalidateHomePageAfterChange } from "@/hooks/revalidateContent";
 
@@ -12,8 +12,9 @@ export const HomePage: GlobalConfig = {
     description: "Hero, sản phẩm nổi bật và các khối nội dung trang chủ.",
   },
   access: {
-    read: publishedDraftOnly,
+    read: staffOrPublishedDraftOnly,
     update: isStaff,
+    readVersions: isStaff,
   },
   versions: {
     drafts: true,

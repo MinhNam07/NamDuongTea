@@ -25,6 +25,7 @@ const dirname = path.dirname(filename);
 const serverURL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 export default buildConfig({
+  serverURL,
   admin: {
     user: Users.slug,
     meta: {

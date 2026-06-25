@@ -13,7 +13,12 @@ export const Users: CollectionConfig = {
     defaultColumns: ["email", "name", "role"],
     description: `Chỉ ${FIXED_ADMIN_COUNT} tài khoản quản trị cố định. Không thể tạo hoặc xóa user qua giao diện admin.`,
   },
-  auth: true,
+  auth: {
+    cookies: {
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "Lax",
+    },
+  },
   access: {
     read: adminOrSelf,
     create: lockUserMutation,
@@ -28,6 +33,7 @@ export const Users: CollectionConfig = {
       name: "name",
       type: "text",
       label: "Họ tên",
+      saveToJWT: true,
     },
     {
       name: "role",
@@ -35,6 +41,7 @@ export const Users: CollectionConfig = {
       defaultValue: "editor",
       required: true,
       label: "Vai trò",
+      saveToJWT: true,
       access: {
         update: ({ req: { user } }) => hasRole(user, ROLES.ADMIN),
       },

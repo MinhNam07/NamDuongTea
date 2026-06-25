@@ -14,7 +14,25 @@ export const isManagerOrAbove: Access = ({ req: { user } }) =>
   hasRole(user, ROLES.ADMIN, ROLES.MANAGER);
 
 export const isStaff: Access = ({ req: { user } }) =>
+  Boolean(user) &&
   hasRole(user, ROLES.ADMIN, ROLES.MANAGER, ROLES.EDITOR);
+
+/** Staff read all; public only sees published content. */
+export const staffOrPublishedOnly: Access = ({ req: { user } }) => {
+  if (isStaff({ req: { user } } as Parameters<typeof isStaff>[0])) return true;
+  return {
+    and: [
+      { _status: { equals: "published" } },
+      { status: { equals: "published" } },
+    ],
+  } as const;
+};
+
+/** Staff read all drafts; public only sees published versions. */
+export const staffOrPublishedDraftOnly: Access = ({ req: { user } }) => {
+  if (isStaff({ req: { user } } as Parameters<typeof isStaff>[0])) return true;
+  return { _status: { equals: "published" } };
+};
 
 /** Public reads only published documents (Payload drafts + legacy status field). */
 export const publishedOnly: Access = ({ req: { user } }) => {

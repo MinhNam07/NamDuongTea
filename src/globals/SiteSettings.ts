@@ -1,6 +1,6 @@
 import type { GlobalConfig } from "payload";
 
-import { isStaff, publishedDraftOnly } from "@/access";
+import { isStaff, staffOrPublishedDraftOnly } from "@/access";
 import { seoGroupField } from "@/fields/seoFields";
 import { revalidateSiteSettingsAfterChange } from "@/hooks/revalidateContent";
 
@@ -12,8 +12,9 @@ export const SiteSettings: GlobalConfig = {
     description: "Thông tin công ty, liên hệ, mạng xã hội và điều hướng.",
   },
   access: {
-    read: publishedDraftOnly,
+    read: staffOrPublishedDraftOnly,
     update: isStaff,
+    readVersions: isStaff,
   },
   versions: {
     drafts: true,
