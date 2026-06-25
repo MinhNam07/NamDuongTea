@@ -54,7 +54,9 @@ async function main() {
 
   printReport(report);
 
-  await payload.db.destroy();
+  if (payload.db.destroy) {
+    await payload.db.destroy();
+  }
 
   process.exit(report.failed > 0 ? 1 : 0);
 }
