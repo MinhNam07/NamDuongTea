@@ -1,20 +1,24 @@
 import type { CollectionConfig } from "payload";
 
-import { adminOnly, adminOrSelf, hasRole, ROLES } from "@/access";
+import { adminOrSelf, hasRole, ROLES } from "@/access";
+import { FIXED_ADMIN_COUNT } from "@/lib/admin-users";
+
+/** Không cho tạo/xóa user qua CMS — chỉ 3 tài khoản cố định từ `pnpm seed:admins`. */
+const lockUserMutation = () => false;
 
 export const Users: CollectionConfig = {
   slug: "users",
   admin: {
     useAsTitle: "email",
     defaultColumns: ["email", "name", "role"],
-    description: "Tài khoản quản trị website.",
+    description: `Chỉ ${FIXED_ADMIN_COUNT} tài khoản quản trị cố định. Không thể tạo hoặc xóa user qua giao diện admin.`,
   },
   auth: true,
   access: {
     read: adminOrSelf,
-    create: adminOnly,
+    create: lockUserMutation,
     update: adminOrSelf,
-    delete: adminOnly,
+    delete: lockUserMutation,
     admin: ({ req: { user } }) =>
       Boolean(user) &&
       hasRole(user, ROLES.ADMIN, ROLES.MANAGER, ROLES.EDITOR),

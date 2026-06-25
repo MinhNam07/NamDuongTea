@@ -17,12 +17,28 @@
 
 See [`.env.example`](../.env.example) for full list.
 
-## Bootstrap admin user
+## Bootstrap admin users
 
-1. Start app: `pnpm dev`
-2. Open `/admin` and create first user (must be done when no users exist)
-3. Set role to **Quản trị viên** (`admin`) in admin UI
-4. Create manager/editor accounts as needed
+Hệ thống chỉ cho phép **đúng 3 tài khoản admin** cố định. Không có trang "tạo user đầu tiên" công khai sau khi seed.
+
+1. Thêm vào `.env` (hoặc secrets trên Vercel):
+
+   ```
+   ADMIN_USER_1_EMAIL=...
+   ADMIN_USER_1_PASSWORD=...
+   ADMIN_USER_1_NAME=...
+   # tương tự cho USER_2 và USER_3
+   ```
+
+2. Chạy seed (sau khi DB migrations đã chạy):
+
+   ```bash
+   pnpm seed:admins
+   ```
+
+3. Đăng nhập `/admin` bằng một trong 3 email trên.
+
+**Lưu ý bảo mật:** Nếu database chưa có user nào, Payload sẽ mở `/admin/create-first-user` cho bất kỳ ai — luôn chạy `pnpm seed:admins` ngay sau deploy lần đầu.
 
 ## Deploy sequence
 

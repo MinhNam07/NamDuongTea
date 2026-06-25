@@ -11,6 +11,7 @@
     "typecheck": "tsc --noEmit",
     "test": "vitest run",
     "migrate:content": "node --env-file=.env --import tsx scripts/migrate-content.ts",
+    "seed:admins": "node --env-file=.env --import tsx scripts/seed-admin-users.ts",
     "payload": "payload",
     "generate:types": "payload generate:types",
     "generate:importmap": "payload generate:importmap",

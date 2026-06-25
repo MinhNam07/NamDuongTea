@@ -152,7 +152,7 @@ pnpm dev
 Lần đầu Payload sẽ tự migrate schema. Truy cập:
 
 - Site: http://localhost:3000
-- Admin: http://localhost:3000/admin (tạo user admin lần đầu)
+- Admin: http://localhost:3000/admin (cấu hình 3 user trong `.env` rồi chạy `pnpm seed:admins`)
 - API public: http://localhost:3000/api/public/products
 - Payload REST: http://localhost:3000/api/products
 - GraphQL: http://localhost:3000/api/graphql-playground
