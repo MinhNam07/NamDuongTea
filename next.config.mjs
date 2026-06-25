@@ -1,5 +1,23 @@
 import { withPayload } from "@payloadcms/next/withPayload";
 
+function s3RemotePatterns() {
+  const publicBase = process.env.S3_PUBLIC_BASE_URL;
+  if (!publicBase) return [];
+
+  try {
+    const url = new URL(publicBase);
+    return [
+      {
+        protocol: url.protocol.replace(":", ""),
+        hostname: url.hostname,
+        pathname: "/**",
+      },
+    ];
+  } catch {
+    return [];
+  }
+}
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
@@ -21,6 +39,7 @@ const nextConfig = {
     remotePatterns: [
       { protocol: "https", hostname: "images.unsplash.com" },
       { protocol: "https", hostname: "cdn.namduongtea.vn" },
+      ...s3RemotePatterns(),
     ],
   },
   experimental: {

@@ -4,6 +4,7 @@ import { absoluteUrl } from "@/lib/utils";
 const SITE_NAME = "Nam Dương Tea";
 const SITE_DESCRIPTION =
   "Nhà cung cấp trà nguyên liệu và thành phẩm cho đại lý, nhà phân phối và xuất khẩu.";
+const DEFAULT_OG_IMAGE = "/images/hero.JPG";
 
 export function buildMetadata({
   title,
@@ -19,6 +20,7 @@ export function buildMetadata({
   const fullTitle = title === SITE_NAME ? title : `${title} | ${SITE_NAME}`;
   const desc = description ?? SITE_DESCRIPTION;
   const url = absoluteUrl(path);
+  const ogImage = image ? absoluteUrl(image) : absoluteUrl(DEFAULT_OG_IMAGE);
 
   return {
     title: fullTitle,
@@ -31,13 +33,13 @@ export function buildMetadata({
       description: desc,
       url,
       locale: "vi_VN",
-      images: image ? [{ url: image }] : undefined,
+      images: [{ url: ogImage }],
     },
     twitter: {
       card: "summary_large_image",
       title: fullTitle,
       description: desc,
-      images: image ? [image] : undefined,
+      images: [ogImage],
     },
   };
 }

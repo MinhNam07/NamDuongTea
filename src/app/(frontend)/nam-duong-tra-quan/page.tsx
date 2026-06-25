@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import { notFound } from "next/navigation";
 
 import { SectionEyebrowTitle } from "@/components/marketing/section-eyebrow-title";
 import { TetGiftB2bCatalogue } from "@/components/marketing/tet-gift/tet-gift-b2b-catalogue";
@@ -7,7 +6,9 @@ import { TetGiftBrandStrip } from "@/components/marketing/tet-gift/tet-gift-bran
 import { TetGiftHeroBanner } from "@/components/marketing/tet-gift/tet-gift-hero-banner";
 import { TetGiftPremiumCard } from "@/components/marketing/tet-gift/tet-gift-premium-card";
 import { buildMetadata } from "@/lib/seo";
-import { TRA_QUAN_COLLECTION_NAME } from "@/lib/tra-quan";
+import { TRA_QUAN_COLLECTION_NAME, traQuanStaticImageSrc } from "@/lib/tra-quan";
+import { TRA_QUAN_SEED_PRODUCTS } from "@/lib/tra-quan-seed-data";
+import type { TraQuanProduct } from "@/lib/tra-quan";
 import { loadTraQuanProducts } from "@/lib/tra-quan-products";
 
 export const metadata: Metadata = buildMetadata({
@@ -16,9 +17,26 @@ export const metadata: Metadata = buildMetadata({
   path: "/nam-duong-tra-quan",
 });
 
+function seedFallbackProducts(): TraQuanProduct[] {
+  return TRA_QUAN_SEED_PRODUCTS.map((p) => ({
+    id: p.slug,
+    slug: p.slug,
+    name: p.name,
+    tagline: p.tagline,
+    teas: p.teas,
+    priceVnd: p.priceVnd,
+    giftHighlights: p.giftHighlights,
+    gallerySlidesReversed: p.gallerySlidesReversed,
+    imageUrl: traQuanStaticImageSrc(
+      p.slug,
+      p.gallerySlidesReversed ? "-2" : "",
+    ),
+  }));
+}
+
 export default async function NamDuongTraQuanPage() {
-  const products = await loadTraQuanProducts();
-  if (products.length === 0) notFound();
+  const cmsProducts = await loadTraQuanProducts();
+  const products = cmsProducts.length > 0 ? cmsProducts : seedFallbackProducts();
 
   const featured =
     products.find((p) => p.slug === "nam-moc-tra-quan") ?? products[0]!;

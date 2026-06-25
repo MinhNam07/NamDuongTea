@@ -12,10 +12,10 @@ export function AboutValueCards({
   return (
     <section className="container mx-auto px-4 py-20 md:px-6 md:py-28">
       <header className="mx-auto max-w-2xl text-center">
-        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-tea-moss">
+        <p className="text-xs font-semibold uppercase tracking-[0.24em] text-[#f3e2a6]">
           Vì sao chọn Nam Dương
         </p>
-        <h2 className="mt-3 font-serif text-3xl leading-[1.08] tracking-tight text-tea-dark-green md:text-5xl">
+        <h2 className="mt-3 font-serif text-3xl leading-[1.08] tracking-tight text-white md:text-5xl">
           {heading}
         </h2>
       </header>

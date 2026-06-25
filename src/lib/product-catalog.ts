@@ -1,21 +1,19 @@
 import "server-only";
 
 import type { ProductCardProduct } from "@/components/product-card";
-import { getPayloadClient } from "@/lib/payload";
+import { getProducts } from "@/data/products";
+import type { StorefrontProduct } from "@/data/types";
 import {
-  getWhitelistSlugsForTab,
   normalizeProductTab,
-  prepareCatalogProducts,
   type ProductTab,
 } from "@/lib/product-tab-config";
-import { TRA_QUAN_COLLECTION_NAME } from "@/lib/tra-quan";
-import { loadTraQuanProducts } from "@/lib/tra-quan-products";
 
 export type { HomeCatalogTabKey } from "@/lib/home-catalog-tabs";
 export { HOME_CATALOG_TABS } from "@/lib/home-catalog-tabs";
 
 export type CatalogProduct = ProductCardProduct & {
   moq?: string | null;
+  origin?: string | null;
 };
 
 export type PublicProductPreview = {
@@ -41,21 +39,7 @@ export function categorySlugToProductTab(raw?: string | null): ProductTab | null
   return normalizeProductTab(normalized);
 }
 
-function productImageUrl(image: ProductCardProduct["image"]): string | null {
-  if (!image) return null;
-  if (typeof image === "string") return image;
-  return image.sizes?.card?.url ?? image.url ?? null;
-}
-
-function productImageAlt(
-  image: ProductCardProduct["image"],
-  fallback: string,
-): string {
-  if (!image || typeof image === "string") return fallback;
-  return image.alt ?? fallback;
-}
-
-export function toPublicProductPreview(product: CatalogProduct): PublicProductPreview {
+function storefrontToCatalogProduct(product: StorefrontProduct): CatalogProduct {
   return {
     id: product.id,
     name: product.name,
@@ -63,8 +47,39 @@ export function toPublicProductPreview(product: CatalogProduct): PublicProductPr
     shortDescription: product.shortDescription ?? null,
     origin: product.origin ?? null,
     moq: product.moq ?? null,
-    image: productImageUrl(product.image),
-    imageAlt: productImageAlt(product.image, product.name),
+    image: product.image
+      ? {
+          url: product.image.url,
+          alt: product.image.alt,
+          sizes: { card: { url: product.image.url } },
+        }
+      : null,
+    category: product.category ?? null,
+  };
+}
+
+export function toPublicProductPreview(product: CatalogProduct): PublicProductPreview {
+  const image =
+    product.image && typeof product.image === "object"
+      ? (product.image.sizes?.card?.url ?? product.image.url ?? null)
+      : typeof product.image === "string"
+        ? product.image
+        : null;
+
+  const imageAlt =
+    product.image && typeof product.image === "object"
+      ? (product.image.alt ?? product.name)
+      : product.name;
+
+  return {
+    id: product.id,
+    name: product.name,
+    slug: product.slug,
+    shortDescription: product.shortDescription ?? null,
+    origin: product.origin ?? null,
+    moq: product.moq ?? null,
+    image,
+    imageAlt,
     category:
       product.category && typeof product.category === "object"
         ? {
@@ -84,45 +99,8 @@ export async function loadCatalogProducts(
   tab: ProductTab,
   options?: { limit?: number },
 ): Promise<CatalogProduct[]> {
-  if (tab === "nam-duong-tra-quan") {
-    const traQuan = await loadTraQuanProducts();
-    const items: CatalogProduct[] = traQuan.map((p) => ({
-      id: p.id,
-      name: p.name,
-      slug: p.slug,
-      shortDescription: p.tagline,
-      origin: null,
-      moq: null,
-      image: p.imageUrl,
-      category: { name: TRA_QUAN_COLLECTION_NAME, slug: "nam-duong-tra-quan" },
-    }));
-    return options?.limit ? items.slice(0, options.limit) : items;
-  }
-
-  let products: CatalogProduct[] = [];
-
-  try {
-    const payload = await getPayloadClient();
-    const slugs = getWhitelistSlugsForTab(tab);
-    const { docs } = await payload.find({
-      collection: "products",
-      where: {
-        and: [{ status: { equals: "published" } }, { slug: { in: slugs } }],
-      },
-      depth: 1,
-      limit: 50,
-    });
-
-    const candidates = docs as unknown as (ProductCardProduct & { moq?: string | null })[];
-    products = prepareCatalogProducts(candidates, tab) as CatalogProduct[];
-  } catch {
-    products = [];
-  }
-
-  if (options?.limit) {
-    return products.slice(0, options.limit);
-  }
-  return products;
+  const products = await getProducts(tab, options);
+  return products.map(storefrontToCatalogProduct);
 }
 
 export async function loadCatalogProductsByCategorySlug(

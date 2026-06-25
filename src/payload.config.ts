@@ -10,12 +10,19 @@ import { Categories } from "@/collections/Categories";
 import { Contacts } from "@/collections/Contacts";
 import { Media } from "@/collections/Media";
 import { Posts } from "@/collections/Posts";
+import { ProductLines } from "@/collections/ProductLines";
 import { Products } from "@/collections/Products";
 import { QuoteRequests } from "@/collections/QuoteRequests";
 import { Users } from "@/collections/Users";
+import { HomePage } from "@/globals/HomePage";
+import { SiteSettings } from "@/globals/SiteSettings";
+import { buildS3StoragePlugin } from "@/lib/storage";
+import { migrations } from "@/migrations";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
+
+const serverURL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
 
 export default buildConfig({
   admin: {
@@ -23,16 +30,27 @@ export default buildConfig({
     meta: {
       titleSuffix: " · Nam Dương Tea Admin",
     },
+    livePreview: {
+      breakpoints: [
+        { label: "Mobile", name: "mobile", width: 375, height: 667 },
+        { label: "Desktop", name: "desktop", width: 1440, height: 900 },
+      ],
+    },
   },
   collections: [
     Users,
     Media,
     Categories,
+    ProductLines,
     Products,
     Posts,
     Contacts,
     QuoteRequests,
   ],
+  globals: [SiteSettings, HomePage],
+  plugins: [buildS3StoragePlugin()].filter(Boolean) as NonNullable<
+    Parameters<typeof buildConfig>[0]["plugins"]
+  >,
   editor: lexicalEditor(),
   secret: process.env.PAYLOAD_SECRET || "dev-secret-change-me",
   typescript: {
@@ -42,9 +60,13 @@ export default buildConfig({
     pool: {
       connectionString: process.env.DATABASE_URI,
     },
+    push: false,
+    prodMigrations: migrations,
   }),
   sharp,
   graphQL: {
     schemaOutputFile: path.resolve(dirname, "../generated-schema.graphql"),
   },
+  cors: [serverURL],
+  csrf: [serverURL],
 });

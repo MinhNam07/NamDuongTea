@@ -1,5 +1,7 @@
 import type { CollectionConfig } from "payload";
 
+import { isManagerOrAbove, isStaff } from "@/access";
+
 export const QuoteRequests: CollectionConfig = {
   slug: "quote-requests",
   admin: {
@@ -8,10 +10,10 @@ export const QuoteRequests: CollectionConfig = {
     description: "Yêu cầu báo giá B2B (RFQ) từ khách hàng.",
   },
   access: {
-    read: ({ req: { user } }) => !!user,
+    read: isStaff,
     create: () => true,
-    update: ({ req: { user } }) => !!user,
-    delete: ({ req: { user } }) => !!user,
+    update: isStaff,
+    delete: isManagerOrAbove,
   },
   fields: [
     { name: "name", type: "text", required: true, label: "Họ tên" },

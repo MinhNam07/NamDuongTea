@@ -40,11 +40,11 @@
     "response_sla": "24h làm việc"
   },
   "social": {
-    "facebook": "https://facebook.com/",
-    "zalo": "https://zalo.me/",
-    "messenger": "https://m.me/",
+    "facebook": "https://www.facebook.com/khanh.trang.24823",
+    "zalo": "https://zalo.me/0945781900",
+    "whatsapp": "https://wa.me/84945781900",
     "youtube": "https://youtube.com/",
-    "support_chat_url": "https://zalo.me/"
+    "support_chat_url": "https://zalo.me/0945781900"
   },
   "design": {
     "ui_kit": {
@@ -644,7 +644,7 @@
       "Toaster (sonner, top-center)"
     ],
     "floating_actions": {
-      "social_left": ["zalo", "messenger", "facebook"],
+      "social_left": ["zalo", "whatsapp", "facebook"],
       "bottom_right": ["support_chat", "scroll_to_top"],
       "scroll_top_threshold_px": 400
     }

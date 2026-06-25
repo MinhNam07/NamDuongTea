@@ -53,47 +53,55 @@ async function findTraQuanCategoryId(): Promise<number | null> {
 }
 
 export async function loadTraQuanProducts(): Promise<TraQuanProduct[]> {
-  const payload = await getPayloadClient();
-  const categoryId = await findTraQuanCategoryId();
-  if (categoryId == null) return [];
+  try {
+    const payload = await getPayloadClient();
+    const categoryId = await findTraQuanCategoryId();
+    if (categoryId == null) return [];
 
-  const { docs } = await payload.find({
-    collection: "products",
-    where: {
-      and: [
-        { status: { equals: "published" } },
-        { category: { equals: categoryId } },
-      ],
-    },
-    depth: 1,
-    limit: 50,
-    sort: "name",
-  });
+    const { docs } = await payload.find({
+      collection: "products",
+      where: {
+        and: [
+          { status: { equals: "published" } },
+          { category: { equals: categoryId } },
+        ],
+      },
+      depth: 1,
+      limit: 50,
+      sort: "name",
+    });
 
-  return (docs as unknown as PayloadTraQuanDoc[]).map(mapTraQuanProduct);
+    return (docs as unknown as PayloadTraQuanDoc[]).map(mapTraQuanProduct);
+  } catch {
+    return [];
+  }
 }
 
 export async function loadTraQuanProductBySlug(
   slug: string,
 ): Promise<TraQuanProduct | null> {
-  const payload = await getPayloadClient();
-  const categoryId = await findTraQuanCategoryId();
+  try {
+    const payload = await getPayloadClient();
+    const categoryId = await findTraQuanCategoryId();
 
-  const { docs } = await payload.find({
-    collection: "products",
-    where: {
-      and: [
-        { slug: { equals: slug } },
-        { status: { equals: "published" } },
-        ...(categoryId != null ? [{ category: { equals: categoryId } }] : []),
-      ],
-    },
-    depth: 1,
-    limit: 1,
-  });
+    const { docs } = await payload.find({
+      collection: "products",
+      where: {
+        and: [
+          { slug: { equals: slug } },
+          { status: { equals: "published" } },
+          ...(categoryId != null ? [{ category: { equals: categoryId } }] : []),
+        ],
+      },
+      depth: 1,
+      limit: 1,
+    });
 
-  const doc = docs[0] as unknown as PayloadTraQuanDoc | undefined;
-  return doc ? mapTraQuanProduct(doc) : null;
+    const doc = docs[0] as unknown as PayloadTraQuanDoc | undefined;
+    return doc ? mapTraQuanProduct(doc) : null;
+  } catch {
+    return null;
+  }
 }
 
 export async function isTraQuanProductSlug(slug: string): Promise<boolean> {

@@ -19,7 +19,7 @@ export function AboutCtaStrip({
   tertiary,
 }: AboutCtaStripProps) {
   return (
-    <section className="bg-tea-dark-green py-16 md:py-20">
+    <section className="bg-[#033300] py-16 md:py-20">
       <div className="container mx-auto max-w-3xl px-4 text-center md:px-6">
         <h2 className="font-display text-3xl font-extrabold text-white md:text-4xl">
           {title}

@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
+import { escapeHtml, sendLeadNotification } from "@/lib/email";
 import { getPayloadClient } from "@/lib/payload";
 
 const QuoteSchema = z.object({
@@ -53,6 +54,27 @@ export async function POST(req: Request) {
         note: parsed.data.note,
         status: "new",
       },
+    });
+
+    const fields = [
+      ["Họ tên", parsed.data.name],
+      ["Điện thoại", parsed.data.phone],
+      ["Email", parsed.data.email || "—"],
+      ["Công ty", parsed.data.company || "—"],
+      ["Sản phẩm", parsed.data.productSlug || "—"],
+      ["Số lượng", parsed.data.quantity],
+      ["Ghi chú", parsed.data.note || "—"],
+    ] as const;
+
+    void sendLeadNotification({
+      subject: `[Nam Dương Tea] Yêu cầu báo giá — ${parsed.data.name}`,
+      html: fields
+        .map(
+          ([label, value]) =>
+            `<p><strong>${escapeHtml(label)}:</strong> ${escapeHtml(value)}</p>`,
+        )
+        .join(""),
+      text: fields.map(([label, value]) => `${label}: ${value}`).join("\n"),
     });
 
     return NextResponse.json(

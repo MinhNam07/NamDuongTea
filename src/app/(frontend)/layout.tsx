@@ -1,6 +1,8 @@
 import type { Metadata, Viewport } from "next";
 
 import { FrontendMain } from "@/components/frontend-main";
+import { GoogleAnalytics } from "@/components/google-analytics";
+import { JsonLdOrganization } from "@/components/json-ld-organization";
 import { SiteFloatingActions } from "@/components/site-floating-actions";
 import { SiteFooter } from "@/components/site-footer";
 import { SiteHeader } from "@/components/site-header";
@@ -31,6 +33,8 @@ export default function RootLayout({
   return (
     <html lang="vi" className={fontVariables} suppressHydrationWarning>
       <body className="min-h-screen bg-background font-sans text-foreground">
+        <JsonLdOrganization />
+        <GoogleAnalytics />
         <SiteHeader />
         <FrontendMain>{children}</FrontendMain>
         <SiteFooter />

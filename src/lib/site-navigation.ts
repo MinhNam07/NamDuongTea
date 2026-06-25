@@ -12,6 +12,7 @@ export type NavItem = {
   children?: NavChild[];
 };
 
+
 export const ABOUT_NAV_CHILDREN: NavChild[] = [
   { label: "Giới thiệu", href: "/gioi-thieu" },
   { label: "Tìm hiểu về vùng trồng", href: "/tim-hieu-vung-trong" },
@@ -55,7 +56,7 @@ export const FOOTER_PRODUCT_LINKS: NavChild[] = PRODUCT_LINES.map((line) => ({
 export const SOCIAL_LINKS = {
   facebook: WEBSITE_DATA.navigation.social.facebook,
   zalo: WEBSITE_DATA.navigation.social.zalo,
-  messenger: WEBSITE_DATA.navigation.social.messenger,
+  whatsapp: WEBSITE_DATA.navigation.social.whatsapp,
   youtube: WEBSITE_DATA.navigation.social.youtube,
 } as const;
 

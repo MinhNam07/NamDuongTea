@@ -3,39 +3,47 @@ import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { ChevronRight, Leaf } from "lucide-react";
 
+import { getProductBySlug } from "@/data/products";
 import { TraQuanProductDetailView } from "@/components/products/tra-quan-product-detail-view";
 import { ProductDetailGallery } from "@/components/products/product-detail-gallery";
 import { ProductDetailStickyPanel } from "@/components/products/product-detail-sticky-panel";
 import { ProductDetailTabs } from "@/components/products/product-detail-tabs";
-import { getPayloadClient } from "@/lib/payload";
-import { getProductDetailTabs } from "@/lib/product-detail-tabs";
+import {
+  getProductDetailTabs,
+  type ProductDetailTabContent,
+} from "@/lib/product-detail-tabs";
 import { getCuratedTeaImages } from "@/lib/product-lines";
 import { canonicalCategoryForProductSlug } from "@/lib/product-tab-config";
 import { buildMetadata } from "@/lib/seo";
 import { TRA_QUAN_CATEGORY_SLUG, TRA_QUAN_COLLECTION_NAME } from "@/lib/tra-quan";
+import type { StorefrontProduct } from "@/data/types";
 
 export const revalidate = 300;
 
 type Params = Promise<{ slug: string }>;
 
-async function loadProduct(slug: string) {
-  try {
-    const payload = await getPayloadClient();
-    const { docs } = await payload.find({
-      collection: "products",
-      where: {
-        and: [
-          { slug: { equals: slug } },
-          { status: { equals: "published" } },
-        ],
+function resolveDetailTabs(
+  slug: string,
+  cmsTabs: StorefrontProduct["detailTabs"],
+): ProductDetailTabContent[] {
+  if (cmsTabs.length > 0) {
+    return cmsTabs.map((tab) => ({
+      key: tab.key,
+      label: tab.label,
+      heading: tab.heading ?? tab.label,
+      paragraphs: tab.paragraphs,
+      bullets: tab.bullets.map((bullet) => ({
+        icon: "local_florist" as const,
+        title: bullet.title,
+        text: bullet.text,
+      })),
+      image: {
+        src: tab.imageUrl ?? "/images/tea-hill-header.webp",
+        alt: tab.imageAlt ?? tab.label,
       },
-      depth: 2,
-      limit: 1,
-    });
-    return docs[0] ?? null;
-  } catch {
-    return null;
+    }));
   }
+  return getProductDetailTabs(slug);
 }
 
 export async function generateMetadata({
@@ -44,25 +52,21 @@ export async function generateMetadata({
   params: Params;
 }): Promise<Metadata> {
   const { slug } = await params;
-  const product = await loadProduct(slug);
+  const product = await getProductBySlug(slug);
   if (!product) {
     return buildMetadata({
       title: "Sản phẩm không tồn tại",
       path: `/san-pham/${slug}`,
     });
   }
-  const seo = (product as { seo?: { metaTitle?: string; metaDescription?: string } }).seo;
-  const categorySlug = (product as { category?: { slug?: string } }).category?.slug;
   const title =
-    seo?.metaTitle ||
-    (categorySlug === TRA_QUAN_CATEGORY_SLUG
-      ? `${product.name as string} · ${TRA_QUAN_COLLECTION_NAME}`
-      : (product.name as string));
+    product.seo?.metaTitle ||
+    (product.category?.slug === TRA_QUAN_CATEGORY_SLUG
+      ? `${product.name} · ${TRA_QUAN_COLLECTION_NAME}`
+      : product.name);
   return buildMetadata({
     title,
-    description:
-      seo?.metaDescription ||
-      ((product as { shortDescription?: string }).shortDescription ?? undefined),
+    description: product.seo?.metaDescription || product.shortDescription || undefined,
     path: `/san-pham/${slug}`,
   });
 }
@@ -73,54 +77,47 @@ export default async function ProductDetailPage({
   params: Params;
 }) {
   const { slug } = await params;
-  const product = await loadProduct(slug);
+  const product = await getProductBySlug(slug);
   if (!product) notFound();
 
-  const p = product as unknown as {
-    id: string;
-    name: string;
-    slug: string;
-    shortDescription?: string;
-    origin?: string;
-    moq?: string;
-    priceVnd?: number | null;
-    giftTeas?: { name: string; weight: string }[] | null;
-    giftHighlights?: { text: string }[] | null;
-    gallerySlidesReversed?: boolean | null;
-    image?: { url?: string; alt?: string } | null;
-    gallery?: { image?: { url?: string; alt?: string } }[];
-    specs?: { label: string; value: string }[];
-    category?: { name?: string; slug?: string } | null;
-  };
-
-  if (p.category?.slug === TRA_QUAN_CATEGORY_SLUG) {
-    return <TraQuanProductDetailView product={p} />;
+  if (product.category?.slug === TRA_QUAN_CATEGORY_SLUG) {
+    return (
+      <TraQuanProductDetailView
+        product={{
+          name: product.name,
+          slug: product.slug,
+          shortDescription: product.shortDescription,
+          priceVnd: product.priceVnd,
+          giftTeas: product.giftTeas,
+          giftHighlights: product.giftHighlights?.map((text) => ({ text })),
+          gallerySlidesReversed: product.gallerySlidesReversed,
+        }}
+      />
+    );
   }
 
-  const curated = getCuratedTeaImages(p.slug);
-  const rawHeroUrl = p.image?.url ?? p.gallery?.[0]?.image?.url ?? null;
-  const heroUrl = curated?.primary ?? rawHeroUrl;
-  const heroAlt = p.image?.alt ?? p.name;
-  const tabs = getProductDetailTabs(p.slug);
+  const curated = getCuratedTeaImages(product.slug);
+  const rawHeroUrl = product.image?.url ?? product.gallery[0]?.url ?? null;
+  const heroUrl = curated?.primary ?? rawHeroUrl ?? product.legacyImagePath;
+  const heroAlt = product.image?.alt ?? product.name;
+  const tabs = resolveDetailTabs(product.slug, product.detailTabs);
   const galleryImages = curated
     ? curated.gallery.map((src, i) => ({
         src,
-        alt: i === 0 ? heroAlt : `${p.name} — ảnh ${i + 1}`,
+        alt: i === 0 ? heroAlt : `${product.name} — ảnh ${i + 1}`,
       }))
     : [
         ...(heroUrl ? [{ src: heroUrl, alt: heroAlt }] : []),
-        ...(p.gallery ?? [])
-          .map((g, i) => ({
-            src: g.image?.url ?? "",
-            alt: g.image?.alt ?? `${p.name} - ${i + 1}`,
-          }))
-          .filter((i) => Boolean(i.src)),
-      ];
+        ...product.gallery.map((img, i) => ({
+          src: img.url,
+          alt: img.alt ?? `${product.name} - ${i + 1}`,
+        })),
+      ].filter((item) => Boolean(item.src));
 
   const specs = [
-    ...(p.origin ? [{ label: "Xuất xứ", value: "Vùng Cao, Việt Nam" }] : []),
-    ...(p.moq ? [{ label: "MOQ", value: p.moq }] : []),
-    ...(p.specs ?? []).map((s) => ({ label: s.label, value: s.value })),
+    ...(product.origin ? [{ label: "Xuất xứ", value: product.origin }] : []),
+    ...(product.moq ? [{ label: "MOQ", value: product.moq }] : []),
+    ...product.specs,
   ];
 
   return (
@@ -142,7 +139,7 @@ export default async function ProductDetailPage({
           </Link>
           <ChevronRight className="h-4 w-4" />
           <span className="text-xs font-semibold text-foreground">
-            {p.name}
+            {product.name}
           </span>
         </nav>
 
@@ -160,15 +157,15 @@ export default async function ProductDetailPage({
           <div className="lg:col-span-5">
             <ProductDetailStickyPanel
               badge={
-                canonicalCategoryForProductSlug(p.slug)?.name ??
-                p.category?.name ??
+                canonicalCategoryForProductSlug(product.slug)?.name ??
+                product.category?.name ??
                 null
               }
-              title={p.name}
-              description={p.shortDescription ?? null}
+              title={product.name}
+              description={product.shortDescription ?? null}
               specs={specs}
-              productSlug={p.slug}
-              productName={p.name}
+              productSlug={product.slug}
+              productName={product.name}
             />
           </div>
         </section>

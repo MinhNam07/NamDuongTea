@@ -1,8 +1,8 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 
+import { getPosts } from "@/data/posts";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { getPayloadClient } from "@/lib/payload";
 import { buildMetadata } from "@/lib/seo";
 
 export const revalidate = 300;
@@ -15,19 +15,7 @@ export const metadata: Metadata = buildMetadata({
 });
 
 export default async function TinTucPage() {
-  let posts: { id: string | number; title: string; slug: string; excerpt?: string }[] = [];
-  try {
-    const payload = await getPayloadClient();
-    const { docs } = await payload.find({
-      collection: "posts",
-      where: { status: { equals: "published" } },
-      sort: "-publishedAt",
-      limit: 12,
-    });
-    posts = docs as unknown as typeof posts;
-  } catch {
-    posts = [];
-  }
+  const posts = await getPosts({ limit: 12 });
 
   return (
     <div className="bg-tea-cream">

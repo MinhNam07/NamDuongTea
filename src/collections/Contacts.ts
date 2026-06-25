@@ -1,5 +1,7 @@
 import type { CollectionConfig } from "payload";
 
+import { isManagerOrAbove, isStaff } from "@/access";
+
 export const Contacts: CollectionConfig = {
   slug: "contacts",
   admin: {
@@ -8,10 +10,10 @@ export const Contacts: CollectionConfig = {
     description: "Form liên hệ và đăng ký đại lý từ website.",
   },
   access: {
-    read: ({ req: { user } }) => !!user,
+    read: isStaff,
     create: () => true,
-    update: ({ req: { user } }) => !!user,
-    delete: ({ req: { user } }) => !!user,
+    update: isStaff,
+    delete: isManagerOrAbove,
   },
   fields: [
     { name: "name", type: "text", required: true, label: "Họ tên" },

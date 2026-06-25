@@ -7,6 +7,7 @@ type SectionEyebrowTitleProps = {
   className?: string;
   headingClassName?: string;
   centered?: boolean;
+  tone?: "default" | "inverse";
 };
 
 export function SectionEyebrowTitle({
@@ -16,7 +17,10 @@ export function SectionEyebrowTitle({
   className,
   headingClassName,
   centered = false,
+  tone = "default",
 }: SectionEyebrowTitleProps) {
+  const inverse = tone === "inverse";
+
   return (
     <div className={cn(centered && "text-center", className)}>
       <div
@@ -25,15 +29,35 @@ export function SectionEyebrowTitle({
           centered && "justify-center",
         )}
       >
-        {!centered ? <span className="h-px w-10 bg-tea-moss" aria-hidden /> : null}
-        <p className="font-sans text-[17px] font-medium uppercase tracking-[0.28em] text-tea-moss">
+        {centered && inverse ? (
+          <span className="h-px w-10 bg-[#f3e2a6]/80" aria-hidden />
+        ) : null}
+        {!centered ? (
+          <span
+            className={cn(
+              "h-px w-10",
+              inverse ? "bg-[#f3e2a6]/80" : "bg-tea-moss",
+            )}
+            aria-hidden
+          />
+        ) : null}
+        <p
+          className={cn(
+            "font-sans text-[17px] font-medium uppercase tracking-[0.28em]",
+            inverse ? "text-[#f3e2a6]" : "text-tea-moss",
+          )}
+        >
           {eyebrow}
         </p>
+        {centered && inverse ? (
+          <span className="h-px w-10 bg-[#f3e2a6]/80" aria-hidden />
+        ) : null}
       </div>
 
       <h2
         className={cn(
-          "max-w-2xl text-4xl leading-[1.05] tracking-tight text-tea-dark-green md:text-5xl lg:text-[3.5rem]",
+          "max-w-2xl text-4xl leading-[1.05] tracking-tight md:text-5xl lg:text-[3.5rem]",
+          inverse ? "text-white" : "text-tea-dark-green",
           centered && "mx-auto",
           headingClassName,
         )}
@@ -42,7 +66,14 @@ export function SectionEyebrowTitle({
         {titleEmphasis ? (
           <>
             {" "}
-            <span className="font-serif italic text-tea-moss">{titleEmphasis}</span>
+            <span
+              className={cn(
+                "font-serif italic",
+                inverse ? "text-tea-olive" : "text-tea-moss",
+              )}
+            >
+              {titleEmphasis}
+            </span>
           </>
         ) : null}
       </h2>

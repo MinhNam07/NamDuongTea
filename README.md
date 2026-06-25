@@ -188,6 +188,29 @@ pnpm generate:importmap
 
 ---
 
+## CMS & Content Management
+
+Payload Admin tại `/admin` là nguồn quản trị nội dung. Xem thêm:
+
+- [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md) — env, bootstrap admin, rollback
+- [docs/MIGRATION.md](docs/MIGRATION.md) — import dữ liệu legacy idempotent
+
+### Scripts
+
+```bash
+pnpm typecheck
+pnpm test
+pnpm migrate:content --dry-run   # inventory + dry-run (cần DB cho full dry-run)
+pnpm migrate:content             # import thật (cần DB + pnpm payload migrate)
+pnpm payload migrate             # apply schema migration
+```
+
+### Rollback nội dung
+
+Đặt `CONTENT_SOURCE=legacy` để storefront đọc lại JSON/TS cũ mà không xóa file legacy.
+
+---
+
 ## Deploy
 
 ### Vercel + Postgres cloud
@@ -195,9 +218,10 @@ pnpm generate:importmap
 1. Tạo Postgres cloud (Neon / Supabase / Railway / RDS).
 2. Push repo lên GitHub.
 3. Import vào Vercel:
-   - Set env: `DATABASE_URI`, `PAYLOAD_SECRET`, `NEXT_PUBLIC_SITE_URL`.
+   - Set env: `DATABASE_URI`, `PAYLOAD_SECRET`, `NEXT_PUBLIC_SITE_URL`, `REVALIDATION_SECRET`.
+   - Production media: `S3_*` vars cho Cloudflare R2 (xem `.env.example`).
    - Build command: `pnpm build`.
-4. Cho media uploads ở production: chuyển `Media.upload.staticDir` sang adapter S3 (`@payloadcms/storage-s3`) hoặc Vercel Blob.
+4. Sau deploy: `pnpm payload migrate` rồi `pnpm migrate:content` (xem [docs/DEPLOYMENT.md](docs/DEPLOYMENT.md)).
 
 ### Tự host
 

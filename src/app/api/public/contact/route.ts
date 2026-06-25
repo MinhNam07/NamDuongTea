@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { z } from "zod";
 
+import { escapeHtml, sendLeadNotification } from "@/lib/email";
 import { getPayloadClient } from "@/lib/payload";
 
 const ContactSchema = z.object({
@@ -35,6 +36,28 @@ export async function POST(req: Request) {
         type: parsed.data.type,
         status: "new",
       },
+    });
+
+    const typeLabel =
+      parsed.data.type === "agent" ? "Đăng ký đại lý" : "Liên hệ";
+    const fields = [
+      ["Loại", typeLabel],
+      ["Họ tên", parsed.data.name],
+      ["Điện thoại", parsed.data.phone],
+      ["Email", parsed.data.email || "—"],
+      ["Công ty", parsed.data.company || "—"],
+      ["Nội dung", parsed.data.message || "—"],
+    ] as const;
+
+    void sendLeadNotification({
+      subject: `[Nam Dương Tea] ${typeLabel} mới — ${parsed.data.name}`,
+      html: fields
+        .map(
+          ([label, value]) =>
+            `<p><strong>${escapeHtml(label)}:</strong> ${escapeHtml(value)}</p>`,
+        )
+        .join(""),
+      text: fields.map(([label, value]) => `${label}: ${value}`).join("\n"),
     });
 
     return NextResponse.json(

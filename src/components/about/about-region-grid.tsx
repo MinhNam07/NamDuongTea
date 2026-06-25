@@ -9,16 +9,17 @@ type AboutRegionGridProps = {
 
 export function AboutRegionGrid({ regions }: AboutRegionGridProps) {
   return (
-    <section className="bg-tea-ivory/70 py-20 md:py-28">
+    <section className="py-20 md:py-28">
       <div className="container mx-auto px-4 md:px-6">
         <SectionEyebrowTitle
           eyebrow="Vùng nguyên liệu"
           title="Đồi chè & nông trường hợp tác"
           centered
+          tone="inverse"
           headingClassName="max-w-none"
         />
 
-        <p className="mx-auto mt-5 max-w-2xl text-center text-sm font-light leading-relaxed text-tea-muted md:text-base">
+        <p className="mx-auto mt-5 max-w-2xl text-center text-sm font-light leading-relaxed text-white/75 md:text-base">
           Hợp tác trực tiếp với nông hộ tại các vùng trồng trọng điểm, kiểm soát
           nguồn búp tươi từ thu hoạch đến vận chuyển về nhà máy.
         </p>
