@@ -4,6 +4,7 @@ import { ChevronRight } from "lucide-react";
 import { TetGiftProductImage } from "@/components/marketing/tet-gift/tet-gift-product-image";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
+import { ProductDetailMobileCtaBar } from "@/components/products/product-detail-mobile-cta-bar";
 import { RfqButton } from "@/components/rfq-button";
 import { TRA_QUAN_COLLECTION_NAME, formatVnd } from "@/lib/tra-quan";
 
@@ -23,10 +24,10 @@ export function TraQuanProductDetailView({ product }: { product: TraQuanPayloadP
   const teas = product.giftTeas ?? [];
 
   return (
-    <div className="bg-tea-cream pb-16">
+    <div className="bg-tea-cream pb-28 md:pb-16">
       <nav
         aria-label="Breadcrumb"
-        className="container mx-auto flex items-center gap-1 px-4 py-4 text-sm text-tea-muted md:px-6"
+        className="container mx-auto flex min-w-0 flex-wrap items-center gap-1 px-4 py-4 text-sm text-tea-muted md:px-6"
       >
         <Link href="/" className="hover:text-tea-green">
           Trang chủ
@@ -36,7 +37,7 @@ export function TraQuanProductDetailView({ product }: { product: TraQuanPayloadP
           Sản phẩm
         </Link>
         <ChevronRight className="h-3.5 w-3.5" />
-        <span className="text-tea-ink">{product.name}</span>
+        <span className="min-w-0 truncate text-tea-ink">{product.name}</span>
       </nav>
 
       <section className="container mx-auto grid gap-10 px-4 md:grid-cols-2 md:px-6">
@@ -105,7 +106,7 @@ export function TraQuanProductDetailView({ product }: { product: TraQuanPayloadP
             ) : null}
           </dl>
 
-          <div className="mt-6 flex flex-wrap gap-3">
+          <div className="mt-6 hidden flex-wrap gap-3 md:flex">
             <RfqButton productSlug={product.slug} productName={product.name} />
             <Button asChild variant="outline" size="lg">
               <Link href="/nam-duong-tra-quan#bo-suu-tap">Xem bộ sưu tập</Link>
@@ -113,6 +114,11 @@ export function TraQuanProductDetailView({ product }: { product: TraQuanPayloadP
           </div>
         </div>
       </section>
+
+      <ProductDetailMobileCtaBar
+        productSlug={product.slug}
+        productName={product.name}
+      />
     </div>
   );
 }

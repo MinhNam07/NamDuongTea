@@ -46,12 +46,12 @@ export function ProductsPagination({
   const common = params ?? {};
 
   const pill =
-    "inline-flex h-10 w-10 items-center justify-center rounded-full border text-sm font-semibold transition-colors";
+    "inline-flex h-11 w-11 items-center justify-center rounded-full border text-sm font-semibold transition-colors md:h-10 md:w-10";
 
   return (
     <nav
       aria-label="Phân trang"
-      className={cn("flex items-center justify-center gap-2", className)}
+      className={cn("flex max-w-full flex-wrap items-center justify-center gap-2", className)}
     >
       <PageButton
         disabled={p <= 1}
@@ -133,7 +133,7 @@ function PageButton({
   children: React.ReactNode;
 }) {
   const base =
-    "inline-flex h-10 w-10 items-center justify-center rounded-full border text-base font-semibold transition-colors";
+    "inline-flex h-11 w-11 items-center justify-center rounded-full border text-base font-semibold transition-colors md:h-10 md:w-10";
 
   if (disabled) {
     return (

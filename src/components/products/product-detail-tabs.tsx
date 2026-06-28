@@ -71,7 +71,7 @@ export function ProductDetailTabs({
               tabIndex={selected ? 0 : -1}
               onClick={() => setActive(idx)}
               className={cn(
-                "whitespace-nowrap pb-4 font-display text-xl font-bold transition-colors",
+                "min-h-11 shrink-0 whitespace-nowrap pb-4 font-display text-lg font-bold transition-colors md:text-xl",
                 selected
                   ? "border-b-2 border-foreground text-foreground"
                   : "text-muted-foreground hover:text-foreground",

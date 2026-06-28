@@ -86,8 +86,9 @@ export default async function ProductListPage({
           <>
             <nav
               aria-label="Lọc theo danh mục"
-              className="mb-10 flex flex-wrap items-center justify-center gap-3 md:mb-12"
+              className="mb-10 -mx-4 flex overflow-x-auto px-4 pb-2 scrollbar-hide md:mx-0 md:mb-12 md:flex-wrap md:justify-center md:overflow-visible md:px-0 md:pb-0"
             >
+              <div className="flex shrink-0 gap-3 md:flex-wrap md:justify-center">
               {PRODUCT_TABS.map((t) => (
                 <FilterChip
                   key={t.value}
@@ -97,6 +98,7 @@ export default async function ProductListPage({
                   {t.label}
                 </FilterChip>
               ))}
+              </div>
             </nav>
 
             <ProductGrid products={pagedProducts} />
@@ -152,7 +154,7 @@ function FilterChip({
       href={href}
       scroll={false}
       className={cn(
-        "inline-flex items-center justify-center rounded-full px-4 py-2 text-sm font-medium transition-colors",
+        "inline-flex shrink-0 items-center justify-center whitespace-nowrap rounded-full px-4 py-2.5 text-sm font-medium transition-colors min-h-11",
         "border bg-white/40 text-tea-muted backdrop-blur",
         "border-border/70 hover:border-border hover:bg-white/70 hover:text-tea-dark-green",
         active

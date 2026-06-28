@@ -20,7 +20,7 @@ export function FrontendMain({ children }: { children: React.ReactNode }) {
 
   return (
     <main
-      className={cn("flex-1", hasFullBleedHero(pathname) ? "pt-0" : "pt-24 md:pt-28")}
+      className={cn("flex-1", hasFullBleedHero(pathname) ? "pt-0" : "pt-[4.5rem] md:pt-28")}
     >
       {children}
     </main>

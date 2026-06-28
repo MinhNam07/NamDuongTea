@@ -1,9 +1,10 @@
 import Link from "next/link";
-import { Mail, MapPin } from "lucide-react";
+import { Facebook, Mail, MapPin } from "lucide-react";
 
 import {
   FOOTER_QUICK_LINKS,
   FOOTER_PRODUCT_LINKS,
+  SOCIAL_LINKS,
 } from "@/lib/site-navigation";
 import { WEBSITE_DATA } from "@/lib/website-data";
 import { cn } from "@/lib/utils";
@@ -41,7 +42,7 @@ export function SiteFooter() {
           "bg-[#f4f0e6] shadow-[0_-8px_32px_rgba(22,48,6,0.12)]",
         )}
       >
-        <div className="mx-auto grid max-w-[1280px] grid-cols-1 gap-12 px-6 py-16 md:grid-cols-[1.4fr_1fr_1fr_1fr] md:gap-10 md:px-10 md:py-20 lg:px-14">
+        <div className="mx-auto grid max-w-[1280px] grid-cols-1 gap-10 px-4 py-12 md:grid-cols-[1.4fr_1fr_1fr_1fr] md:gap-10 md:px-10 md:py-20 lg:px-14">
           <div className="flex flex-col items-start">
             <Link
               href="/"
@@ -52,6 +53,14 @@ export function SiteFooter() {
             <p className="mt-6 max-w-xs text-sm font-light leading-relaxed text-tea-muted">
               {WEBSITE_DATA.brand.footerTagline}
             </p>
+            <div className="mt-6 flex items-center gap-3 md:hidden">
+              <SocialLink href={SOCIAL_LINKS.zalo} label="Zalo">
+                Z
+              </SocialLink>
+              <SocialLink href={SOCIAL_LINKS.facebook} label="Facebook">
+                <Facebook className="h-5 w-5" aria-hidden />
+              </SocialLink>
+            </div>
           </div>
 
           <FooterColumn title="Khám phá">
@@ -99,12 +108,34 @@ export function SiteFooter() {
           </FooterColumn>
         </div>
 
-        <div className="border-t border-border/60 px-6 py-8 text-center md:px-10">
+        <div className="border-t border-border/60 px-4 py-6 text-center md:px-10 md:py-8">
           <p className="text-sm font-light text-tea-muted">
             © {year} Nam Dương Tea. Tinh hoa trà Việt.
           </p>
         </div>
       </div>
     </footer>
+  );
+}
+
+function SocialLink({
+  href,
+  label,
+  children,
+}: {
+  href: string;
+  label: string;
+  children: React.ReactNode;
+}) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={label}
+      className="inline-flex h-11 w-11 items-center justify-center rounded-full border border-tea-olive/50 bg-white text-sm font-semibold text-tea-dark-green transition-colors hover:border-tea-yellow-green hover:bg-tea-green-50"
+    >
+      {children}
+    </a>
   );
 }

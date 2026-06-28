@@ -182,7 +182,7 @@ export function ProductDetailGallery({
       <div
         className={cn(
           "relative w-full overflow-hidden rounded-2xl glass-panel",
-          "h-[420px] md:h-[560px]",
+          "aspect-[4/3] md:aspect-auto md:h-[560px]",
           "shadow-[0_8px_32px_0_rgba(37,74,12,0.10)]",
         )}
       >
@@ -221,6 +221,7 @@ export function ProductDetailGallery({
                   fill
                   priority={index === (useInfiniteTrack ? 1 : 0)}
                   sizes="(min-width: 1024px) 55vw, 100vw"
+                  loading={index === (useInfiniteTrack ? 1 : 0) ? undefined : "lazy"}
                   className="object-cover"
                   draggable={false}
                 />
@@ -234,7 +235,7 @@ export function ProductDetailGallery({
             <button
               type="button"
               onClick={() => goPrev()}
-              className="absolute left-3 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-tea-gold/30 bg-white/90 text-tea-deep-brown shadow-sm transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tea-gold/50"
+              className="absolute left-3 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-tea-gold/30 bg-white/90 text-tea-deep-brown shadow-sm transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tea-gold/50 md:h-9 md:w-9"
               aria-label="Ảnh trước"
             >
               <ChevronLeft className="h-5 w-5" aria-hidden />
@@ -242,7 +243,7 @@ export function ProductDetailGallery({
             <button
               type="button"
               onClick={() => goNext()}
-              className="absolute right-3 top-1/2 z-20 flex h-9 w-9 -translate-y-1/2 items-center justify-center rounded-full border border-tea-gold/30 bg-white/90 text-tea-deep-brown shadow-sm transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tea-gold/50"
+              className="absolute right-3 top-1/2 z-20 flex h-11 w-11 -translate-y-1/2 items-center justify-center rounded-full border border-tea-gold/30 bg-white/90 text-tea-deep-brown shadow-sm transition-colors hover:bg-white focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-tea-gold/50 md:h-9 md:w-9"
               aria-label="Ảnh sau"
             >
               <ChevronRight className="h-5 w-5" aria-hidden />

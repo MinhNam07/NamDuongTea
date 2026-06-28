@@ -29,6 +29,8 @@ export function SiteFloatingActions() {
   const [showTop, setShowTop] = useState(false);
   const pathname = usePathname();
   const isHome = pathname === "/";
+  const isProductDetail =
+    pathname.startsWith("/san-pham/") && pathname !== "/san-pham";
 
   useEffect(() => {
     const onScroll = () => setShowTop(window.scrollY > 400);
@@ -81,7 +83,12 @@ export function SiteFloatingActions() {
         </Button>
       </aside>
 
-      <div className="fixed bottom-5 right-4 z-40 flex flex-col items-end gap-2 sm:bottom-6 sm:right-6">
+      <div
+        className={cn(
+          "fixed bottom-5 right-4 z-40 flex flex-col items-end gap-2 safe-bottom sm:bottom-6 sm:right-6",
+          isProductDetail && "bottom-24 max-md:bottom-[5.5rem]",
+        )}
+      >
         <Button
           asChild
           size="icon"

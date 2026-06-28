@@ -76,7 +76,7 @@ export function PartnerFormSection() {
               <span className="italic text-tea-yellow-green">
                 thành công
               </span>{" "}
-              cùng <span className="whitespace-nowrap">đối tác</span>
+              cùng <span className="md:whitespace-nowrap">đối tác</span>
             </h2>
 
             <p className="mt-6 max-w-2xl text-pretty text-base font-light leading-relaxed text-white/80 md:text-xl">

@@ -21,10 +21,10 @@ export function AlternatingStorySection() {
   return (
     <section
       id="story"
-      className="w-full bg-[#133200] px-6 py-28 md:px-[5vw] md:py-32"
+      className="w-full bg-[#133200] px-4 py-14 md:px-[5vw] md:py-32"
       aria-label="Câu chuyện thương hiệu"
     >
-      <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-32">
+      <div className="mx-auto flex w-full max-w-[1440px] flex-col gap-16 md:gap-32">
           {items.map((item, idx) => (
             <article
               key={item.id}
@@ -98,7 +98,7 @@ export function AlternatingStorySection() {
                 className={idx % 2 === 1 ? "order-1 lg:order-1" : "order-1 lg:order-2"}
                 aria-label="Hình ảnh minh họa"
               >
-                <div className="group relative h-[420px] max-h-[70vh] overflow-hidden rounded-[40px] sm:h-[520px] lg:h-[600px]">
+                <div className="group relative aspect-[4/3] w-full max-h-[70vh] overflow-hidden rounded-[28px] md:rounded-[40px] lg:h-[600px] lg:max-h-none lg:aspect-auto">
                   <Image
                     src={(STORY_IMAGES[item.id]?.src ?? WEBSITE_DATA.brand.assets.storyFarm) as string}
                     alt={STORY_IMAGES[item.id]?.alt ?? "Hình ảnh vùng trà"}

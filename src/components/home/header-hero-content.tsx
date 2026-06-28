@@ -16,7 +16,7 @@ export function HeaderHeroContent() {
         </span>
       </div>
 
-      <h1 className="opacity-0 motion-safe-fade-up [animation-delay:100ms] font-serif text-5xl font-light leading-[1.1] tracking-tight text-white md:text-7xl lg:text-8xl">
+      <h1 className="opacity-0 motion-safe-fade-up [animation-delay:100ms] text-hero-clamp font-serif font-light tracking-tight text-white md:text-7xl lg:text-8xl">
         {hero.title}{" "}
         <span className="italic font-normal text-[rgba(214,198,140,1)]">
           {hero.titleEmphasis}
@@ -41,7 +41,7 @@ export function HeaderHeroContent() {
 
       <Link
         href={hero.scrollHint.href}
-        className="opacity-0 motion-safe-fade-up [animation-delay:300ms] motion-safe-float absolute bottom-10 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-2 text-[rgba(223,229,212,0.6)] transition-colors hover:text-[rgba(223,229,212,0.9)]"
+        className="opacity-0 motion-safe-fade-up [animation-delay:300ms] motion-safe-float absolute bottom-6 left-1/2 z-20 flex -translate-x-1/2 flex-col items-center gap-2 text-[rgba(223,229,212,0.6)] transition-colors hover:text-[rgba(223,229,212,0.9)] md:bottom-10"
       >
         <span className="text-xs uppercase tracking-[0.15em]">
           {hero.scrollHint.label}

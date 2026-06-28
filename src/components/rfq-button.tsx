@@ -52,7 +52,7 @@ export function RfqButton({
           </span>
         </Button>
       </DialogTrigger>
-      <DialogContent className="max-w-2xl">
+      <DialogContent className="max-w-2xl max-h-[90svh] overflow-y-auto">
         <DialogHeader>
           <DialogTitle>Yêu cầu báo giá B2B</DialogTitle>
           <DialogDescription>

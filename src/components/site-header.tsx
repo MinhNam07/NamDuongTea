@@ -17,7 +17,7 @@ export function SiteHeader() {
   const variant = !scrolled ? "dark-on-hero" : "dark-on-light";
 
   return (
-    <header className="pointer-events-none fixed inset-x-0 top-0 z-50 px-[5vw] pt-4 md:pt-5">
+    <header className="pointer-events-none fixed inset-x-0 top-0 z-50 px-4 pt-3 md:px-[5vw] md:pt-5">
       <div
         className={cn(
           "pointer-events-auto mx-auto flex w-full max-w-[1280px] items-center",
@@ -37,7 +37,7 @@ export function SiteHeader() {
               ),
         )}
       >
-        <div className="w-full px-6 py-3 md:px-8">
+        <div className="w-full px-4 py-2.5 md:px-8 md:py-3">
           <SiteNavBar variant={variant} />
         </div>
       </div>

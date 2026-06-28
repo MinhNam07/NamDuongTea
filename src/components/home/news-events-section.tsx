@@ -24,7 +24,7 @@ export function NewsEventsSection({ posts }: { posts: NewsCardPost[] }) {
   const display = filtered.length > 0 ? filtered.slice(0, 4) : posts.slice(0, 4);
 
   return (
-    <section className="container mx-auto px-4 py-16 md:px-6 md:py-24">
+    <section className="container mx-auto px-4 py-14 md:px-6 md:py-24">
       <header className="flex flex-col gap-6 md:flex-row md:items-end md:justify-between">
         <div>
           <p className="text-sm font-semibold uppercase tracking-widest text-tea-olive">
@@ -52,7 +52,7 @@ export function NewsEventsSection({ posts }: { posts: NewsCardPost[] }) {
               aria-selected={tab === id}
               onClick={() => setTab(id)}
               className={cn(
-                "rounded-xl px-5 py-2 text-sm font-semibold transition-colors",
+                "min-h-11 rounded-xl px-5 py-2.5 text-sm font-semibold transition-colors",
                 tab === id
                   ? "bg-tea-dark-green text-white"
                   : "text-tea-muted hover:text-tea-dark-green",

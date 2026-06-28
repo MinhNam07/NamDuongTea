@@ -12,7 +12,7 @@ type ProductLinePageProps = {
 export function ProductLinePage({ line }: ProductLinePageProps) {
   return (
     <div className="bg-tea-cream">
-      <section className="relative overflow-hidden bg-tea-dark-green">
+      <section className="relative -mt-24 overflow-hidden bg-tea-dark-green md:-mt-28">
         <div className="absolute inset-0">
           <Image
             src={line.image}
@@ -37,7 +37,7 @@ export function ProductLinePage({ line }: ProductLinePageProps) {
           <p className="mt-8 text-sm font-semibold uppercase tracking-[0.2em] text-tea-yellow-green">
             Dòng trà Nam Dương
           </p>
-          <h1 className="mt-2 max-w-2xl font-serif text-4xl leading-[1.05] tracking-tight text-white md:text-5xl">
+          <h1 className="mt-2 max-w-2xl text-hero-clamp font-serif leading-[1.05] tracking-tight text-white md:text-5xl">
             {line.name}
           </h1>
           <p className="mt-4 max-w-xl text-lg text-white/85">{line.description}</p>

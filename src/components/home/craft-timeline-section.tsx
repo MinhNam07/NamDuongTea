@@ -21,7 +21,7 @@ export function CraftTimelineSection() {
     <section
       id="craft"
       aria-label="Quy trình chế tác"
-      className="relative w-full overflow-hidden py-28 md:py-32"
+      className="relative w-full overflow-hidden py-14 md:py-32"
     >
       <div
         aria-hidden
@@ -34,9 +34,9 @@ export function CraftTimelineSection() {
         <div className={cn("absolute inset-0", HERO_GRADIENT_OVERLAY)} />
       </div>
 
-      <div className="relative z-10 mx-auto w-full max-w-[1440px] px-6 md:px-[5vw]">
-        <header className="mx-auto mb-20 max-w-3xl text-center">
-          <h2 className="font-serif text-3xl font-light tracking-tight text-white md:text-5xl">
+      <div className="relative z-10 mx-auto w-full max-w-[1440px] px-4 md:px-[5vw]">
+        <header className="mx-auto mb-12 max-w-3xl text-center md:mb-20">
+          <h2 className="text-section-clamp font-serif font-light tracking-tight text-white md:text-5xl">
             Nghệ Thuật{" "}
             <span className="italic text-[rgba(214,198,140,1)]">Chế Tác</span>
           </h2>

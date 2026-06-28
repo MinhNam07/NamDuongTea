@@ -49,7 +49,7 @@ export function AboutPageHero({
         <span className="h-px w-10 bg-[rgba(243,226,166,0.82)]" />
       </div>
 
-      <h1 className="font-serif text-4xl font-light leading-[1.05] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[4.25rem]">
+      <h1 className="text-hero-clamp font-serif font-light leading-[1.05] tracking-tight text-white sm:text-5xl md:text-6xl lg:text-[4.25rem]">
         {title}
       </h1>
 
@@ -61,11 +61,11 @@ export function AboutPageHero({
 
   if (hasStats) {
     return (
-      <div className="relative min-h-[100svh]">
-        <section className="relative flex min-h-[100svh] flex-col overflow-hidden bg-tea-dark-green px-4 pt-28 md:px-6 md:pt-32">
+      <div className="relative min-h-[80svh] md:min-h-[100svh]">
+        <section className="relative flex min-h-[80svh] flex-col overflow-hidden bg-tea-dark-green px-4 pt-24 md:min-h-[100svh] md:px-6 md:pt-32">
           <HeroBackground image={image} />
 
-          <div className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-1 items-center justify-center pb-44 pt-4 md:pb-52">
+          <div className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-1 items-center justify-center pb-8 pt-4 md:pb-52 md:pt-4">
             {heroCopy}
           </div>
         </section>
@@ -73,14 +73,14 @@ export function AboutPageHero({
         <AboutStatBand
           stats={stats!}
           overlapping
-          className="absolute inset-x-0 bottom-8 z-20 md:bottom-10"
+          className="relative z-20 mt-8 px-4 md:absolute md:inset-x-0 md:bottom-10 md:mt-0 md:px-6"
         />
       </div>
     );
   }
 
   return (
-    <section className="relative flex min-h-[100svh] flex-col overflow-hidden bg-tea-dark-green px-4 pb-20 pt-28 md:px-6 md:pt-32">
+    <section className="relative flex min-h-[80svh] flex-col overflow-hidden bg-tea-dark-green px-4 pb-14 pt-24 md:min-h-[100svh] md:px-6 md:pb-20 md:pt-32">
       <HeroBackground image={image} />
 
       <div className="relative z-10 mx-auto flex min-h-0 w-full max-w-[1440px] flex-1 items-center">

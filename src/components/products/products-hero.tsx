@@ -23,7 +23,7 @@ export function ProductsHero({
     <section
       className={cn(
         // Pull hero up to cancel <FrontendMain> top padding (pt-24 md:pt-28)
-        "relative -mt-24 flex min-h-[100svh] items-center justify-center overflow-hidden bg-tea-dark-green px-6 pb-20 pt-32 md:-mt-28 md:px-[5vw]",
+        "relative -mt-24 flex min-h-[80svh] items-center justify-center overflow-hidden bg-tea-dark-green px-4 pb-16 pt-24 md:-mt-28 md:min-h-[100svh] md:px-[5vw] md:pb-20 md:pt-32",
         className,
       )}
     >
@@ -52,7 +52,7 @@ export function ProductsHero({
             </p>
           ) : null}
 
-          <h1 className="mt-4 font-serif text-4xl leading-[1.05] tracking-tight sm:text-5xl md:text-6xl">
+          <h1 className="mt-4 text-hero-clamp font-serif leading-[1.05] tracking-tight sm:text-5xl md:text-6xl">
             {title}
           </h1>
 

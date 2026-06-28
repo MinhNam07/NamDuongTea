@@ -35,7 +35,7 @@ export function ProductCollectionTilesSection({
     <section
       id="products"
       aria-label="Danh mục sản phẩm"
-      className="w-full bg-tea-ivory px-6 py-24 md:px-[5vw] md:py-28 lg:py-32"
+      className="w-full bg-tea-ivory px-4 py-14 md:px-[5vw] md:py-28 lg:py-32"
     >
       <div className="mx-auto w-full max-w-[1440px]">
         <header className="mb-12 grid gap-8 md:grid-cols-[1.05fr_0.95fr] md:items-end">
@@ -53,14 +53,14 @@ export function ProductCollectionTilesSection({
           </div>
 
           <div className="md:justify-self-end">
-            <div className="flex flex-wrap gap-2 md:justify-end">
+            <div className="-mx-4 flex gap-2 overflow-x-auto px-4 pb-1 scrollbar-hide md:mx-0 md:flex-wrap md:justify-end md:overflow-visible md:px-0">
               {tabs.map((t) => (
                 <button
                   key={t.key}
                   type="button"
                   onClick={() => setActive(t.key)}
                   className={cn(
-                    "rounded-full border px-4 py-2 text-sm font-semibold transition-colors",
+                    "shrink-0 rounded-full border px-4 py-2.5 text-sm font-semibold transition-colors min-h-11 whitespace-nowrap",
                     active === t.key
                       ? "border-tea-olive bg-tea-dark-green text-white"
                       : "border-border bg-white text-tea-muted hover:bg-tea-green-50 hover:text-tea-dark-green",
@@ -115,7 +115,7 @@ function HomeProductCard({ product }: { product: PublicProductPreview }) {
             src={imageUrl}
             alt={imageAlt}
             fill
-            sizes="(min-width: 1024px) 33vw, 100vw"
+            sizes="(min-width: 1024px) 33vw, (min-width: 640px) 50vw, 100vw"
             className="object-cover transition-transform duration-500 group-hover:scale-[1.03]"
           />
         </div>

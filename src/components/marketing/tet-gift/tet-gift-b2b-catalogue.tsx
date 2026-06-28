@@ -29,7 +29,10 @@ export function TetGiftB2bCatalogue({ products }: TetGiftB2bCatalogueProps) {
           </p>
         </header>
 
-        <div className="mt-10 overflow-x-auto rounded-sm border border-tea-gold/20">
+        <div className="mt-10 overflow-x-auto overscroll-x-contain rounded-sm border border-tea-gold/20">
+          <p className="px-4 py-2 text-xs text-tea-muted md:hidden">
+            Vuốt ngang để xem bảng giá
+          </p>
           <table className="w-full min-w-[720px] border-collapse text-left text-sm">
             <thead>
               <tr className="border-b border-tea-gold/20 bg-tea-ivory">

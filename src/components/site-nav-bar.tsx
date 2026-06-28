@@ -27,7 +27,7 @@ import { BRAND_LOGO_SRC } from "@/lib/site-assets";
 import { cn } from "@/lib/utils";
 
 const MOBILE_PANEL_CLASS =
-  "overflow-y-auto border-l border-white/10 bg-[rgba(7,27,0,0.96)] text-white backdrop-blur-md backdrop-saturate-[1.25]";
+  "overflow-y-auto overscroll-contain border-l border-white/10 bg-[rgba(7,27,0,0.96)] text-white backdrop-blur-md backdrop-saturate-[1.25]";
 
 function isActive(pathname: string, href: string) {
   if (href === "/") return pathname === "/";
@@ -118,7 +118,7 @@ export function SiteNavBar({ variant = "dark-on-light" }: SiteNavBarProps) {
             alt="Nam Dương Tea"
             width={664}
             height={376}
-            className="h-9 w-auto bg-transparent md:h-10"
+            className="h-8 w-auto bg-transparent md:h-10"
           />
           <span className={cn("hidden text-lg font-bold tracking-tight md:inline", brandText)}>
             Nam Dương Tea
@@ -315,7 +315,7 @@ function MobileNavAccordion({
               href={it.href}
               onClick={onNavigate}
               className={cn(
-                "flex min-h-10 items-center rounded-xl px-3 text-sm font-medium",
+                "flex min-h-11 items-center rounded-xl px-3 text-sm font-medium",
                 "text-white/80 transition-colors hover:bg-white/10 hover:text-white",
               )}
             >

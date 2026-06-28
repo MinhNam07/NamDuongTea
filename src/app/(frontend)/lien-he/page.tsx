@@ -22,8 +22,8 @@ export default async function LienHePage({
 
   return (
     <div className="bg-tea-cream">
-      <section className="container mx-auto grid gap-10 px-4 py-16 md:grid-cols-2 md:px-6 md:py-20">
-        <div>
+      <section className="container mx-auto grid gap-10 px-4 py-14 md:grid-cols-2 md:px-6 md:py-20">
+        <div className="order-2 md:order-1">
           <p className="text-sm font-medium uppercase tracking-wider text-tea-brown-700">
             Liên hệ
           </p>
@@ -80,7 +80,7 @@ export default async function LienHePage({
 
         <div
           id="rfq"
-          className="rounded-2xl border border-tea-green/10 bg-white p-6 shadow-sm md:p-8 scroll-mt-24"
+          className="order-1 scroll-mt-24 rounded-2xl border border-tea-green/10 bg-white p-6 shadow-sm md:order-2 md:p-8"
         >
           <h2 className="font-display text-2xl font-semibold text-tea-green">
             Yêu cầu báo giá

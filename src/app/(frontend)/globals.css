@@ -129,6 +129,12 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
+  @media (max-width: 767px) {
+    body {
+      overflow-x: clip;
+    }
+  }
+
   /* Trang chủ: nền tối để không lộ khoảng trắng phía trên header floating */
   body:has([data-home]) {
     background-color: #071b00;
@@ -143,6 +149,45 @@
 }
 
 @layer utilities {
+  .px-page-mobile {
+    @apply px-4;
+  }
+
+  .py-section-mobile {
+    @apply py-14 md:py-28;
+  }
+
+  .py-section-mobile-lg {
+    @apply py-[4.5rem] md:py-32;
+  }
+
+  .text-hero-clamp {
+    font-size: clamp(2rem, 8vw + 0.5rem, 4.5rem);
+    line-height: 1.1;
+  }
+
+  .text-section-clamp {
+    font-size: clamp(1.75rem, 5vw + 0.5rem, 3rem);
+    line-height: 1.15;
+  }
+
+  .scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+  }
+
+  .scrollbar-hide::-webkit-scrollbar {
+    display: none;
+  }
+
+  .safe-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+
+  .touch-target {
+    @apply min-h-11 min-w-11;
+  }
+
   .container-prose {
     @apply max-w-3xl mx-auto;
   }
@@ -153,7 +198,7 @@
   }
 
   .px-margin-mobile {
-    @apply px-5;
+    @apply px-4;
   }
 
   .px-margin-desktop {
@@ -176,6 +221,19 @@
     .motion-safe-fade-up,
     .motion-safe-float {
       animation: none !important;
+      transform: none !important;
+    }
+  }
+
+  @media (max-width: 767px) {
+    .motion-safe-float {
+      animation: none !important;
+    }
+
+    .group:hover .group-hover\:scale-\[1\.03\],
+    .group:hover .group-hover\:scale-\[1\.04\],
+    .group:hover .group-hover\:scale-\[1\.05\],
+    .group:hover .group-hover\:scale-105 {
       transform: none !important;
     }
   }

@@ -128,7 +128,7 @@ export function QuoteRequestForm({
         <p className="text-sm text-destructive">{serverError}</p>
       ) : null}
 
-      <Button type="submit" size="lg" disabled={isSubmitting} className="w-full md:w-auto">
+      <Button type="submit" size="lg" disabled={isSubmitting} className="w-full">
         {isSubmitting ? <Loader2 className="h-4 w-4 animate-spin" /> : null}
         Gửi yêu cầu báo giá
       </Button>

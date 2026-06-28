@@ -28,7 +28,7 @@ export function ProductDetailStickyPanel({
 }) {
   return (
     <div className={cn("relative", className)}>
-      <div className="sticky top-40 flex flex-col gap-8">
+      <div className="sticky top-40 flex flex-col gap-8 max-md:static max-md:gap-6">
         <div>
           {badge ? (
             <Badge
@@ -86,7 +86,7 @@ export function ProductDetailStickyPanel({
             />
           </div>
 
-          <div className="mt-3 grid grid-cols-2 gap-3">
+          <div className="mt-3 grid grid-cols-1 gap-3 sm:grid-cols-2">
             <Button
               asChild
               variant="outline"
