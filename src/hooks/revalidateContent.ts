@@ -28,11 +28,13 @@ export function revalidateProductCollection(
 ): void {
   runRevalidation(() => {
     revalidateTag(CACHE_TAGS.products);
+    revalidateTag(CACHE_TAGS.traQuan);
     if (doc.slug) {
       revalidateTag(productTag(doc.slug));
       revalidatePath(`/san-pham/${doc.slug}`);
     }
     revalidatePath("/san-pham");
+    revalidatePath("/nam-duong-tra-quan");
     revalidatePath("/");
     if (operation === "create" || operation === "update") {
       revalidatePath("/api/public/products");

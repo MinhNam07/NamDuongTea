@@ -11,6 +11,8 @@ import { TRA_QUAN_SEED_PRODUCTS } from "@/lib/tra-quan-seed-data";
 import type { TraQuanProduct } from "@/lib/tra-quan";
 import { loadTraQuanProducts } from "@/lib/tra-quan-products";
 
+export const revalidate = 300;
+
 export const metadata: Metadata = buildMetadata({
   title: `${TRA_QUAN_COLLECTION_NAME} — Quà biếu cao cấp`,
   description: `Bộ sưu tập ${TRA_QUAN_COLLECTION_NAME} Nam Dương Tea: thất phẩm gỗ chạm khắc, trà tuyển chọn — quà biếu sang trọng cho doanh nghiệp và đại lý.`,

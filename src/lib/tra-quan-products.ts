@@ -1,5 +1,8 @@
 import "server-only";
 
+import { unstable_cache } from "next/cache";
+
+import { CACHE_TAGS } from "@/data/cache";
 import type { TraQuanProduct } from "@/lib/tra-quan";
 import {
   TRA_QUAN_CATEGORY_SLUG,
@@ -39,7 +42,7 @@ function mapTraQuanProduct(doc: PayloadTraQuanDoc): TraQuanProduct {
   };
 }
 
-async function findTraQuanCategoryId(): Promise<number | null> {
+async function fetchTraQuanCategoryId(): Promise<number | null> {
   const payload = await getPayloadClient();
   const { docs } = await payload.find({
     collection: "categories",
@@ -52,10 +55,19 @@ async function findTraQuanCategoryId(): Promise<number | null> {
   return Number.isFinite(id) ? id : null;
 }
 
-export async function loadTraQuanProducts(): Promise<TraQuanProduct[]> {
+const getTraQuanCategoryId = unstable_cache(
+  fetchTraQuanCategoryId,
+  ["tra-quan-category-id"],
+  {
+    tags: [CACHE_TAGS.traQuan, CACHE_TAGS.categories],
+    revalidate: 300,
+  },
+);
+
+async function fetchTraQuanProducts(): Promise<TraQuanProduct[]> {
   try {
     const payload = await getPayloadClient();
-    const categoryId = await findTraQuanCategoryId();
+    const categoryId = await getTraQuanCategoryId();
     if (categoryId == null) return [];
 
     const { docs } = await payload.find({
@@ -77,12 +89,21 @@ export async function loadTraQuanProducts(): Promise<TraQuanProduct[]> {
   }
 }
 
-export async function loadTraQuanProductBySlug(
+export const loadTraQuanProducts = unstable_cache(
+  fetchTraQuanProducts,
+  ["tra-quan-products"],
+  {
+    tags: [CACHE_TAGS.traQuan, CACHE_TAGS.products],
+    revalidate: 300,
+  },
+);
+
+async function fetchTraQuanProductBySlug(
   slug: string,
 ): Promise<TraQuanProduct | null> {
   try {
     const payload = await getPayloadClient();
-    const categoryId = await findTraQuanCategoryId();
+    const categoryId = await getTraQuanCategoryId();
 
     const { docs } = await payload.find({
       collection: "products",
@@ -102,6 +123,20 @@ export async function loadTraQuanProductBySlug(
   } catch {
     return null;
   }
+}
+
+export async function loadTraQuanProductBySlug(
+  slug: string,
+): Promise<TraQuanProduct | null> {
+  const cached = unstable_cache(
+    () => fetchTraQuanProductBySlug(slug),
+    ["tra-quan-product", slug],
+    {
+      tags: [CACHE_TAGS.traQuan, CACHE_TAGS.products],
+      revalidate: 300,
+    },
+  );
+  return cached();
 }
 
 export async function isTraQuanProductSlug(slug: string): Promise<boolean> {

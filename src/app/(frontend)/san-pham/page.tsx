@@ -39,15 +39,18 @@ export default async function ProductListPage({
   const currentPage = Math.max(1, Number.parseInt(page ?? "1", 10) || 1);
   const pageSize = 8;
 
-  const traQuanProducts = await loadCatalogProducts("nam-duong-tra-quan");
-
+  let traQuanProducts: CatalogProduct[] = [];
   let products: CatalogProduct[] = [];
-  if (tab === "nam-duong-tra-quan") {
-    products = traQuanProducts;
-  } else if (tab !== "tat-ca") {
-    products = await loadCatalogProducts(tab);
+
+  if (tab === "tat-ca") {
+    [traQuanProducts, products] = await Promise.all([
+      loadCatalogProducts("nam-duong-tra-quan"),
+      loadCatalogProducts("tra-uong-cao-cap"),
+    ]);
+  } else if (tab === "nam-duong-tra-quan") {
+    products = await loadCatalogProducts("nam-duong-tra-quan");
   } else {
-    products = await loadCatalogProducts("tra-uong-cao-cap");
+    products = await loadCatalogProducts(tab);
   }
 
   const filteredProducts = query

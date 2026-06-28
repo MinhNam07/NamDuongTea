@@ -1,8 +1,8 @@
 import { NextRequest, NextResponse } from "next/server";
 
-import { getPayloadClient } from "@/lib/payload";
+import { getCategories } from "@/data/categories";
 
-export const revalidate = 60;
+export const revalidate = 300;
 
 /**
  * GET /api/public/categories
@@ -19,27 +19,16 @@ export async function GET(req: NextRequest) {
   const limit = Math.min(Number.isFinite(limitRaw) ? limitRaw : 50, 100);
 
   try {
-    const payload = await getPayloadClient();
-    const { docs, totalDocs } = await payload.find({
-      collection: "categories",
-      limit,
-      sort: "name",
-    });
+    const categories = await getCategories();
+    const items = categories.slice(0, limit).map((category) => ({
+      id: category.id,
+      name: category.name,
+      slug: category.slug,
+    }));
 
     return NextResponse.json({
-      total: totalDocs,
-      items: docs.map((c) => {
-        const category = c as unknown as {
-          id: string | number;
-          name: string;
-          slug: string;
-        };
-        return {
-          id: category.id,
-          name: category.name,
-          slug: category.slug,
-        };
-      }),
+      total: categories.length,
+      items,
     });
   } catch (err) {
     console.error("[GET /api/public/categories]", err);
@@ -49,4 +38,3 @@ export async function GET(req: NextRequest) {
     );
   }
 }
-

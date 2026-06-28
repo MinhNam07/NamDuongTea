@@ -1,5 +1,6 @@
 import "server-only";
 
+import { cache } from "react";
 import { unstable_cache } from "next/cache";
 
 import { CACHE_TAGS, productTag } from "@/data/cache";
@@ -228,7 +229,7 @@ async function fetchFeaturedProducts(limit = 6): Promise<StorefrontProduct[]> {
   }
 }
 
-export async function getProducts(
+export const getProducts = cache(async function getProducts(
   tab: ProductTab,
   options?: { limit?: number },
 ): Promise<StorefrontProduct[]> {
@@ -238,9 +239,9 @@ export async function getProducts(
     { tags: [CACHE_TAGS.products], revalidate: 300 },
   );
   return cached();
-}
+});
 
-export async function getProductBySlug(
+export const getProductBySlug = cache(async function getProductBySlug(
   slug: string,
 ): Promise<StorefrontProduct | null> {
   const cached = unstable_cache(
@@ -249,9 +250,9 @@ export async function getProductBySlug(
     { tags: [CACHE_TAGS.products, productTag(slug)], revalidate: 300 },
   );
   return cached();
-}
+});
 
-export async function getFeaturedProducts(
+export const getFeaturedProducts = cache(async function getFeaturedProducts(
   limit = 6,
 ): Promise<StorefrontProduct[]> {
   const cached = unstable_cache(
@@ -260,4 +261,4 @@ export async function getFeaturedProducts(
     { tags: [CACHE_TAGS.products], revalidate: 300 },
   );
   return cached();
-}
+});

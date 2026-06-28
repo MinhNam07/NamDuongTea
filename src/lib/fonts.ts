@@ -9,7 +9,7 @@ export const beVietnamPro = Be_Vietnam_Pro({
 
 export const nunito = Nunito({
   subsets: ["vietnamese", "latin"],
-  weight: ["400", "500", "600", "700", "800"],
+  weight: ["400", "600", "700", "800"],
   variable: "--font-nunito",
   display: "swap",
 });

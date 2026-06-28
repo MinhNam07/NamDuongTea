@@ -2,7 +2,7 @@
 
 import Image from "next/image";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useMemo, useState } from "react";
 import { ArrowRight, Plus } from "lucide-react";
 
 import { SectionEyebrowTitle } from "@/components/marketing/section-eyebrow-title";
@@ -11,79 +11,25 @@ import {
   HOME_CATALOG_TABS,
   type HomeCatalogTabKey,
 } from "@/lib/home-catalog-tabs";
+import type { PublicProductPreview } from "@/lib/product-catalog";
 import { cn } from "@/lib/utils";
 import { WEBSITE_DATA } from "@/lib/website-data";
 
 type TabKey = HomeCatalogTabKey;
 
-type ProductPreviewItem = {
-  id: string | number;
-  name: string;
-  slug: string;
-  shortDescription?: string | null;
-  origin?: string | null;
-  moq?: string | null;
-  image?: string | null;
-  imageAlt?: string | null;
-  category?: { name?: string | null; slug?: string | null } | null;
-};
-
-export function ProductCollectionTilesSection() {
+export function ProductCollectionTilesSection({
+  initialProductsByTab,
+}: {
+  initialProductsByTab: Record<string, PublicProductPreview[]>;
+}) {
   const tabs = useMemo(() => HOME_CATALOG_TABS, []);
 
   const [active, setActive] = useState<TabKey>("green");
-  const [items, setItems] = useState<ProductPreviewItem[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   const activeTab = tabs.find((t) => t.key === active);
   const activeSlug = activeTab?.category ?? "che-xanh";
   const activeLabel = activeTab?.label ?? "";
-
-  useEffect(() => {
-    let cancelled = false;
-    const controller = new AbortController();
-
-    async function load() {
-      setLoading(true);
-      setError(null);
-
-      try {
-        const res = await fetch(
-          `/api/public/products?category=${encodeURIComponent(activeSlug)}&limit=3`,
-          {
-            method: "GET",
-            headers: { accept: "application/json" },
-            signal: controller.signal,
-          },
-        );
-
-        if (!res.ok) throw new Error("products");
-
-        const data = (await res.json()) as { items?: ProductPreviewItem[] };
-        const next = Array.isArray(data.items) ? data.items : [];
-
-        if (!cancelled) setItems(next);
-      } catch (e) {
-        if (cancelled) return;
-
-        const err = e as { name?: string } | null | undefined;
-        if (err?.name === "AbortError") return;
-
-        setItems([]);
-        setError("Không thể tải sản phẩm lúc này.");
-      } finally {
-        if (!cancelled) setLoading(false);
-      }
-    }
-
-    load();
-
-    return () => {
-      cancelled = true;
-      controller.abort();
-    };
-  }, [activeSlug]);
+  const items = initialProductsByTab[activeSlug] ?? [];
 
   return (
     <section
@@ -128,9 +74,7 @@ export function ProductCollectionTilesSection() {
         </header>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          {loading ? (
-            <ProductCardSkeletons />
-          ) : items.length > 0 ? (
+          {items.length > 0 ? (
             items.map((p) => <HomeProductCard key={String(p.id)} product={p} />)
           ) : (
             <div className="rounded-[28px] border border-dashed border-tea-moss/25 bg-white p-10 text-center md:col-span-2 lg:col-span-3">
@@ -143,8 +87,6 @@ export function ProductCollectionTilesSection() {
             </div>
           )}
         </div>
-
-        {error ? <p className="mt-6 text-sm text-red-700">{error}</p> : null}
 
         <div className="mt-10 text-center">
           <Button
@@ -159,29 +101,7 @@ export function ProductCollectionTilesSection() {
   );
 }
 
-function ProductCardSkeletons() {
-  return (
-    <>
-      {Array.from({ length: 3 }).map((_, i) => (
-        <div key={i} className="overflow-hidden rounded-[28px] border border-border bg-white shadow-sm">
-          <div className="aspect-[4/3] w-full animate-pulse bg-tea-green-50" />
-          <div className="p-7">
-            <div className="h-6 w-4/5 animate-pulse rounded-md bg-tea-green-50" />
-            <div className="mt-4 h-4 w-full animate-pulse rounded-md bg-tea-green-50" />
-            <div className="mt-2 h-4 w-5/6 animate-pulse rounded-md bg-tea-green-50" />
-            <div className="mt-6 h-4 w-1/2 animate-pulse rounded-md bg-tea-green-50" />
-            <div className="mt-7 flex items-center justify-between">
-              <div className="h-4 w-24 animate-pulse rounded-md bg-tea-green-50" />
-              <div className="h-10 w-10 animate-pulse rounded-full bg-tea-green-50" />
-            </div>
-          </div>
-        </div>
-      ))}
-    </>
-  );
-}
-
-function HomeProductCard({ product }: { product: ProductPreviewItem }) {
+function HomeProductCard({ product }: { product: PublicProductPreview }) {
   const href = `/san-pham/${product.slug}`;
   const imageUrl = product.image ?? WEBSITE_DATA.brand.assets.storyFarm;
   const imageAlt = product.imageAlt ?? product.name;

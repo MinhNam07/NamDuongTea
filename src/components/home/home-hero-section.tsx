@@ -1,3 +1,5 @@
+import Image from "next/image";
+
 import { HeaderHeroContent } from "@/components/home/header-hero-content";
 
 /**
@@ -13,11 +15,14 @@ export function HomeHeroSection() {
         aria-hidden
         className="pointer-events-none absolute -top-10 inset-x-0 bottom-0 z-0 overflow-hidden"
       >
-        <div
-          className="absolute inset-0 bg-cover bg-center [transform:translateZ(0)]"
-          style={{
-            backgroundImage: "url('/images/hero.JPG')",
-          }}
+        <Image
+          src="/images/hero.JPG"
+          alt=""
+          fill
+          priority
+          sizes="100vw"
+          className="object-cover object-center [transform:translateZ(0)]"
+          aria-hidden
         />
         {/* Deep overlay for text legibility (DESIGN.md) */}
         <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(7,27,0,0.82),rgba(7,27,0,0.45),rgba(246,252,235,0.92))] mix-blend-multiply" />

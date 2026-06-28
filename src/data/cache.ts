@@ -5,6 +5,7 @@ export const CACHE_TAGS = {
   siteSettings: "site-settings",
   homePage: "home-page",
   posts: "posts",
+  traQuan: "tra-quan",
 } as const;
 
 export function productTag(slug: string): string {

@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { useState } from "react";
 
 import { FileText } from "lucide-react";
@@ -13,7 +14,18 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { QuoteRequestForm } from "@/components/quote-request-form";
+
+const QuoteRequestForm = dynamic(
+  () =>
+    import("@/components/quote-request-form").then((m) => ({
+      default: m.QuoteRequestForm,
+    })),
+  {
+    loading: () => (
+      <div className="h-48 animate-pulse rounded-lg bg-muted" aria-hidden />
+    ),
+  },
+);
 
 export function RfqButton({
   productSlug,
@@ -48,11 +60,13 @@ export function RfqButton({
             trong vòng 24h kèm bảng giá theo MOQ và mẫu thử.
           </DialogDescription>
         </DialogHeader>
-        <QuoteRequestForm
-          productSlug={productSlug}
-          productName={productName}
-          onSuccess={() => setTimeout(() => setOpen(false), 2500)}
-        />
+        {open ? (
+          <QuoteRequestForm
+            productSlug={productSlug}
+            productName={productName}
+            onSuccess={() => setTimeout(() => setOpen(false), 2500)}
+          />
+        ) : null}
       </DialogContent>
     </Dialog>
   );

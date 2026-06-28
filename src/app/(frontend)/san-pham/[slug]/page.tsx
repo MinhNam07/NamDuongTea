@@ -1,11 +1,11 @@
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import { notFound } from "next/navigation";
 import type { Metadata } from "next";
 import { ChevronRight, Leaf } from "lucide-react";
 
 import { getProductBySlug } from "@/data/products";
 import { TraQuanProductDetailView } from "@/components/products/tra-quan-product-detail-view";
-import { ProductDetailGallery } from "@/components/products/product-detail-gallery";
 import { ProductDetailStickyPanel } from "@/components/products/product-detail-sticky-panel";
 import { ProductDetailTabs } from "@/components/products/product-detail-tabs";
 import {
@@ -19,6 +19,21 @@ import { TRA_QUAN_CATEGORY_SLUG, TRA_QUAN_COLLECTION_NAME } from "@/lib/tra-quan
 import type { StorefrontProduct } from "@/data/types";
 
 export const revalidate = 300;
+
+const ProductDetailGallery = dynamic(
+  () =>
+    import("@/components/products/product-detail-gallery").then((m) => ({
+      default: m.ProductDetailGallery,
+    })),
+  {
+    loading: () => (
+      <div
+        className="aspect-[4/3] w-full animate-pulse rounded-2xl bg-muted"
+        aria-hidden
+      />
+    ),
+  },
+);
 
 type Params = Promise<{ slug: string }>;
 

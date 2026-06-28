@@ -1,5 +1,6 @@
 import "server-only";
 
+import { cache } from "react";
 import { unstable_cache } from "next/cache";
 
 import { CACHE_TAGS, productLineTag } from "@/data/cache";
@@ -119,16 +120,18 @@ async function fetchProductLineBySlug(
   }
 }
 
-export async function getProductLines(): Promise<StorefrontProductLine[]> {
+export const getProductLines = cache(async function getProductLines(): Promise<
+  StorefrontProductLine[]
+> {
   const cached = unstable_cache(
     () => fetchProductLines(),
     ["product-lines"],
     { tags: [CACHE_TAGS.productLines], revalidate: 300 },
   );
   return cached();
-}
+});
 
-export async function getProductLineBySlug(
+export const getProductLineBySlug = cache(async function getProductLineBySlug(
   slug: string,
 ): Promise<StorefrontProductLine | null> {
   const cached = unstable_cache(
@@ -140,4 +143,4 @@ export async function getProductLineBySlug(
     },
   );
   return cached();
-}
+});

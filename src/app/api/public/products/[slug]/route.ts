@@ -1,9 +1,9 @@
 import { NextResponse } from "next/server";
 
-import { getPayloadClient } from "@/lib/payload";
+import { getProductBySlug } from "@/data/products";
 import { canonicalCategoryForProductSlug } from "@/lib/product-tab-config";
 
-export const revalidate = 60;
+export const revalidate = 300;
 
 /**
  * GET /api/public/products/:slug — chi tiết 1 sản phẩm.
@@ -15,20 +15,7 @@ export async function GET(
   const { slug } = await params;
 
   try {
-    const payload = await getPayloadClient();
-    const { docs } = await payload.find({
-      collection: "products",
-      where: {
-        and: [
-          { slug: { equals: slug } },
-          { status: { equals: "published" } },
-        ],
-      },
-      depth: 2,
-      limit: 1,
-    });
-
-    const product = docs[0];
+    const product = await getProductBySlug(slug);
     if (!product) {
       return NextResponse.json(
         { error: "Không tìm thấy sản phẩm." },
@@ -36,33 +23,20 @@ export async function GET(
       );
     }
 
-    const p = product as unknown as {
-      id: string | number;
-      name: string;
-      slug: string;
-      shortDescription?: string;
-      origin?: string;
-      moq?: string;
-      image?: { url?: string; alt?: string } | null;
-      gallery?: { image?: { url?: string; alt?: string } }[];
-      specs?: { label: string; value: string }[];
-      category?: { name?: string; slug?: string } | null;
-    };
-
     return NextResponse.json({
-      id: p.id,
-      name: p.name,
-      slug: p.slug,
-      shortDescription: p.shortDescription ?? null,
-      origin: p.origin ?? null,
-      moq: p.moq ?? null,
-      image: p.image?.url ?? null,
-      gallery: p.gallery?.map((g) => g.image?.url).filter(Boolean) ?? [],
-      specs: p.specs ?? [],
+      id: product.id,
+      name: product.name,
+      slug: product.slug,
+      shortDescription: product.shortDescription ?? null,
+      origin: product.origin ?? null,
+      moq: product.moq ?? null,
+      image: product.image?.url ?? null,
+      gallery: product.gallery.map((img) => img.url).filter(Boolean),
+      specs: product.specs,
       category:
-        canonicalCategoryForProductSlug(p.slug) ??
-        (p.category
-          ? { name: p.category.name ?? null, slug: p.category.slug ?? null }
+        canonicalCategoryForProductSlug(product.slug) ??
+        (product.category
+          ? { name: product.category.name ?? null, slug: product.category.slug ?? null }
           : null),
     });
   } catch (err) {

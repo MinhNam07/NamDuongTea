@@ -119,7 +119,6 @@ export function SiteNavBar({ variant = "dark-on-light" }: SiteNavBarProps) {
             width={664}
             height={376}
             className="h-9 w-auto bg-transparent md:h-10"
-            priority
           />
           <span className={cn("hidden text-lg font-bold tracking-tight md:inline", brandText)}>
             Nam Dương Tea

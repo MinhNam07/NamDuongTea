@@ -6,7 +6,7 @@ import {
   toPublicProductPreview,
 } from "@/lib/product-catalog";
 
-export const revalidate = 60;
+export const revalidate = 300;
 
 /**
  * GET /api/public/products

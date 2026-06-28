@@ -1,5 +1,6 @@
 import "server-only";
 
+import { cache } from "react";
 import { unstable_cache } from "next/cache";
 
 import { CACHE_TAGS, postTag } from "@/data/cache";
@@ -94,7 +95,7 @@ async function fetchPostBySlug(slug: string): Promise<StorefrontPost | null> {
   }
 }
 
-export async function getPosts(options?: {
+export const getPosts = cache(async function getPosts(options?: {
   limit?: number;
 }): Promise<StorefrontPost[]> {
   const limit = options?.limit ?? 20;
@@ -104,9 +105,9 @@ export async function getPosts(options?: {
     { tags: [CACHE_TAGS.posts], revalidate: 300 },
   );
   return cached();
-}
+});
 
-export async function getPostBySlug(
+export const getPostBySlug = cache(async function getPostBySlug(
   slug: string,
 ): Promise<StorefrontPost | null> {
   const cached = unstable_cache(
@@ -115,4 +116,4 @@ export async function getPostBySlug(
     { tags: [CACHE_TAGS.posts, postTag(slug)], revalidate: 300 },
   );
   return cached();
-}
+});
