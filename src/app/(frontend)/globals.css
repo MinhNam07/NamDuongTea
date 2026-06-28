@@ -129,6 +129,11 @@
     font-feature-settings: "rlig" 1, "calt" 1;
   }
 
+  /* Trang chủ: nền tối để không lộ khoảng trắng phía trên header floating */
+  body:has([data-home]) {
+    background-color: #071b00;
+  }
+
   h1,
   h2,
   h3,

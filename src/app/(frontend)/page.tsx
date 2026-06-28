@@ -19,13 +19,13 @@ export default async function HomePage() {
   }));
 
   return (
-    <>
+    <div data-home>
       <HomeHeroSection />
       <AlternatingStorySection />
       <CraftTimelineSection />
       <ProductCollectionTilesSection />
       <NewsEventsSection posts={posts} />
       <PartnerFormSection />
-    </>
+    </div>
   );
 }

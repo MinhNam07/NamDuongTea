@@ -11,7 +11,7 @@ export function HomeHeroSection() {
     >
       <div
         aria-hidden
-        className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
+        className="pointer-events-none absolute -top-10 inset-x-0 bottom-0 z-0 overflow-hidden"
       >
         <div
           className="absolute inset-0 bg-cover bg-center [transform:translateZ(0)]"
