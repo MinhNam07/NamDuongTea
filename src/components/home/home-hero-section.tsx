@@ -9,7 +9,7 @@ export function HomeHeroSection() {
   return (
     <header
       aria-label="Giới thiệu Nam Dương Tea"
-      className="relative flex min-h-[80svh] items-center justify-center overflow-hidden px-4 pb-16 pt-24 md:min-h-[100svh] md:px-[5vw] md:pb-20 md:pt-32"
+      className="relative flex min-h-[80svh] items-center justify-center overflow-x-hidden px-4 pb-16 pt-24 md:min-h-[100svh] md:px-[5vw] md:pb-20 md:pt-32"
     >
       <div
         aria-hidden
