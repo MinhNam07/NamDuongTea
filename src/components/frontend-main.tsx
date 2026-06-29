@@ -11,7 +11,10 @@ function hasFullBleedHero(pathname: string) {
     pathname === "/" ||
     pathname === "/nam-duong-tra-quan" ||
     pathname === "/gioi-thieu" ||
-    pathname === "/tim-hieu-vung-trong"
+    pathname === "/tim-hieu-vung-trong" ||
+    pathname === "/san-pham" ||
+    pathname.startsWith("/san-pham/") ||
+    pathname.startsWith("/dong-tra/")
   );
 }
 

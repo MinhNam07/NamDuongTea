@@ -41,6 +41,67 @@ function mapProductLine(line: ProductLine, order: number): StorefrontProductLine
   };
 }
 
+function productLineToStorefrontProduct(line: ProductLine): StorefrontProduct {
+  const tabs = getProductDetailTabs(line.slug);
+  return {
+    id: line.slug,
+    name: line.name,
+    slug: line.slug,
+    shortDescription: line.description,
+    description: line.detail,
+    origin: null,
+    moq: null,
+    image: { url: line.image, alt: line.name },
+    gallery: line.gallery.map((url) => ({ url, alt: line.name })),
+    category: null,
+    categories: [],
+    isFeatured: false,
+    detailTabs: tabs.map((t) => ({
+      key: t.key,
+      label: t.label,
+      heading: t.heading,
+      paragraphs: t.paragraphs,
+      bullets: t.bullets.map((b) => ({ title: b.title, text: b.text })),
+      imageUrl: t.image.src,
+      imageAlt: t.image.alt,
+    })),
+    specs: [],
+    legacyImagePath: line.image,
+  };
+}
+
+/** Static seed data when Payload/DB is unreachable or empty. */
+export function staticTeaProductsForTab(
+  tab: ProductTab,
+  options?: { limit?: number },
+): StorefrontProduct[] {
+  if (tab === "nam-duong-tra-quan") return [];
+
+  const candidates = TEA_PRODUCT_LINES.map((line) => ({
+    id: line.slug,
+    name: line.name,
+    slug: line.slug,
+    shortDescription: line.description,
+    image: line.image,
+    category: null,
+  }));
+
+  const prepared = prepareCatalogProducts(
+    candidates as Parameters<typeof prepareCatalogProducts>[0],
+    tab as Exclude<ProductTab, "nam-duong-tra-quan">,
+  );
+
+  const bySlug = new Map(
+    TEA_PRODUCT_LINES.map((line) => [line.slug, productLineToStorefrontProduct(line)]),
+  );
+
+  const items = prepared
+    .map((p) => bySlug.get(p.slug))
+    .filter((p): p is StorefrontProduct => Boolean(p));
+
+  return options?.limit ? items.slice(0, options.limit) : items;
+}
+
 export async function legacyGetProductLines(): Promise<StorefrontProductLine[]> {
   return PRODUCT_LINES.map((line, index) => mapProductLine(line, index));
 }
@@ -135,9 +196,10 @@ export async function legacyGetProductsForTab(
       specs: [],
     }));
 
-    return options?.limit ? mapped.slice(0, options.limit) : mapped;
+    const result = options?.limit ? mapped.slice(0, options.limit) : mapped;
+    return result.length > 0 ? result : staticTeaProductsForTab(tab, options);
   } catch {
-    return [];
+    return staticTeaProductsForTab(tab, options);
   }
 }
 

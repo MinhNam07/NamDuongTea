@@ -129,7 +129,7 @@ export function ProductCard({
           asChild
           variant="default"
           size="default"
-          className="w-full rounded-full"
+          className="w-full rounded-full bg-tea-dark-green text-white shadow-sm transition-all hover:bg-tea-dark-green hover:text-white hover:shadow-md hover:brightness-[1.50]"
         >
           <Link href={`/lien-he?product=${product.slug}#rfq`}>Yêu cầu báo giá</Link>
         </Button>
@@ -137,7 +137,7 @@ export function ProductCard({
           asChild
           variant="outline"
           size="default"
-          className="w-full rounded-full bg-white hover:bg-tea-dark-green"
+          className="w-full rounded-full bg-white hover:border-tea-gold hover:bg-white hover:text-tea-gold"
         >
           <Link href={`/san-pham/${product.slug}`}>Xem chi tiết</Link>
         </Button>

@@ -70,7 +70,7 @@ export default async function ProductListPage({
   const pagedProducts = filteredProducts.slice(start, start + pageSize);
 
   return (
-    <div className="bg-tea-cream">
+    <div className="bg-tea-cream" data-full-bleed-hero>
       <ProductsHero
         eyebrow={WEBSITE_DATA.pages.products.eyebrow}
         title="Danh mục Sản phẩm"
@@ -134,7 +134,18 @@ export default async function ProductListPage({
               </p>
             </div>
           </>
-        ) : null}
+        ) : (
+          <div className="mx-auto max-w-lg rounded-2xl border border-border/70 bg-white/60 px-6 py-10 text-center">
+            <p className="font-serif text-xl text-tea-dark-green">
+              Chưa có sản phẩm để hiển thị
+            </p>
+            <p className="mt-3 text-sm leading-relaxed text-tea-muted">
+              Dữ liệu sản phẩm chưa được tải từ CMS. Kiểm tra biến môi trường{" "}
+              <code className="text-xs">DATABASE_URI</code> trên Vercel và chạy{" "}
+              <code className="text-xs">pnpm migrate:content</code> nếu cần.
+            </p>
+          </div>
+        )}
       </section>
     </div>
   );

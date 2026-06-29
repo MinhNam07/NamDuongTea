@@ -30,7 +30,7 @@ export function NewsEventsSection({ posts }: { posts: NewsCardPost[] }) {
           <p className="text-sm font-semibold uppercase tracking-widest text-tea-olive">
             Tin tức & sự kiện
           </p>
-          <h2 className="mt-2 font-display text-3xl font-extrabold text-tea-dark-green md:text-4xl">
+          <h2 className="mt-2 font-serif text-3xl font-light tracking-tight text-[#f3e2a6] md:text-4xl">
             Tin tức mới nhất
           </h2>
         </div>
@@ -77,7 +77,11 @@ export function NewsEventsSection({ posts }: { posts: NewsCardPost[] }) {
       )}
 
       <div className="mt-10 text-center">
-        <Button asChild variant="outline">
+        <Button
+          asChild
+          variant="outline"
+          className="border-white/30 bg-transparent text-white hover:border-[#f3e2a6] hover:bg-transparent hover:text-[#f3e2a6]"
+        >
           <Link href="/tin-tuc">Xem tất cả tin tức</Link>
         </Button>
       </div>

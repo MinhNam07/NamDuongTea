@@ -22,8 +22,8 @@ export function ProductsHero({
   return (
     <section
       className={cn(
-        // Pull hero up to cancel <FrontendMain> top padding (pt-24 md:pt-28)
-        "relative -mt-24 flex min-h-[80svh] items-center justify-center overflow-hidden bg-tea-dark-green px-4 pb-16 pt-24 md:-mt-28 md:min-h-[100svh] md:px-[5vw] md:pb-20 md:pt-32",
+        // Full-bleed hero; top padding clears the fixed navbar pill.
+        "relative flex min-h-[80svh] items-center justify-center overflow-hidden bg-tea-dark-green px-4 pb-16 pt-24 md:min-h-[100svh] md:px-[5vw] md:pb-20 md:pt-32",
         className,
       )}
     >

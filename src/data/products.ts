@@ -8,6 +8,7 @@ import { getContentSource } from "@/data/types";
 import {
   legacyGetProductBySlug,
   legacyGetProductsForTab,
+  staticTeaProductsForTab,
 } from "@/data/legacy-fallback";
 import { mapSeo, mediaToImage } from "@/data/mappers";
 import { getPayloadClient } from "@/data/payload";
@@ -170,7 +171,8 @@ async function fetchProductsForTab(
     const mapped = prepared.map((doc) =>
       mapPayloadProduct(doc as unknown as Record<string, unknown>),
     );
-    return limit ? mapped.slice(0, limit) : mapped;
+    const result = limit ? mapped.slice(0, limit) : mapped;
+    return result.length > 0 ? result : staticTeaProductsForTab(tab, { limit });
   } catch {
     return legacyGetProductsForTab(tab, { limit });
   }

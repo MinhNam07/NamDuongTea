@@ -73,7 +73,7 @@ export function TetGiftHeroBanner({ featured }: TetGiftHeroBannerProps) {
             <Button
               asChild
               size="lg"
-              className="bg-tea-gold text-tea-deep-brown hover:bg-tea-ivory"
+              className="bg-tea-gold text-tea-deep-brown shadow-sm transition-all hover:bg-tea-gold hover:text-tea-deep-brown hover:shadow-lg hover:brightness-105"
             >
               <Link href="/nam-duong-tra-quan#bo-suu-tap">
                 Khám phá bộ sưu tập
@@ -85,7 +85,7 @@ export function TetGiftHeroBanner({ featured }: TetGiftHeroBannerProps) {
               asChild
               size="lg"
               variant="outline"
-              className="border-tea-ivory/35 text-tea-ivory hover:bg-tea-ivory/10"
+              className="border-tea-ivory/35 bg-transparent text-tea-ivory transition-all hover:border-tea-gold hover:bg-transparent hover:text-tea-gold"
             >
               <Link href="/lien-he?campaign=tet-gift#rfq">Báo giá B2B</Link>
             </Button>

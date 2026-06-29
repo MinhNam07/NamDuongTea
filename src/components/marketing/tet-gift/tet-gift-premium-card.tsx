@@ -80,13 +80,18 @@ export function TetGiftPremiumCard({
               asChild
               variant="default"
               size="sm"
-              className="bg-tea-dark-green hover:bg-tea-moss"
+              className="bg-tea-dark-green text-white shadow-sm transition-all hover:bg-tea-dark-green hover:text-white hover:shadow-md hover:brightness-[1.50]"
             >
               <Link href={`/lien-he?product=${product.slug}&campaign=tet-gift#rfq`}>
                 Yêu cầu báo giá
               </Link>
             </Button>
-            <Button asChild variant="outline" size="sm" className="border-tea-gold/40">
+            <Button
+              asChild
+              variant="outline"
+              size="sm"
+              className="border-tea-gold/40 hover:border-tea-gold hover:bg-white hover:text-tea-gold"
+            >
               <Link href={`/san-pham/${product.slug}`}>Chi tiết</Link>
             </Button>
           </div>
