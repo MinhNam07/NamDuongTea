@@ -34,6 +34,9 @@ next-env.d.ts
 # media uploads (dev)
 public/media
 
+# local backups / dumps
+data/backups
+
 # camera RAW (keep exported JPG/WebP only)
 *.CR2
 *.cr2

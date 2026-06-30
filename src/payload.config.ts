@@ -16,13 +16,15 @@ import { QuoteRequests } from "@/collections/QuoteRequests";
 import { Users } from "@/collections/Users";
 import { HomePage } from "@/globals/HomePage";
 import { SiteSettings } from "@/globals/SiteSettings";
+import { getAllowedOrigins, getServerURL } from "@/lib/payload-urls";
 import { buildS3StoragePlugin } from "@/lib/storage";
 import { migrations } from "@/migrations";
 
 const filename = fileURLToPath(import.meta.url);
 const dirname = path.dirname(filename);
 
-const serverURL = process.env.NEXT_PUBLIC_SITE_URL ?? "http://localhost:3000";
+const serverURL = getServerURL();
+const allowedOrigins = getAllowedOrigins();
 
 export default buildConfig({
   serverURL,
@@ -68,6 +70,6 @@ export default buildConfig({
   graphQL: {
     schemaOutputFile: path.resolve(dirname, "../generated-schema.graphql"),
   },
-  cors: [serverURL],
-  csrf: [serverURL],
+  cors: allowedOrigins,
+  csrf: allowedOrigins,
 });
