@@ -135,12 +135,6 @@
     }
   }
 
-  /* Hero full-bleed: nền tối để không lộ khoảng trắng phía trên header floating */
-  body:has([data-home]),
-  body:has([data-full-bleed-hero]) {
-    background-color: #071b00;
-  }
-
   h1,
   h2,
   h3,
