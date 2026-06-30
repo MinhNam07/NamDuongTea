@@ -200,6 +200,11 @@
     @apply px-20;
   }
 
+  /** Clears the fixed site header on pages without a full-bleed hero */
+  .pt-header-offset {
+    @apply pt-[4.5rem] md:pt-28;
+  }
+
   .gap-gutter {
     @apply gap-6;
   }

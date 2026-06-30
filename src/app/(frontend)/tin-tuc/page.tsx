@@ -18,7 +18,7 @@ export default async function TinTucPage() {
   const posts = await getPosts({ limit: 12 });
 
   return (
-    <div className="bg-tea-cream">
+    <div className="bg-tea-cream pt-header-offset">
       <section className="container mx-auto px-4 py-16 md:px-6 md:py-20">
         <header className="mb-10 max-w-2xl">
           <p className="text-sm font-medium uppercase tracking-wider text-tea-brown-700">

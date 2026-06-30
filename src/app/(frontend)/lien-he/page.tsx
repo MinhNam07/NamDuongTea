@@ -21,7 +21,7 @@ export default async function LienHePage({
   const { product } = await searchParams;
 
   return (
-    <div className="bg-tea-cream">
+    <div className="bg-tea-cream pt-header-offset">
       <section className="container mx-auto grid gap-10 px-4 py-14 md:grid-cols-2 md:px-6 md:py-20">
         <div className="order-2 md:order-1">
           <p className="text-sm font-medium uppercase tracking-wider text-tea-brown-700">

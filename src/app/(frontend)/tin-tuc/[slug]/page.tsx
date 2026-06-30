@@ -31,7 +31,7 @@ export default async function PostDetailPage({ params }: { params: Params }) {
   if (!post) notFound();
 
   return (
-    <article className="bg-tea-cream">
+    <article className="bg-tea-cream pt-header-offset">
       <div className="container mx-auto max-w-3xl px-4 py-16 md:px-6 md:py-24">
         <h1 className="font-display text-4xl font-bold text-tea-green md:text-5xl">
           {post.title}
