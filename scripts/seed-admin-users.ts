@@ -28,12 +28,25 @@ async function main() {
 
   let created = 0;
   let skipped = 0;
+  let upgraded = 0;
 
   for (const seedUser of seedUsers) {
     const emailKey = seedUser.email.toLowerCase();
-    if (existingByEmail.has(emailKey)) {
-      console.log(`[seed:admins] Đã tồn tại: ${seedUser.email}`);
-      skipped += 1;
+    const existingUser = existingByEmail.get(emailKey);
+    if (existingUser) {
+      if (existingUser.role !== "admin") {
+        await payload.update({
+          collection: "users",
+          id: existingUser.id,
+          data: { role: "admin" },
+          overrideAccess: true,
+        });
+        console.log(`[seed:admins] Đã nâng quyền admin: ${seedUser.email}`);
+        upgraded += 1;
+      } else {
+        console.log(`[seed:admins] Đã tồn tại: ${seedUser.email}`);
+        skipped += 1;
+      }
       continue;
     }
 
@@ -54,7 +67,7 @@ async function main() {
 
   const finalCount = await payload.count({ collection: "users" });
   console.log(
-    `[seed:admins] Xong — tạo mới: ${created}, bỏ qua: ${skipped}, tổng: ${finalCount.totalDocs}/${FIXED_ADMIN_COUNT}`,
+    `[seed:admins] Xong — tạo mới: ${created}, nâng quyền: ${upgraded}, bỏ qua: ${skipped}, tổng: ${finalCount.totalDocs}/${FIXED_ADMIN_COUNT}`,
   );
 
   if (payload.db.destroy) {

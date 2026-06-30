@@ -17,7 +17,7 @@ export function SiteHeader() {
   const variant = !scrolled ? "dark-on-hero" : "dark-on-light";
 
   return (
-    <header className="pointer-events-none fixed inset-x-0 top-0 z-50 px-4 md:px-[5vw]">
+    <header className="pointer-events-none fixed inset-x-0 top-0 z-50 px-4 pt-3 md:px-[5vw] md:pt-5">
       <div
         className={cn(
           "pointer-events-auto mx-auto flex w-full max-w-[1280px] items-center",
