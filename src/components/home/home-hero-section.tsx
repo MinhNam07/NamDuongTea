@@ -24,8 +24,8 @@ export function HomeHeroSection() {
           className="object-cover object-top [transform:translateZ(0)]"
           aria-hidden
         />
-        {/* Lighten the top so the photo reaches behind the fixed nav */}
-        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(7,27,0,0.28)_0%,rgba(7,27,0,0.45)_38%,rgba(246,252,235,0.92)_100%)] mix-blend-multiply" />
+        {/* Deep overlay for text legibility (DESIGN.md) */}
+        <div className="absolute inset-0 bg-[linear-gradient(to_bottom,rgba(7,27,0,0.82),rgba(7,27,0,0.45),rgba(246,252,235,0.92))] mix-blend-multiply" />
       </div>
 
       <div className="relative z-10 mx-auto flex w-full max-w-[1440px] flex-col items-center text-center">
