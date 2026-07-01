@@ -64,7 +64,7 @@ export function ProductCard({
     <Card
       className={cn(
         "group flex flex-col overflow-hidden rounded-[28px] border border-border/60 bg-white/85 transition-all",
-        "shadow-[0_10px_34px_rgba(37,74,12,0.06)] hover:shadow-[0_18px_60px_rgba(37,74,12,0.10)]",
+        "shadow-card hover:shadow-card-hover",
         "hover:border-border",
         className,
       )}

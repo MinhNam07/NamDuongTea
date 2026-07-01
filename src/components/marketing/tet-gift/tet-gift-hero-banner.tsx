@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { NAM_MOC_TRA_QUAN_HERO_SRC, TRA_QUAN_COLLECTION_NAME } from "@/lib/tra-quan";
 import type { TraQuanProduct } from "@/lib/tra-quan";
 
-const TRA_QUAN_BG_SRC = "/images/IMG_6548.JPG";
+const TRA_QUAN_BG_SRC = "/images/cau-chuyen-2.webp";
 
 type TetGiftHeroBannerProps = {
   featured: TraQuanProduct;

@@ -1,31 +1,4 @@
-"use client";
-
-import { usePathname } from "next/navigation";
-
-import { cn } from "@/lib/utils";
-
-/** Offset for fixed navbar on pages without in-flow hero */
-/** Routes whose first section is a full-bleed hero (no main top padding). */
-function hasFullBleedHero(pathname: string) {
-  return (
-    pathname === "/" ||
-    pathname === "/nam-duong-tra-quan" ||
-    pathname === "/gioi-thieu" ||
-    pathname === "/tim-hieu-vung-trong" ||
-    pathname === "/san-pham" ||
-    pathname.startsWith("/san-pham/") ||
-    pathname.startsWith("/dong-tra/")
-  );
-}
-
+/** Main content shell. Header offset for non-hero pages lives on each page root. */
 export function FrontendMain({ children }: { children: React.ReactNode }) {
-  const pathname = usePathname();
-
-  return (
-    <main
-      className={cn("flex-1", hasFullBleedHero(pathname) ? "pt-0" : "pt-[4.5rem] md:pt-28")}
-    >
-      {children}
-    </main>
-  );
+  return <main className="flex-1">{children}</main>;
 }

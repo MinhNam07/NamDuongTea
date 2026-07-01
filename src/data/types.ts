@@ -1,10 +1,3 @@
-export type ContentSource = "payload" | "legacy";
-
-export function getContentSource(): ContentSource {
-  const source = process.env.CONTENT_SOURCE?.toLowerCase();
-  return source === "legacy" ? "legacy" : "payload";
-}
-
 export type SeoFields = {
   metaTitle?: string | null;
   metaDescription?: string | null;
@@ -60,6 +53,7 @@ export type StorefrontProduct = {
   specs: { label: string; value: string }[];
   seo?: SeoFields | null;
   legacyImagePath?: string | null;
+  theme?: import("@/data/content/product-lines/types").ProductThemeTokens | null;
 };
 
 export type StorefrontProductLine = {

@@ -3,7 +3,7 @@ import { NextResponse } from "next/server";
 import { getProductBySlug } from "@/data/products";
 import { canonicalCategoryForProductSlug } from "@/lib/product-tab-config";
 
-export const revalidate = 300;
+export const revalidate = 3600;
 
 /**
  * GET /api/public/products/:slug — chi tiết 1 sản phẩm.

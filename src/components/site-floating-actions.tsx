@@ -3,10 +3,12 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { ArrowUp, Facebook, MessageCircle } from "lucide-react";
+import { ArrowUp, MessageCircle } from "lucide-react";
+
+import { FacebookIcon } from "@/components/icons/facebook-icon";
 
 import { Button } from "@/components/ui/button";
-import { SOCIAL_LINKS, SUPPORT_CHAT_URL } from "@/lib/site-navigation";
+import { SOCIAL_LINKS, SUPPORT_CHAT_URL } from "@/data/content/site";
 import { cn } from "@/lib/utils";
 
 function ZaloIcon({ className }: { className?: string }) {
@@ -78,7 +80,7 @@ export function SiteFloatingActions() {
             rel="noopener noreferrer"
             aria-label="Facebook"
           >
-            <Facebook className="h-5 w-5" />
+            <FacebookIcon className="h-5 w-5" />
           </a>
         </Button>
       </aside>

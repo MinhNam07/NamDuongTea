@@ -9,7 +9,7 @@ import { Handshake, Loader2 } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { WEBSITE_DATA } from "@/lib/website-data";
+import { WEBSITE_DATA } from "@/data/content/site";
 import { cn } from "@/lib/utils";
 
 const Schema = z.object({

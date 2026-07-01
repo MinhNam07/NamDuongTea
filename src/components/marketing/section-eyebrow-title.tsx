@@ -30,13 +30,13 @@ export function SectionEyebrowTitle({
         )}
       >
         {centered && inverse ? (
-          <span className="h-px w-10 bg-[#f3e2a6]/80" aria-hidden />
+          <span className="h-px w-10 bg-tea-gold/80" aria-hidden />
         ) : null}
         {!centered ? (
           <span
             className={cn(
               "h-px w-10",
-              inverse ? "bg-[#f3e2a6]/80" : "bg-tea-moss",
+              inverse ? "bg-tea-gold/80" : "bg-tea-moss",
             )}
             aria-hidden
           />
@@ -44,13 +44,13 @@ export function SectionEyebrowTitle({
         <p
           className={cn(
             "font-sans text-[17px] font-medium uppercase tracking-[0.28em]",
-            inverse ? "text-[#f3e2a6]" : "text-tea-moss",
+            inverse ? "text-tea-gold" : "text-tea-moss",
           )}
         >
           {eyebrow}
         </p>
         {centered && inverse ? (
-          <span className="h-px w-10 bg-[#f3e2a6]/80" aria-hidden />
+          <span className="h-px w-10 bg-tea-gold/80" aria-hidden />
         ) : null}
       </div>
 

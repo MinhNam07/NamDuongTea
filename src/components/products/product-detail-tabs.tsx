@@ -11,7 +11,7 @@ import {
   Flower2,
 } from "lucide-react";
 
-import type { ProductDetailTabContent } from "@/lib/product-detail-tabs";
+import type { ProductDetailTabContent } from "@/data/content/product-lines/types";
 import { cn } from "@/lib/utils";
 
 function BulletIcon({ name }: { name: string }) {

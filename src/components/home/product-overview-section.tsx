@@ -4,7 +4,7 @@ import { ArrowRight } from "lucide-react";
 import { ProductCategoryCard } from "@/components/marketing/product-category-card";
 import { ProductGrid } from "@/components/product-grid";
 import { Button } from "@/components/ui/button";
-import { PRODUCT_LINES } from "@/lib/product-lines";
+import { PRODUCT_LINES, productLineHref } from "@/data/content/product-lines";
 import type { ProductCardProduct } from "@/components/product-card";
 
 type ProductOverviewSectionProps = {
@@ -41,8 +41,8 @@ export function ProductOverviewSection({
             <ProductCategoryCard
               key={line.slug}
               name={line.name}
-              href={line.href}
-              image={line.image}
+              href={productLineHref(line.slug)}
+              image={line.images.hero}
               description={line.description}
             />
           ))}

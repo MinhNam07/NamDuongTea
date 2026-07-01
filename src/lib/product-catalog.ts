@@ -1,6 +1,9 @@
 import "server-only";
 
+import { unstable_cache } from "next/cache";
+
 import type { ProductCardProduct } from "@/components/product-card";
+import { CACHE_TAGS } from "@/data/cache";
 import { getProducts } from "@/data/products";
 import type { StorefrontProduct } from "@/data/types";
 import {
@@ -8,8 +11,10 @@ import {
   type ProductTab,
 } from "@/lib/product-tab-config";
 
-export type { HomeCatalogTabKey } from "@/lib/home-catalog-tabs";
-export { HOME_CATALOG_TABS } from "@/lib/home-catalog-tabs";
+export type { HomeCatalogTabKey } from "@/data/content/catalog-tabs";
+export { HOME_CATALOG_TABS } from "@/data/content/catalog-tabs";
+
+import { HOME_CATALOG_TABS } from "@/data/content/catalog-tabs";
 
 export type CatalogProduct = ProductCardProduct & {
   moq?: string | null;
@@ -28,7 +33,7 @@ export type PublicProductPreview = {
   category?: { name?: string | null; slug?: string | null } | null;
 };
 
-/** Legacy Payload category slugs and query params → catalog tab. */
+/** Legacy category slugs and query params → catalog tab. */
 export function categorySlugToProductTab(raw?: string | null): ProductTab | null {
   if (!raw) return null;
   const normalized = raw.trim().toLowerCase();
@@ -110,4 +115,28 @@ export async function loadCatalogProductsByCategorySlug(
   const tab = categorySlugToProductTab(categorySlug);
   if (!tab) return [];
   return loadCatalogProducts(tab, options);
+}
+
+const HOME_PREVIEW_LIMIT = 3;
+
+/** Single cached fetch for all home catalog tabs. */
+export async function getHomeCatalogPreviews(): Promise<
+  Record<string, PublicProductPreview[]>
+> {
+  const cached = unstable_cache(
+    async () => {
+      const entries = await Promise.all(
+        HOME_CATALOG_TABS.map(async (tab) => {
+          const products = await loadCatalogProducts(tab.category, {
+            limit: HOME_PREVIEW_LIMIT,
+          });
+          return [tab.category, products.map(toPublicProductPreview)] as const;
+        }),
+      );
+      return Object.fromEntries(entries) as Record<string, PublicProductPreview[]>;
+    },
+    ["home-catalog-previews"],
+    { tags: [CACHE_TAGS.products], revalidate: 3600 },
+  );
+  return cached();
 }

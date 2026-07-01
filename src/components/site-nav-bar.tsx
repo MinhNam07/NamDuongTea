@@ -22,7 +22,7 @@ import {
   SheetTitle,
   SheetTrigger,
 } from "@/components/ui/sheet";
-import { ABOUT_NAV_CHILDREN } from "@/lib/site-navigation";
+import { ABOUT_NAV_CHILDREN, PRODUCT_DROPDOWN_ITEMS } from "@/data/content/site";
 import { BRAND_LOGO_SRC } from "@/lib/site-assets";
 import { cn } from "@/lib/utils";
 
@@ -42,14 +42,6 @@ const HOME_NAV_BEFORE_DROPDOWNS: SimpleNavItem[] = [
 
 const HOME_NAV_AFTER_PRODUCTS: SimpleNavItem[] = [
   { label: "Liên hệ", href: "/lien-he" },
-];
-
-const PRODUCT_DROPDOWN_ITEMS: SimpleNavItem[] = [
-  { label: "Tất cả sản phẩm", href: "/san-pham" },
-  { label: "Chè xanh", href: "/san-pham/che-xanh" },
-  { label: "Chè đen", href: "/san-pham/che-den" },
-  { label: "Trà uống cao cấp", href: "/san-pham/tra-uong-cao-cap" },
-  { label: "Nam Dương trà quán", href: "/nam-duong-tra-quan" },
 ];
 
 function NavDropdownContent({ items }: { items: SimpleNavItem[] }) {

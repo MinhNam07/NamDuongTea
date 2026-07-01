@@ -9,14 +9,14 @@ const STORIES = [
     title: "Tinh hoa trà Việt",
     description:
       "Hành trình xây dựng thương hiệu Nam Dương Tea — am hiểu văn hóa trà, đam mê chất lượng và sáng tạo cho thị trường hiện đại.",
-    image: "/images/hero.JPG",
+    image: "/images/hero.webp",
     href: "/gioi-thieu",
   },
   {
     title: "Từ nông trường đến tách trà",
     description:
       "Kiểm soát từ vùng nguyên liệu, quy trình chế biến đến đóng gói — minh bạch nguồn gốc cho đối tác B2B.",
-    image: "/images/IMG_6559.JPG",
+    image: "/images/cau-chuyen-3.webp",
     href: "/tim-hieu-vung-trong",
   },
 ] as const;

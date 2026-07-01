@@ -1,4 +1,4 @@
-import { WEBSITE_DATA } from "@/lib/website-data";
+import { WEBSITE_DATA } from "@/data/content/site";
 import { absoluteUrl } from "@/lib/utils";
 
 export function JsonLdOrganization() {

@@ -4,7 +4,7 @@ import { absoluteUrl } from "@/lib/utils";
 const SITE_NAME = "Nam Dương Tea";
 const SITE_DESCRIPTION =
   "Nhà cung cấp trà nguyên liệu và thành phẩm cho đại lý, nhà phân phối và xuất khẩu.";
-const DEFAULT_OG_IMAGE = "/images/hero.JPG";
+const DEFAULT_OG_IMAGE = "/images/hero.webp";
 
 export function buildMetadata({
   title,

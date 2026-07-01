@@ -1,12 +1,14 @@
 import Link from "next/link";
-import { Facebook, Mail, MapPin } from "lucide-react";
+import { Mail, MapPin } from "lucide-react";
+
+import { FacebookIcon } from "@/components/icons/facebook-icon";
 
 import {
   FOOTER_QUICK_LINKS,
   FOOTER_PRODUCT_LINKS,
   SOCIAL_LINKS,
-} from "@/lib/site-navigation";
-import { WEBSITE_DATA } from "@/lib/website-data";
+} from "@/data/content/site";
+import { WEBSITE_DATA } from "@/data/content/site";
 import { cn } from "@/lib/utils";
 
 const footerLinkClass = cn(
@@ -58,7 +60,7 @@ export function SiteFooter() {
                 Z
               </SocialLink>
               <SocialLink href={SOCIAL_LINKS.facebook} label="Facebook">
-                <Facebook className="h-5 w-5" aria-hidden />
+                <FacebookIcon className="h-5 w-5" aria-hidden />
               </SocialLink>
             </div>
           </div>

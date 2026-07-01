@@ -19,7 +19,7 @@ import {
 } from "@/lib/tra-quan";
 import { cn } from "@/lib/utils";
 
-const EXTENSIONS = [".jpg", ".jpeg", ".png", ".webp"] as const;
+const EXTENSIONS = [".webp", ".jpg", ".jpeg", ".png"] as const;
 const SWIPE_THRESHOLD_PX = 48;
 const SLIDE_MS = 300;
 

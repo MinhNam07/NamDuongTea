@@ -3,7 +3,7 @@
 import { usePathname } from "next/navigation";
 
 import { SiteNavBar } from "@/components/site-nav-bar";
-import { useHeaderScrolled } from "@/hooks/use-navbar-scroll-state";
+import { useHeaderScrolled } from "@/components/layout/use-navbar-scroll-state";
 import { cn } from "@/lib/utils";
 
 /**

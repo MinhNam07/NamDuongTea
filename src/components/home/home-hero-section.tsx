@@ -16,7 +16,7 @@ export function HomeHeroSection() {
         className="pointer-events-none absolute inset-0 z-0 overflow-hidden"
       >
         <Image
-          src="/images/hero.JPG"
+          src="/images/hero.webp"
           alt=""
           fill
           priority

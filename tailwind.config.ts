@@ -6,6 +6,7 @@ const config: Config = {
     "./src/app/**/*.{ts,tsx}",
     "./src/components/**/*.{ts,tsx}",
     "./src/lib/**/*.{ts,tsx}",
+    "./content/**/*.{ts,tsx}",
   ],
   theme: {
     container: {
@@ -56,7 +57,6 @@ const config: Config = {
           foreground: "hsl(var(--card-foreground))",
         },
 
-        // Tea brand palette (hex vars from globals.css :root)
         tea: {
           "deep-brown": "var(--tea-deep-brown)",
           "dark-green": "var(--tea-dark-green)",
@@ -88,6 +88,12 @@ const config: Config = {
           ink: "var(--text-main)",
           muted: "var(--text-muted)",
         },
+        line: {
+          primary: "var(--line-primary, var(--nd-primary))",
+          surface: "var(--line-surface, var(--cream-50))",
+          accent: "var(--line-accent, var(--nd-tertiary-container))",
+          muted: "var(--line-muted, var(--text-muted))",
+        },
       },
       fontFamily: {
         display: ["var(--font-nunito)", "system-ui", "sans-serif"],
@@ -104,6 +110,10 @@ const config: Config = {
         md: "calc(var(--radius) - 2px)",
         sm: "calc(var(--radius) - 4px)",
         "2xl": "1rem",
+      },
+      boxShadow: {
+        card: "0 10px 34px rgba(37,74,12,0.06)",
+        "card-hover": "0 18px 60px rgba(37,74,12,0.10)",
       },
       keyframes: {
         "accordion-down": {

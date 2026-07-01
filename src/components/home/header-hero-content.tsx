@@ -2,7 +2,7 @@ import Link from "next/link";
 import { ArrowRight, ChevronDown } from "lucide-react";
 
 import { Button } from "@/components/ui/button";
-import { WEBSITE_DATA } from "@/lib/website-data";
+import { WEBSITE_DATA } from "@/data/content/site";
 
 export function HeaderHeroContent() {
   const hero = WEBSITE_DATA.pages.home.hero;

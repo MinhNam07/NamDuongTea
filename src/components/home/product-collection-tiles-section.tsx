@@ -10,10 +10,10 @@ import { Button } from "@/components/ui/button";
 import {
   HOME_CATALOG_TABS,
   type HomeCatalogTabKey,
-} from "@/lib/home-catalog-tabs";
+} from "@/data/content/catalog-tabs";
 import type { PublicProductPreview } from "@/lib/product-catalog";
 import { cn } from "@/lib/utils";
-import { WEBSITE_DATA } from "@/lib/website-data";
+import { WEBSITE_DATA } from "@/data/content/site";
 
 type TabKey = HomeCatalogTabKey;
 

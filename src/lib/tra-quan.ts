@@ -4,7 +4,7 @@ export const TRA_QUAN_COLLECTION_NAME = "Nam Dương trà quán";
 export const TRA_QUAN_CATEGORY_SLUG = "nam-duong-tra-quan";
 
 export const NAM_MOC_TRA_QUAN_HERO_SRC =
-  "/images/products/tet-gift-sets/nam-moc-tra-quan-hero.JPG";
+  "/images/products/tet-gift-sets/nam-moc-tra-quan-hero.webp";
 
 export type TraQuanTeaLine = {
   name: string;
@@ -38,7 +38,7 @@ export function traQuanStaticImageSrc(
   slug: string,
   suffix: TetGiftSlideSuffix = "",
 ): string {
-  return `/images/products/tet-gift-sets/${slug}${suffix}.png`;
+  return `/images/products/tet-gift-sets/${slug}${suffix}.webp`;
 }
 
 export function traQuanSlideSuffixes(

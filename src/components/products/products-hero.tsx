@@ -10,7 +10,7 @@ type ProductsHeroProps = {
   className?: string;
 };
 
-const DEFAULT_BG_SRC = "/images/IMG_6548.JPG";
+const DEFAULT_BG_SRC = "/images/cau-chuyen-2.webp";
 
 export function ProductsHero({
   eyebrow,

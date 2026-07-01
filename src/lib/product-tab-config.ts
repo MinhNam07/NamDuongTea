@@ -1,93 +1,38 @@
 import type { ProductCardProduct } from "@/components/product-card";
-import { getCuratedTeaImages } from "@/lib/product-lines";
+import { getCuratedTeaImages } from "@/data/content/product-lines";
 
-export type ProductTab =
-  | "tat-ca"
-  | "tra-uong-cao-cap"
-  | "che-xanh"
-  | "che-den"
-  | "nam-duong-tra-quan";
+export type {
+  CategoryLanding,
+  HomeCatalogTabKey,
+  ProductTab,
+} from "@/data/content/catalog-tabs";
 
-export const PRODUCT_TABS: { value: ProductTab; label: string; href: string }[] =
-  [
-    { value: "tat-ca", label: "Tất cả sản phẩm", href: "/san-pham" },
-    {
-      value: "che-xanh",
-      label: "Chè xanh",
-      href: "/san-pham?category=che-xanh",
-    },
-    { value: "che-den", label: "Chè đen", href: "/san-pham?category=che-den" },
-    {
-      value: "tra-uong-cao-cap",
-      label: "Trà uống cao cấp",
-      href: "/san-pham?category=tra-uong-cao-cap",
-    },
-    {
-      value: "nam-duong-tra-quan",
-      label: "Nam Dương trà quán",
-      href: "/san-pham?category=nam-duong-tra-quan",
-    },
-  ];
+export {
+  ALL_TEA_PICK_ORDER,
+  CATEGORY_LANDINGS,
+  CATEGORY_SLUGS,
+  HOME_CATALOG_TABS,
+  OOLONG_SLUGS,
+  PRODUCT_SLUG_WHITELIST,
+  PRODUCT_TABS,
+  getCategoryLanding,
+  isCategorySlug,
+  normalizeProductTab,
+  tabLabel,
+  catalogTabForProductSlug,
+} from "@/data/content/catalog-tabs";
 
-/** Slugs treated as the single “Trà Ô Long” product (DB may use legacy variants). */
-export const OOLONG_SLUGS = [
-  "tra-o-long",
-  "o-long-ban-len-men",
-  "o-long-rang-nhe",
-] as const;
-
-export const ALL_TEA_PICK_ORDER = {
-  dinhNgoc: ["tra-dinh-ngoc", "tra-xanh-dinh-ngoc"],
-  shanTuyet: ["bach-tra-shan-tuyet", "tra-xanh-shan-tuyet"],
-  oLong: [...OOLONG_SLUGS],
-  hongTra: ["hong-tra", "hong-tra-len-men-vua"] as const,
-} as const;
-
-export const PRODUCT_SLUG_WHITELIST: Record<
-  Exclude<ProductTab, "nam-duong-tra-quan" | "tat-ca">,
-  string[]
-> = {
-  "tra-uong-cao-cap": [
-    // Premium drinking set: green + white + black + oolong.
-    ...ALL_TEA_PICK_ORDER.dinhNgoc,
-    ...ALL_TEA_PICK_ORDER.shanTuyet,
-    ...ALL_TEA_PICK_ORDER.hongTra,
-    // Backward-compatible oolong slugs: DB may still have older variants.
-    "tra-o-long",
-    "o-long-ban-len-men",
-    "o-long-rang-nhe",
-  ],
-  // Prefer canonical slugs, but keep compatibility with existing DB slugs.
-  "che-xanh": [
-    "tra-dinh-ngoc",
-    "tra-xanh-dinh-ngoc",
-    "bach-tra-shan-tuyet",
-    "tra-xanh-shan-tuyet",
-    ...OOLONG_SLUGS,
-  ],
-  "che-den": ["hong-tra", "hong-tra-len-men-vua"],
-};
-
-export function normalizeProductTab(raw?: string): ProductTab {
-  if (raw === "tat-ca") return "tat-ca";
-  if (raw === "tra-uong-cao-cap") return "tra-uong-cao-cap";
-  if (raw === "che-den" || raw === "tra-den") return "che-den";
-  if (raw === "nam-duong-tra-quan") return "nam-duong-tra-quan";
-  if (raw === "che-xanh" || raw === "tra-xanh" || raw === "tra-o-long") {
-    return "che-xanh";
-  }
-  return "tat-ca";
-}
-
-export function tabLabel(tab: ProductTab) {
-  return PRODUCT_TABS.find((t) => t.value === tab)?.label ?? tab;
-}
+import {
+  ALL_TEA_PICK_ORDER,
+  OOLONG_SLUGS,
+  PRODUCT_SLUG_WHITELIST,
+  type ProductTab,
+} from "@/data/content/catalog-tabs";
 
 export function isOolongSlug(slug: string) {
   return slug === "tra-o-long" || slug.startsWith("o-long-");
 }
 
-/** Slugs to query from Payload for a catalog tab. */
 export function getWhitelistSlugsForTab(tab: ProductTab): string[] {
   if (tab === "nam-duong-tra-quan") return [];
   if (tab === "tat-ca") return [...PRODUCT_SLUG_WHITELIST["tra-uong-cao-cap"]];
@@ -100,7 +45,6 @@ export function withCatalogProductImage(p: ProductCardProduct): ProductCardProdu
   return p;
 }
 
-/** Keep one oolong card; prefer canonical slug `tra-o-long`. */
 export function collapseOolongProducts(
   items: ProductCardProduct[],
 ): ProductCardProduct[] {
@@ -123,7 +67,6 @@ export function applyCanonicalProductName(p: ProductCardProduct): ProductCardPro
   return canonical ? { ...p, name: canonical } : p;
 }
 
-/** Ô long thuộc nhóm trà xanh trên catalog. */
 export const GREEN_TEA_CATEGORY = {
   name: "Trà xanh",
   slug: "tra-xanh",
@@ -154,7 +97,6 @@ export function pickFirstProduct(
   return null;
 }
 
-/** Curated rows for catalog tabs (one card per tea line). */
 export function pickCuratedCatalogProducts(
   candidates: ProductCardProduct[],
   tab: Exclude<ProductTab, "nam-duong-tra-quan">,
@@ -172,7 +114,6 @@ export function pickCuratedCatalogProducts(
       Boolean(p),
     );
   }
-  // tat-ca + tra-uong-cao-cap: cùng bộ 4 dòng trà
   return [dinhNgoc, shanTuyet, oLong, hongTra].filter(
     (p): p is ProductCardProduct => Boolean(p),
   );
@@ -214,4 +155,3 @@ export function canonicalNameForProductSlug(slug: string): string | null {
   }
   return null;
 }
-

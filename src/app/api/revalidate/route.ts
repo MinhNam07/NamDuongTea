@@ -34,25 +34,25 @@ export async function POST(req: NextRequest) {
   const revalidated: string[] = [];
 
   if (body.tag && ALLOWED_TAGS.has(body.tag)) {
-    revalidateTag(body.tag);
+    revalidateTag(body.tag, { expire: 0 });
     revalidated.push(`tag:${body.tag}`);
   }
 
   if (body.slug && body.collection === "products") {
-    revalidateTag(productTag(body.slug));
+    revalidateTag(productTag(body.slug), { expire: 0 });
     revalidatePath(`/san-pham/${body.slug}`);
     revalidated.push(`product:${body.slug}`);
   }
 
   if (body.slug && body.collection === "posts") {
-    revalidateTag(postTag(body.slug));
+    revalidateTag(postTag(body.slug), { expire: 0 });
     revalidatePath(`/tin-tuc/${body.slug}`);
     revalidated.push(`post:${body.slug}`);
   }
 
   if (body.slug && body.collection === "product-lines") {
-    revalidateTag(productLineTag(body.slug));
-    revalidatePath(`/dong-tra/${body.slug}`);
+    revalidateTag(productLineTag(body.slug), { expire: 0 });
+    revalidatePath(`/san-pham/${body.slug}`);
     revalidated.push(`product-line:${body.slug}`);
   }
 

@@ -2,7 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 
 import { getCategories } from "@/data/categories";
 
-export const revalidate = 300;
+export const revalidate = 3600;
 
 /**
  * GET /api/public/categories

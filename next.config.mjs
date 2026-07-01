@@ -1,5 +1,3 @@
-import { withPayload } from "@payloadcms/next/withPayload";
-
 function s3RemotePatterns() {
   const publicBase = process.env.S3_PUBLIC_BASE_URL;
   if (!publicBase) return [];
@@ -24,6 +22,11 @@ const nextConfig = {
   async redirects() {
     return [
       {
+        source: "/dong-tra/:slug",
+        destination: "/san-pham/:slug",
+        permanent: true,
+      },
+      {
         source: "/set-tra-tet",
         destination: "/nam-duong-tra-quan",
         permanent: true,
@@ -42,9 +45,7 @@ const nextConfig = {
       ...s3RemotePatterns(),
     ],
   },
-  experimental: {
-    reactCompiler: false,
-  },
+  reactCompiler: false,
 };
 
-export default withPayload(nextConfig);
+export default nextConfig;

@@ -31,7 +31,7 @@ export const COMPANY_INTRO_PAGE = {
     title: "Công ty Trà Nam Dương",
     subtitle:
       "Tinh hoa trà Việt — đối tác tin cậy cho đại lý, nhà phân phối và đơn vị xuất khẩu với chất lượng ổn định và nguồn gốc minh bạch.",
-    image: "/images/IMG_6570.JPG",
+    image: "/images/cau-chuyen-4.webp",
   },
   stats: [
     { value: "8", label: "Quốc gia", description: "Xuất khẩu" },
@@ -64,7 +64,7 @@ export const COMPANY_INTRO_PAGE = {
       "Chúng tôi hợp tác trực tiếp với các nông hộ tại vùng nguyên liệu — kiểm soát toàn bộ chuỗi cung ứng từ búp tươi, sao sấy, đóng gói cho tới giao hàng.",
     ],
     image: {
-      src: "/images/IMG_6547.JPG",
+      src: "/images/cau-chuyen-1.webp",
       alt: "Lá trà tươi được tuyển chọn thủ công",
     },
     imagePosition: "right" as const,
@@ -121,7 +121,7 @@ export const GROWING_REGION_PAGE = {
       "Văn phòng & nhà máy: Khối 1, Xã Sóc Sơn, Hà Nội, Việt Nam",
     ],
     image: {
-      src: "/images/IMG_6548.JPG",
+      src: "/images/cau-chuyen-2.webp",
       alt: "Cơ sở chế biến và đóng gói trà Nam Dương",
     },
     imagePosition: "left" as const,
@@ -140,7 +140,7 @@ export const GROWING_REGION_PAGE = {
       "Hỗ trợ hồ sơ CO, kiểm nghiệm theo yêu cầu xuất khẩu",
     ],
     image: {
-      src: "/images/IMG_6559.JPG",
+      src: "/images/cau-chuyen-3.webp",
       alt: "Đồi chè và nguyên liệu tươi tại vùng trồng",
     },
     imagePosition: "right" as const,

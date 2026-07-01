@@ -2,15 +2,15 @@ import Link from "next/link";
 import Image from "next/image";
 
 import { Button } from "@/components/ui/button";
-import { WEBSITE_DATA } from "@/lib/website-data";
+import { WEBSITE_DATA } from "@/data/content/site";
 
 const STORY_IMAGES: Record<string, { src: string; alt: string }> = {
   quality: {
-    src: "/images/IMG_6547.JPG",
+    src: "/images/cau-chuyen-1.webp",
     alt: "Lá trà tươi được tuyển chọn thủ công",
   },
   sustainability: {
-    src: "/images/IMG_6437.png",
+    src: "/images/cau-chuyen-5.webp",
     alt: "Đồi chè xanh mướt trong làn sương sớm",
   },
 };

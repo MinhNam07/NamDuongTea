@@ -1,7 +1,7 @@
 import { Leaf, Sun, Flame, RotateCw } from "lucide-react";
 
 import { CRAFT_TIMELINE_BG_SRC } from "@/lib/site-assets";
-import { WEBSITE_DATA } from "@/lib/website-data";
+import { WEBSITE_DATA } from "@/data/content/site";
 import { cn } from "@/lib/utils";
 
 const HERO_GRADIENT_OVERLAY =

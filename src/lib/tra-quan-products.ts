@@ -4,89 +4,28 @@ import { unstable_cache } from "next/cache";
 
 import { CACHE_TAGS } from "@/data/cache";
 import type { TraQuanProduct } from "@/lib/tra-quan";
-import {
-  TRA_QUAN_CATEGORY_SLUG,
-  traQuanStaticImageSrc,
-} from "@/lib/tra-quan";
-import { getPayloadClient } from "@/lib/payload";
+import { traQuanStaticImageSrc } from "@/lib/tra-quan";
+import { TRA_QUAN_SEED_PRODUCTS } from "@/data/content/tra-quan";
 
-type PayloadTraQuanDoc = {
-  id: string | number;
-  name: string;
-  slug: string;
-  shortDescription?: string | null;
-  priceVnd?: number | null;
-  giftTeas?: { name: string; weight: string }[] | null;
-  giftHighlights?: { text: string }[] | null;
-  gallerySlidesReversed?: boolean | null;
-  image?: { url?: string | null } | null;
-};
-
-function mapTraQuanProduct(doc: PayloadTraQuanDoc): TraQuanProduct {
-  const reversed = Boolean(doc.gallerySlidesReversed);
+function mapSeedProduct(
+  seed: (typeof TRA_QUAN_SEED_PRODUCTS)[number],
+): TraQuanProduct {
+  const reversed = Boolean(seed.gallerySlidesReversed);
   return {
-    id: doc.id,
-    slug: doc.slug,
-    name: doc.name,
-    tagline: doc.shortDescription ?? "",
-    teas: doc.giftTeas ?? [],
-    priceVnd: doc.priceVnd ?? null,
-    giftHighlights: (doc.giftHighlights ?? []).map((h) => h.text),
+    id: seed.slug,
+    slug: seed.slug,
+    name: seed.name,
+    tagline: seed.tagline,
+    teas: seed.teas,
+    priceVnd: seed.priceVnd,
+    giftHighlights: seed.giftHighlights,
     gallerySlidesReversed: reversed,
-    imageUrl:
-      doc.image?.url ??
-      traQuanStaticImageSrc(
-        doc.slug,
-        reversed ? "-2" : "",
-      ),
+    imageUrl: traQuanStaticImageSrc(seed.slug, reversed ? "-2" : ""),
   };
 }
 
-async function fetchTraQuanCategoryId(): Promise<number | null> {
-  const payload = await getPayloadClient();
-  const { docs } = await payload.find({
-    collection: "categories",
-    where: { slug: { equals: TRA_QUAN_CATEGORY_SLUG } },
-    limit: 1,
-  });
-  const rawId = docs[0]?.id;
-  if (rawId == null) return null;
-  const id = typeof rawId === "number" ? rawId : Number.parseInt(String(rawId), 10);
-  return Number.isFinite(id) ? id : null;
-}
-
-const getTraQuanCategoryId = unstable_cache(
-  fetchTraQuanCategoryId,
-  ["tra-quan-category-id"],
-  {
-    tags: [CACHE_TAGS.traQuan, CACHE_TAGS.categories],
-    revalidate: 300,
-  },
-);
-
 async function fetchTraQuanProducts(): Promise<TraQuanProduct[]> {
-  try {
-    const payload = await getPayloadClient();
-    const categoryId = await getTraQuanCategoryId();
-    if (categoryId == null) return [];
-
-    const { docs } = await payload.find({
-      collection: "products",
-      where: {
-        and: [
-          { status: { equals: "published" } },
-          { category: { equals: categoryId } },
-        ],
-      },
-      depth: 1,
-      limit: 50,
-      sort: "name",
-    });
-
-    return (docs as unknown as PayloadTraQuanDoc[]).map(mapTraQuanProduct);
-  } catch {
-    return [];
-  }
+  return TRA_QUAN_SEED_PRODUCTS.map(mapSeedProduct);
 }
 
 export const loadTraQuanProducts = unstable_cache(
@@ -94,52 +33,13 @@ export const loadTraQuanProducts = unstable_cache(
   ["tra-quan-products"],
   {
     tags: [CACHE_TAGS.traQuan, CACHE_TAGS.products],
-    revalidate: 300,
+    revalidate: 3600,
   },
 );
-
-async function fetchTraQuanProductBySlug(
-  slug: string,
-): Promise<TraQuanProduct | null> {
-  try {
-    const payload = await getPayloadClient();
-    const categoryId = await getTraQuanCategoryId();
-
-    const { docs } = await payload.find({
-      collection: "products",
-      where: {
-        and: [
-          { slug: { equals: slug } },
-          { status: { equals: "published" } },
-          ...(categoryId != null ? [{ category: { equals: categoryId } }] : []),
-        ],
-      },
-      depth: 1,
-      limit: 1,
-    });
-
-    const doc = docs[0] as unknown as PayloadTraQuanDoc | undefined;
-    return doc ? mapTraQuanProduct(doc) : null;
-  } catch {
-    return null;
-  }
-}
 
 export async function loadTraQuanProductBySlug(
   slug: string,
 ): Promise<TraQuanProduct | null> {
-  const cached = unstable_cache(
-    () => fetchTraQuanProductBySlug(slug),
-    ["tra-quan-product", slug],
-    {
-      tags: [CACHE_TAGS.traQuan, CACHE_TAGS.products],
-      revalidate: 300,
-    },
-  );
-  return cached();
-}
-
-export async function isTraQuanProductSlug(slug: string): Promise<boolean> {
-  const product = await loadTraQuanProductBySlug(slug);
-  return product != null;
+  const products = await loadTraQuanProducts();
+  return products.find((p) => p.slug === slug) ?? null;
 }

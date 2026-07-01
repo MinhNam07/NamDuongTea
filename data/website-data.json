@@ -24,13 +24,13 @@
     "assets": {
       "logo": "/images/logo.png",
       "logoSvg": "/images/logo.svg",
-      "teaHillHeader": "/images/tea-hill-header.JPG",
+      "teaHillHeader": "/images/tea-hill-header.webp",
       "teaHillHeaderWebp": "/images/tea-hill-header.webp",
-      "teaHillFooter": "/images/tea-hill-footer.JPG",
+      "teaHillFooter": "/images/tea-hill-footer.webp",
       "teaHillFooterWebp": "/images/tea-hill-footer.webp",
-      "hero": "/images/hero.JPG",
-      "storyFarm": "/images/story-farm.webp",
-      "heroDoiche": "/images/Hero/doiche.webp"
+      "hero": "/images/hero.webp",
+      "storyFarm": "/images/tea-hill-header.webp",
+      "heroDoiche": "/images/hero.webp"
     },
     "header": {
       "glassBase": "#163006",
@@ -79,7 +79,6 @@
           { "label": "Nam Dương trà quán", "href": "/san-pham?category=nam-duong-tra-quan" }
         ]
       },
-      { "label": "Tin tức", "href": "/tin-tuc" },
       { "label": "Đại lý", "href": "/dang-ky-dai-ly" },
       { "label": "Liên hệ", "href": "/lien-he" }
     ],
@@ -88,7 +87,6 @@
         { "label": "Giới thiệu", "href": "/gioi-thieu" },
         { "label": "Sản phẩm", "href": "/san-pham" },
         { "label": "Đăng ký đại lý", "href": "/dang-ky-dai-ly" },
-        { "label": "Tin tức", "href": "/tin-tuc" },
         { "label": "Liên hệ", "href": "/lien-he" }
       ],
       "productLinks": [
@@ -125,28 +123,28 @@
       "name": "Chè xanh",
       "slug": "che-xanh",
       "href": "/san-pham/che-xanh",
-      "image": "/images/tra-dinh-ngoc/DSC_3112 copy 2.png",
+      "image": "/images/tra-dinh-ngoc/bo-am-tra.webp",
       "description": "Búp tươi, hương thanh mát từ vùng trà Nam Dương."
     },
     {
       "name": "Chè đen",
       "slug": "che-den",
       "href": "/san-pham/che-den",
-      "image": "/images/hong-tra/DSC_3117 copy 2.png",
+      "image": "/images/hong-tra/bo-am-tra.webp",
       "description": "Đậm vị, ổn định cho pha trà và pha chế F&B."
     },
     {
       "name": "Trà uống cao cấp",
       "slug": "tra-uong-cao-cap",
       "href": "/san-pham/tra-uong-cao-cap",
-      "image": "/images/bach-tra-shan-tuyet/DSC_3122 copy 2.png",
+      "image": "/images/bach-tra-shan-tuyet/bo-am-tra.webp",
       "description": "Tuyển chọn tinh hoa từ các dòng trà chủ lực."
     },
     {
       "name": "Nam Dương trà quán",
       "slug": "nam-duong-tra-quan",
       "href": "/san-pham?category=nam-duong-tra-quan",
-      "image": "/images/products/tet-gift-sets/nam-moc-tra-quan-hero.JPG",
+      "image": "/images/products/tet-gift-sets/nam-moc-tra-quan-hero.webp",
       "description": "Bộ quà biếu thất phẩm gỗ chạm khắc — trà tuyển chọn, trình bày sang trọng."
     }
   ],
@@ -169,13 +167,13 @@
       "path": "/gioi-thieu",
       "title": "Giới thiệu — Công ty Trà Nam Dương",
       "description": "Giới thiệu về Công ty Trà Nam Dương — tinh hoa trà Việt cho đại lý, nhà phân phối và xuất khẩu.",
-      "file": "src/app/(frontend)/gioi-thieu/page.tsx"
+      "file": "src/app/gioi-thieu/page.tsx"
     },
     {
       "path": "/tim-hieu-vung-trong",
       "title": "Tìm hiểu về vùng trồng",
       "description": "Cơ sở hạ tầng, nhà máy, vùng trồng và nguyên liệu của Công ty Trà Nam Dương.",
-      "file": "src/app/(frontend)/tim-hieu-vung-trong/page.tsx"
+      "file": "src/app/tim-hieu-vung-trong/page.tsx"
     },
     {
       "path": "/san-pham",
@@ -234,7 +232,7 @@
         "primaryCta": { "label": "Khám phá sản phẩm", "href": "/san-pham" },
         "scrollHint": { "label": "Cuộn để khám phá", "href": "#story" },
         "backgroundImage": {
-          "src": "/images/Hero/doiche.webp",
+          "src": "/images/hero.webp",
           "alt": "Đồi chè xanh uốn lượn"
         }
       },

@@ -1,0 +1,176 @@
+[
+  {
+    "from": "/images/bach-tra-shan-tuyet/bach-tra-shan-tuyet.png",
+    "to": "/images/bach-tra-shan-tuyet/bo-am-tra.webp",
+    "src": "bach-tra-shan-tuyet/bach-tra-shan-tuyet.png",
+    "dest": "bach-tra-shan-tuyet/bo-am-tra.webp"
+  },
+  {
+    "from": "/images/bach-tra-shan-tuyet/DSC_3139 copy 2.png",
+    "to": "/images/bach-tra-shan-tuyet/la-tra-kho.webp",
+    "src": "bach-tra-shan-tuyet/DSC_3139 copy 2.png",
+    "dest": "bach-tra-shan-tuyet/la-tra-kho.webp"
+  },
+  {
+    "from": "/images/hong-tra/DSC_3117 copy 2.png",
+    "to": "/images/hong-tra/bo-am-tra.webp",
+    "src": "hong-tra/DSC_3117 copy 2.png",
+    "dest": "hong-tra/bo-am-tra.webp"
+  },
+  {
+    "from": "/images/hong-tra/DSC_3134 copy 2.png",
+    "to": "/images/hong-tra/la-tra-kho.webp",
+    "src": "hong-tra/DSC_3134 copy 2.png",
+    "dest": "hong-tra/la-tra-kho.webp"
+  },
+  {
+    "from": "/images/tra-o-long/DSC_3126 copy 2.png",
+    "to": "/images/tra-o-long/bo-am-tra.webp",
+    "src": "tra-o-long/DSC_3126 copy 2.png",
+    "dest": "tra-o-long/bo-am-tra.webp"
+  },
+  {
+    "from": "/images/tra-o-long/DSC_3132 copy 2.png",
+    "to": "/images/tra-o-long/la-tra-kho.webp",
+    "src": "tra-o-long/DSC_3132 copy 2.png",
+    "dest": "tra-o-long/la-tra-kho.webp"
+  },
+  {
+    "from": "/images/tra-dinh-ngoc/DSC_3112 copy 2.png",
+    "to": "/images/tra-dinh-ngoc/bo-am-tra.webp",
+    "src": "tra-dinh-ngoc/DSC_3112 copy 2.png",
+    "dest": "tra-dinh-ngoc/bo-am-tra.webp"
+  },
+  {
+    "from": "/images/tra-dinh-ngoc/DSC_3137 copy 2.png",
+    "to": "/images/tra-dinh-ngoc/la-tra-kho.webp",
+    "src": "tra-dinh-ngoc/DSC_3137 copy 2.png",
+    "dest": "tra-dinh-ngoc/la-tra-kho.webp"
+  },
+  {
+    "from": "/images/products/tet-gift-sets/nam-moc-tra-quan.png",
+    "to": "/images/products/tet-gift-sets/nam-moc-tra-quan.webp",
+    "src": "products/tet-gift-sets/nam-moc-tra-quan.png",
+    "dest": "products/tet-gift-sets/nam-moc-tra-quan.webp"
+  },
+  {
+    "from": "/images/products/tet-gift-sets/nam-moc-tra-quan-2.png",
+    "to": "/images/products/tet-gift-sets/nam-moc-tra-quan-2.webp",
+    "src": "products/tet-gift-sets/nam-moc-tra-quan-2.png",
+    "dest": "products/tet-gift-sets/nam-moc-tra-quan-2.webp"
+  },
+  {
+    "from": "/images/products/tet-gift-sets/nam-moc-tra-quan-hero.JPG",
+    "to": "/images/products/tet-gift-sets/nam-moc-tra-quan-hero.webp",
+    "src": "products/tet-gift-sets/nam-moc-tra-quan-hero.JPG",
+    "dest": "products/tet-gift-sets/nam-moc-tra-quan-hero.webp"
+  },
+  {
+    "from": "/images/products/tet-gift-sets/son-moc-tra-quan.png",
+    "to": "/images/products/tet-gift-sets/son-moc-tra-quan.webp",
+    "src": "products/tet-gift-sets/son-moc-tra-quan.png",
+    "dest": "products/tet-gift-sets/son-moc-tra-quan.webp"
+  },
+  {
+    "from": "/images/products/tet-gift-sets/son-moc-tra-quan-2.png",
+    "to": "/images/products/tet-gift-sets/son-moc-tra-quan-2.webp",
+    "src": "products/tet-gift-sets/son-moc-tra-quan-2.png",
+    "dest": "products/tet-gift-sets/son-moc-tra-quan-2.webp"
+  },
+  {
+    "from": "/images/products/tet-gift-sets/thanh-nhien-tra-quan.png",
+    "to": "/images/products/tet-gift-sets/thanh-nhien-tra-quan.webp",
+    "src": "products/tet-gift-sets/thanh-nhien-tra-quan.png",
+    "dest": "products/tet-gift-sets/thanh-nhien-tra-quan.webp"
+  },
+  {
+    "from": "/images/products/tet-gift-sets/thanh-nhien-tra-quan-2.png",
+    "to": "/images/products/tet-gift-sets/thanh-nhien-tra-quan-2.webp",
+    "src": "products/tet-gift-sets/thanh-nhien-tra-quan-2.png",
+    "dest": "products/tet-gift-sets/thanh-nhien-tra-quan-2.webp"
+  },
+  {
+    "from": "/images/products/tet-gift-sets/bach-nhien-tra-quan.png",
+    "to": "/images/products/tet-gift-sets/bach-nhien-tra-quan.webp",
+    "src": "products/tet-gift-sets/bach-nhien-tra-quan.png",
+    "dest": "products/tet-gift-sets/bach-nhien-tra-quan.webp"
+  },
+  {
+    "from": "/images/products/tet-gift-sets/bach-nhien-tra-quan-2.png",
+    "to": "/images/products/tet-gift-sets/bach-nhien-tra-quan-2.webp",
+    "src": "products/tet-gift-sets/bach-nhien-tra-quan-2.png",
+    "dest": "products/tet-gift-sets/bach-nhien-tra-quan-2.webp"
+  },
+  {
+    "from": "/images/products/tet-gift-sets/van-lo-tra-quan.png",
+    "to": "/images/products/tet-gift-sets/van-lo-tra-quan.webp",
+    "src": "products/tet-gift-sets/van-lo-tra-quan.png",
+    "dest": "products/tet-gift-sets/van-lo-tra-quan.webp"
+  },
+  {
+    "from": "/images/products/tet-gift-sets/van-lo-tra-quan-2.png",
+    "to": "/images/products/tet-gift-sets/van-lo-tra-quan-2.webp",
+    "src": "products/tet-gift-sets/van-lo-tra-quan-2.png",
+    "dest": "products/tet-gift-sets/van-lo-tra-quan-2.webp"
+  },
+  {
+    "from": "/images/hero.JPG",
+    "to": "/images/hero.webp",
+    "src": "hero.JPG",
+    "dest": "hero.webp"
+  },
+  {
+    "from": "/images/tea-hill-header.JPG",
+    "to": "/images/tea-hill-header.webp",
+    "src": "tea-hill-header.JPG",
+    "dest": "tea-hill-header.webp"
+  },
+  {
+    "from": "/images/tea-hill-footer.JPG",
+    "to": "/images/tea-hill-footer.webp",
+    "src": "tea-hill-footer.JPG",
+    "dest": "tea-hill-footer.webp"
+  },
+  {
+    "from": "/images/IMG_6478.JPG",
+    "to": "/images/che-tac-nen.webp",
+    "src": "IMG_6478.JPG",
+    "dest": "che-tac-nen.webp"
+  },
+  {
+    "from": "/images/IMG_6547.JPG",
+    "to": "/images/cau-chuyen-1.webp",
+    "src": "IMG_6547.JPG",
+    "dest": "cau-chuyen-1.webp"
+  },
+  {
+    "from": "/images/IMG_6548.JPG",
+    "to": "/images/cau-chuyen-2.webp",
+    "src": "IMG_6548.JPG",
+    "dest": "cau-chuyen-2.webp"
+  },
+  {
+    "from": "/images/IMG_6559.JPG",
+    "to": "/images/cau-chuyen-3.webp",
+    "src": "IMG_6559.JPG",
+    "dest": "cau-chuyen-3.webp"
+  },
+  {
+    "from": "/images/IMG_6570.JPG",
+    "to": "/images/cau-chuyen-4.webp",
+    "src": "IMG_6570.JPG",
+    "dest": "cau-chuyen-4.webp"
+  },
+  {
+    "from": "/images/IMG_6437.png",
+    "to": "/images/cau-chuyen-5.webp",
+    "src": "IMG_6437.png",
+    "dest": "cau-chuyen-5.webp"
+  },
+  {
+    "from": "/images/tra-quan-hero-bg.jpg",
+    "to": "/images/tra-quan-hero-bg.webp",
+    "src": "tra-quan-hero-bg.jpg",
+    "dest": "tra-quan-hero-bg.webp"
+  }
+]
